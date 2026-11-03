@@ -1,0 +1,11 @@
+{
+  "name": "English Learning Hub",
+  "short_name": "Learning Hub",
+  "description": "An offline-friendly library of English learning materials.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f8fc",
+  "theme_color": "#172554",
+  "icons": []
+}

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172554">
+  <meta name="description" content="English Learning Hub - an offline-friendly library of English lessons.">
+  <link rel="manifest" href="manifest.json">
+  <title>English Learning Hub</title>
+  <style>
+    :root{--navy:#172554;--blue:#2563eb;--pale:#eff6ff;--ink:#172033;--muted:#64748b;--line:#e2e8f0;--bg:#f6f8fc;--white:#fff}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--ink)}
+    button,input{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:grid;grid-template-columns:245px 1fr}
+    aside{background:var(--navy);color:white;padding:24px 16px;display:flex;flex-direction:column;gap:24px}
+    .brand{display:flex;align-items:center;gap:11px;padding:4px 8px}.brand-icon{width:40px;height:40px;border-radius:13px;background:#60a5fa;display:grid;place-items:center;font-size:22px}
+    .brand strong{display:block;font-size:16px}.brand small{color:#bfdbfe}
+    .nav-label{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:#93c5fd;padding:0 12px;margin:8px 0}
+    nav{display:grid;gap:5px}.nav-btn{border:0;background:transparent;color:#dbeafe;text-align:left;padding:11px 12px;border-radius:10px;display:flex;align-items:center;gap:12px}
+    .nav-btn:hover,.nav-btn.active{background:#263b70;color:white}.nav-btn span:first-child{width:22px;text-align:center}
+    .side-note{margin-top:auto;background:#203768;padding:14px;border-radius:14px;color:#dbeafe;font-size:12px;line-height:1.5}
+    main{padding:30px clamp(18px,4vw,54px);max-width:1500px;width:100%;margin:auto}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:28px}.eyebrow{color:var(--blue);font-size:12px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+    h1{font-size:clamp(25px,3vw,34px);margin:6px 0}.sub{color:var(--muted);margin:0;line-height:1.6}
+    .status{border:1px solid var(--line);background:white;border-radius:999px;padding:9px 13px;font-size:12px;color:#166534;white-space:nowrap}
+    .hero{background:linear-gradient(120deg,#1d4ed8,#172554);color:white;border-radius:22px;padding:clamp(24px,4vw,42px);display:flex;justify-content:space-between;gap:20px;align-items:center;overflow:hidden}
+    .hero h2{font-size:clamp(25px,4vw,38px);margin:0 0 10px;max-width:520px}.hero p{color:#dbeafe;line-height:1.6;max-width:520px}.hero-art{font-size:clamp(65px,9vw,110px);padding:12px}
+    .primary{background:white;color:#1d4ed8;border:0;border-radius:10px;padding:11px 16px;font-weight:750;margin-top:8px}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:30px 0 14px}.section-head h2{margin:0;font-size:20px}.text-btn{border:0;background:none;color:var(--blue);font-weight:700}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:18px}.stat,.card,.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:17px}.stat strong{font-size:25px;display:block}.stat small{color:var(--muted)}
+    .categories{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.category{border:1px solid var(--line);background:white;border-radius:15px;padding:18px 13px;text-align:left;transition:.15s}.category:hover,.lesson:hover{border-color:#93c5fd;transform:translateY(-2px)}.cat-icon{font-size:25px}.category strong{display:block;margin:10px 0 4px}.category small{color:var(--muted)}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.search{flex:1;min-width:200px;border:1px solid var(--line);border-radius:11px;padding:12px 14px;background:white}.filter{border:1px solid var(--line);background:white;border-radius:11px;padding:11px 14px;color:var(--ink)}
+    .lesson-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.lesson{background:white;border:1px solid var(--line);border-radius:15px;padding:17px;text-align:left;transition:.15s}.lesson-top{display:flex;justify-content:space-between;align-items:center}.lesson-id{font-size:11px;color:var(--muted);font-weight:750}.tag{font-size:11px;padding:5px 8px;border-radius:99px;background:var(--pale);color:#1d4ed8}.lesson h3{font-size:16px;margin:14px 0 5px}.lesson p{font-size:13px;color:var(--muted);margin:0;line-height:1.5}.filetypes{display:flex;gap:6px;margin-top:14px}.file{font-size:10px;border:1px solid var(--line);border-radius:6px;padding:4px 6px;color:#475569}
+    .page{display:none}.page.active{display:block}.back{border:0;background:none;color:var(--blue);font-weight:700;padding:0;margin-bottom:18px}.detail-box{background:white;border:1px solid var(--line);border-radius:18px;padding:clamp(20px,4vw,32px)}.detail-box h2{margin:8px 0}.resource{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:10px}.resource button,.secondary{border:1px solid #bfdbfe;background:var(--pale);color:#1d4ed8;border-radius:9px;padding:9px 12px;font-weight:700}
+    .qr-layout{display:grid;grid-template-columns:1fr 1fr;gap:15px}.qr-input{display:flex;gap:8px;margin-top:12px}.qr-input input{min-width:0;flex:1;border:1px solid var(--line);border-radius:9px;padding:11px}.result{margin-top:12px;color:#166534;font-weight:650}.camera-box{background:#0f172a;color:#cbd5e1;border-radius:14px;min-height:180px;display:grid;place-items:center;text-align:center;padding:20px}
+    .empty{padding:30px;text-align:center;color:var(--muted);background:white;border:1px dashed var(--line);border-radius:14px;grid-column:1/-1}
+    footer{padding:28px 0 8px;color:var(--muted);font-size:12px;text-align:center}
+    @media(max-width:900px){.app{grid-template-columns:1fr}aside{padding:12px 14px;gap:10px}.brand{padding:2px 5px}.brand-icon{width:34px;height:34px}nav{display:flex;overflow-x:auto;padding-bottom:3px}.nav-label,.side-note{display:none}.nav-btn{white-space:nowrap;padding:9px 11px}.stats{grid-template-columns:repeat(2,1fr)}.categories{grid-template-columns:repeat(3,1fr)}.lesson-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:560px){main{padding:20px 14px}.topbar{align-items:flex-start}.status{font-size:10px}.hero-art{display:none}.categories{grid-template-columns:repeat(2,1fr)}.lesson-grid,.qr-layout{grid-template-columns:1fr}.section-head{margin-top:24px}.category{padding:14px}.stats{gap:9px}.stat{padding:13px}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="brand"><div class="brand-icon">📚</div><div><strong>English Learning Hub</strong><small>Learn anywhere</small></div></div>
+    <div><div class="nav-label">Workspace</div><nav id="navigation">
+      <button class="nav-btn active" data-page="home"><span>⌂</span>Home</button>
+      <button class="nav-btn" data-page="catalogue"><span>▦</span>Catalogue</button>
+      <button class="nav-btn" data-page="qr"><span>▧</span>QR Lookup</button>
+    </nav></div>
+    <div><div class="nav-label">Learning sections</div><nav id="categoryNav">
+      <button class="nav-btn" data-category="Listening"><span>🎧</span>Listening</button>
+      <button class="nav-btn" data-category="Reading"><span>📖</span>Reading</button>
+      <button class="nav-btn" data-category="Writing"><span>✍️</span>Writing</button>
+      <button class="nav-btn" data-category="Vocabulary"><span>🔤</span>Vocabulary</button>
+      <button class="nav-btn" data-category="Grammar"><span>🧩</span>Grammar</button>
+    </nav></div>
+    <div class="side-note">💡 <strong>Offline-friendly learning</strong><br>Install this hub on your device. Lessons you cache can be opened without an internet connection.</div>
+  </aside>
+  <main>
+    <div class="topbar"><div><div class="eyebrow">Your learning library</div><h1 id="pageTitle">Welcome back!</h1><p class="sub" id="pageSubtitle">A simple place to find and practise English.</p></div><div class="status" id="connectionStatus">● Checking connection</div></div>
+
+    <section class="page active" id="home">
+      <div class="hero"><div><div class="eyebrow" style="color:#bfdbfe">ENGLISH LEARNING HUB</div><h2>Small steps. Better English.</h2><p>Explore lessons, practise your skills and keep your learning materials together in one place.</p><button class="primary" onclick="showPage('catalogue')">Explore lessons →</button></div><div class="hero-art">🎓</div></div>
+      <div class="stats">
+        <div class="stat"><strong id="totalLessons">8</strong><small>Sample lessons</small></div><div class="stat"><strong>5</strong><small>Learning sections</small></div><div class="stat"><strong>3</strong><small>Supported file types</small></div><div class="stat"><strong>∞</strong><small>Room to learn</small></div>
+      </div>
+      <div class="section-head"><h2>Browse by skill</h2><button class="text-btn" onclick="showPage('catalogue')">View catalogue →</button></div>
+      <div class="categories" id="homeCategories"></div>
+      <div class="section-head"><h2>Recently added</h2></div><div class="lesson-grid" id="recentLessons"></div>
+    </section>
+
+    <section class="page" id="catalogue">
+      <div class="section-head"><h2>All learning materials</h2><span class="sub" id="resultCount"></span></div>
+      <div class="toolbar"><input class="search" id="searchInput" placeholder="Search by lesson name or ID..." aria-label="Search lessons"><select class="filter" id="categoryFilter"><option value="All">All sections</option><option>Listening</option><option>Reading</option><option>Writing</option><option>Vocabulary</option><option>Grammar</option></select></div>
+      <div class="lesson-grid" id="catalogueLessons"></div>
+    </section>
+
+    <section class="page" id="detail">
+      <button class="back" onclick="showPage('catalogue')">← Back to catalogue</button><div id="lessonDetail"></div>
+    </section>
+
+    <section class="page" id="qr">
+      <div class="qr-layout">
+        <div class="panel"><div class="eyebrow">Quick access</div><h2>Find a lesson by code</h2><p class="sub">Enter a lesson ID printed below a QR code, for example <b>L001</b> or <b>G002</b>.</p><div class="qr-input"><input id="qrCode" placeholder="Enter lesson code"><button class="secondary" id="lookupBtn">Find</button></div><div class="result" id="qrResult" aria-live="polite"></div></div>
+        <div class="panel"><div class="eyebrow">Camera scanner</div><h2>Scan a QR code</h2><div class="camera-box"><div><div style="font-size:38px">▦</div><strong>Camera scanner placeholder</strong><p style="font-size:12px">Camera scanning will be added in a later version. Manual lesson-code lookup works now.</p></div></div></div>
+      </div>
+    </section>
+    <footer>English Learning Hub · Demo version · Your learning materials stay organised.</footer>
+  </main>
+</div>
+<script>
+const lessons = [
+ {id:"L001",title:"At the Weekend",category:"Listening",level:"A2",description:"Listen to a short conversation about weekend activities.",files:["MP3","PDF"]},
+ {id:"L002",title:"A Day at the Beach",category:"Listening",level:"A1–A2",description:"Practise listening for people, places and activities.",files:["MP3","PDF"]},
+ {id:"R001",title:"A Healthy Lifestyle",category:"Reading",level:"A2",description:"Read a short text and find important details.",files:["PDF","JPG"]},
+ {id:"R002",title:"Life in the City",category:"Reading",level:"A2",description:"Read about places in a town and daily routines.",files:["PDF"]},
+ {id:"W001",title:"My Favourite Place",category:"Writing",level:"A2",description:"Plan and write a short paragraph with useful prompts.",files:["PDF","JPG"]},
+ {id:"V001",title:"Personality and Feelings",category:"Vocabulary",level:"A2",description:"Learn and practise adjectives for describing people.",files:["PDF","JPG","MP3"]},
+ {id:"G001",title:"Present Simple or Present Continuous?",category:"Grammar",level:"A1–A2",description:"Choose the correct tense using time expressions and context.",files:["PDF"]},
+ {id:"G002",title:"Past Simple",category:"Grammar",level:"A2",description:"Practise regular and irregular verbs in past sentences.",files:["PDF","JPG"]}
+];
+const icons={Listening:"🎧",Reading:"📖",Writing:"✍️",Vocabulary:"🔤",Grammar:"🧩"};
+let currentCategory="All";
+const $=id=>document.getElementById(id);
+function lessonCard(l){return `<button class="lesson" onclick="openLesson('${l.id}')"><div class="lesson-top"><span class="lesson-id">${l.id}</span><span class="tag">${l.level}</span></div><h3>${icons[l.category]} ${l.title}</h3><p>${l.description}</p><div class="filetypes">${l.files.map(f=>`<span class="file">${f}</span>`).join("")}</div></button>`}
+function renderCards(target,items){$(target).innerHTML=items.length?items.map(lessonCard).join(""):'<div class="empty">No lessons found. Try another search.</div>'}
+function renderHome(){
+ $("homeCategories").innerHTML=Object.keys(icons).map(c=>`<button class="category" onclick="filterCategory('${c}')"><span class="cat-icon">${icons[c]}</span><strong>${c}</strong><small>${lessons.filter(l=>l.category===c).length} sample lessons</small></button>`).join("");
+ renderCards("recentLessons",lessons.slice(0,3));$("totalLessons").textContent=lessons.length;
+}
+function renderCatalogue(){
+ const q=$("searchInput").value.toLowerCase().trim(),cat=$("categoryFilter").value;
+ const items=lessons.filter(l=>(cat==="All"||l.category===cat)&&(`${l.id} ${l.title} ${l.description} ${l.category}`).toLowerCase().includes(q));
+ $("resultCount").textContent=`${items.length} lesson${items.length===1?"":"s"}`;renderCards("catalogueLessons",items);
+}
+function showPage(page,title,subtitle){
+ document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===page));
+ document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+ $("pageTitle").textContent=title||({home:"Welcome back!",catalogue:"Lesson catalogue",qr:"QR lesson lookup",detail:"Lesson details"}[page]);
+ $("pageSubtitle").textContent=subtitle||({home:"A simple place to find and practise English.",catalogue:"Search, filter and open your learning materials.",qr:"Use a lesson code to jump straight to a resource.",detail:"Open the resources for this lesson."}[page]);
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function openLesson(id){
+ const l=lessons.find(x=>x.id===id);if(!l)return;
+ $("lessonDetail").innerHTML=`<div class="detail-box"><div class="eyebrow">${icons[l.category]} ${l.category} · ${l.id}</div><h2>${l.title}</h2><p class="sub">${l.description}</p><p><span class="tag">${l.level}</span></p><h3 style="margin-top:28px">Lesson resources</h3>${l.files.map(f=>`<div class="resource"><div><strong>${f} resource</strong><div class="sub" style="font-size:12px">${f==="MP3"?"Listening audio":f==="JPG"?"Picture or visual worksheet":"Printable worksheet"}</div></div><button onclick="alert('Demo resource: add your ${f} file to the lesson resources folder and connect its path here.')">Open ${f}</button></div>`).join("")}<p class="sub" style="margin-top:20px;font-size:12px">Teacher note: this is sample catalogue data. Replace it with your own lesson files when you are ready.</p></div>`;
+ showPage("detail",l.title,`${l.category} · ${l.id}`);
+}
+function filterCategory(cat){$("categoryFilter").value=cat;showPage("catalogue","Lesson catalogue",`Showing ${cat} lessons.`);renderCatalogue();}
+function lookupCode(){
+ const code=$("qrCode").value.trim().toUpperCase(),l=lessons.find(x=>x.id===code);
+ $("qrResult").textContent=l?`Found: ${l.title}`:"No lesson found. Check the code and try again.";
+ if(l)openLesson(l.id);
+}
+$("searchInput").addEventListener("input",renderCatalogue);$("categoryFilter").addEventListener("change",renderCatalogue);
+$("lookupBtn").addEventListener("click",lookupCode);$("qrCode").addEventListener("keydown",e=>{if(e.key==="Enter")lookupCode()});
+document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
+document.querySelectorAll("[data-category]").forEach(b=>b.addEventListener("click",()=>filterCategory(b.dataset.category)));
+function updateConnection(){$("connectionStatus").textContent=navigator.onLine?"● Online":"● Offline";$("connectionStatus").style.color=navigator.onLine?"#166534":"#b45309"}
+window.addEventListener("online",updateConnection);window.addEventListener("offline",updateConnection);
+renderHome();renderCatalogue();updateConnection();
+if("serviceWorker" in navigator && location.protocol!=="file:"){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(console.error));}
+</script>
+</body>
+</html>
