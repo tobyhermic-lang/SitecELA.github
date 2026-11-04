@@ -1,0 +1,13 @@
+
+{
+  "sentences": [
+    {
+      "sentence": "Let's sit on the sofa.",
+      "audio": "./audio/actions-at-home/living-room/001.mp3"
+    },
+    {
+      "sentence": "Turn off the TV.",
+      "audio": "./audio/actions-at-home/living-room/002.mp3"
+    }
+  ]
+}
