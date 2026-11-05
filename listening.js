@@ -1,12 +1,11 @@
-
 const listeningList = document.getElementById("listening-list");
 
-function loadAHLIV() {
+function loadListeningLessons() {
   if (!listeningList) return;
 
   listeningList.innerHTML = "";
 
-  for (let i = 1; i <= 999; i++) {
+  for (let i = 1; i <= 10; i++) {
     const number = String(i).padStart(3, "0");
     const fileName = `AH-LIV-${number}.mp3`;
 
