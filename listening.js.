@@ -1,47 +1,32 @@
 
 const listeningList = document.getElementById("listening-list");
 
-async function loadListeningLessons() {
+function loadListeningLessons() {
   if (!listeningList) return;
 
-  try {
-    const response = await fetch("./audio-index.json");
+  listeningList.innerHTML = "";
 
-    if (!response.ok) {
-      throw new Error("Could not load audio-index.json");
-    }
+  for (let i = 1; i <= 999; i++) {
+    const number = String(i).padStart(3, "0");
+    const fileName = `AH-LIV-${number}.mp3`;
 
-    const data = await response.json();
-    const lessons = data.sentences || [];
+    const lesson = document.createElement("div");
+    lesson.className = "resource";
 
-    listeningList.innerHTML = "";
+    const info = document.createElement("div");
+    const title = document.createElement("strong");
+    title.textContent = `Listening Lesson ${number}`;
 
-    lessons.forEach((item, index) => {
-      const lesson = document.createElement("div");
-      lesson.className = "resource";
+    const audio = document.createElement("audio");
+    audio.controls = true;
+    audio.preload = "none";
+    audio.src = `./audio/${fileName}`;
 
-      const info = document.createElement("div");
-      const title = document.createElement("strong");
-      title.textContent = `Listening Lesson ${index + 1}`;
+    info.appendChild(title);
+    lesson.appendChild(info);
+    lesson.appendChild(audio);
 
-      const sentence = document.createElement("p");
-      sentence.textContent = item.sentence;
-
-      info.append(title, sentence);
-
-      const audio = document.createElement("audio");
-      audio.controls = true;
-      audio.preload = "none";
-      audio.src = item.audio;
-
-      lesson.append(info, audio);
-      listeningList.appendChild(lesson);
-    });
-
-  } catch (error) {
-    console.error(error);
-    listeningList.textContent =
-      "Sorry, listening lessons could not be loaded.";
+    listeningList.appendChild(lesson);
   }
 }
 
