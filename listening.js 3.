@@ -1,28 +1,24 @@
-const audioFiles = Array.from({ length: 10 }, (_, index) => {
-    const number = String(index + 1).padStart(3, "0");
-    return `AH-LIV-${number}.mp3`;
-});
+const listeningList = document.getElementById("listening-list");
 
-const audioFolder = "audio/";
+for (let i = 1; i <= 999; i++) {
 
-const listeningContainer = document.getElementById("listening-list");
+    const number = String(i).padStart(3, "0");
+    const fileName = `AH-LIV-${number}.mp3`;
 
-if (listeningContainer) {
-    audioFiles.forEach((file, index) => {
-        const exercise = document.createElement("div");
-        exercise.className = "listening-exercise";
+    const lesson = document.createElement("div");
 
-        const title = document.createElement("h3");
-        title.textContent = `Listening ${index + 1}`;
+    lesson.className = "resource";
 
-        const player = document.createElement("audio");
-        player.controls = true;
-        player.preload = "none";
-        player.src = audioFolder + file;
+    lesson.innerHTML = `
+        <div>
+            <strong>Listening Lesson ${number}</strong>
+            <p>${fileName}</p>
+        </div>
 
-        exercise.appendChild(title);
-        exercise.appendChild(player);
+        <audio controls preload="none">
+            <source src="audio/${fileName}" type="audio/mpeg">
+        </audio>
+    `;
 
-        listeningContainer.appendChild(exercise);
-    });
+    listeningList.appendChild(lesson);
 }
