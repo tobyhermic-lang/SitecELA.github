@@ -1,7 +1,7 @@
 
 const listeningList = document.getElementById("listening-list");
 
-function loadListeningLessons() {
+function loadAHLIV() {
   if (!listeningList) return;
 
   listeningList.innerHTML = "";
