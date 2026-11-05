@@ -48,8 +48,7 @@
       <button class="nav-btn" data-page="qr"><span>▧</span>QR Lookup</button>
     </nav></div>
     <div><div class="nav-label">Learning sections</div><nav id="categoryNav">
-      <button class="nav-btn" data-category="Listening"><span>🎧</span>Listening</button>
-      <button class="nav-btn" data-category="Reading"><span>📖</span>Reading</button>
+<button class="nav-btn" data-page="listening"><span>🎧</span>Listening</button>      <button class="nav-btn" data-category="Reading"><span>📖</span>Reading</button>
       <button class="nav-btn" data-category="Writing"><span>✍️</span>Writing</button>
       <button class="nav-btn" data-category="Vocabulary"><span>🔤</span>Vocabulary</button>
       <button class="nav-btn" data-category="Grammar"><span>🧩</span>Grammar</button>
@@ -74,7 +73,12 @@
       <div class="toolbar"><input class="search" id="searchInput" placeholder="Search by lesson name or ID..." aria-label="Search lessons"><select class="filter" id="categoryFilter"><option value="All">All sections</option><option>Listening</option><option>Reading</option><option>Writing</option><option>Vocabulary</option><option>Grammar</option></select></div>
       <div class="lesson-grid" id="catalogueLessons"></div>
     </section>
+<!-- Listening Section -->
+<section class="page" id="listening">
+    <h2>Listening</h2>
 
+    <div id="listening-list"></div>
+</section>
     <section class="page" id="detail">
       <button class="back" onclick="showPage('catalogue')">← Back to catalogue</button><div id="lessonDetail"></div>
     </section>
