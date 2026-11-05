@@ -75,9 +75,11 @@
     </section>
 <!-- Listening Section -->
 <section class="page" id="listening">
-    <h2>Listening</h2>
+  <div class="section-head">
+    <h2>Listening Practice</h2>
+  </div>
 
-    <div id="listening-list"></div>
+  <div id="listening-list"></div>
 </section>
     <section class="page" id="detail">
       <button class="back" onclick="showPage('catalogue')">← Back to catalogue</button><div id="lessonDetail"></div>
@@ -160,8 +162,21 @@ function renderCatalogue(){
 function showPage(page,title,subtitle){
  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===page));
  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
- $("pageTitle").textContent=title||({home:"Welcome back!",catalogue:"Lesson catalogue",qr:"QR lesson lookup",detail:"Lesson details"}[page]);
- $("pageSubtitle").textContent=subtitle||({home:"A simple place to find and practise English.",catalogue:"Search, filter and open your learning materials.",qr:"Use a lesson code to jump straight to a resource.",detail:"Open the resources for this lesson."}[page]);
+ $("pageTitle").textContent=title||({
+  home:"Welcome back!",
+  catalogue:"Lesson catalogue",
+  listening:"Listening Practice",
+  qr:"QR lesson lookup",
+  detail:"Lesson details"
+}[page]);
+
+$("pageSubtitle").textContent=subtitle||({
+  home:"A simple place to find and practise English.",
+  catalogue:"Search, filter and open your learning materials.",
+  listening:"Listen and practise your English.",
+  qr:"Use a lesson code to jump straight to a resource.",
+  detail:"Open the resources for this lesson."
+}[page]);
  window.scrollTo({top:0,behavior:"smooth"});
 }
 function openLesson(id){
