@@ -34,6 +34,28 @@
     .page{display:none}.page.active{display:block}.back{border:0;background:none;color:var(--blue);font-weight:700;padding:0;margin-bottom:18px}.detail-box{background:white;border:1px solid var(--line);border-radius:18px;padding:clamp(20px,4vw,32px)}.detail-box h2{margin:8px 0}.resource{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:10px}.resource button,.secondary{border:1px solid #bfdbfe;background:var(--pale);color:#1d4ed8;border-radius:9px;padding:9px 12px;font-weight:700}
     .qr-layout{display:grid;grid-template-columns:1fr 1fr;gap:15px}.qr-input{display:flex;gap:8px;margin-top:12px}.qr-input input{min-width:0;flex:1;border:1px solid var(--line);border-radius:9px;padding:11px}.result{margin-top:12px;color:#166534;font-weight:650}.camera-box{background:#0f172a;color:#cbd5e1;border-radius:14px;min-height:180px;display:grid;place-items:center;text-align:center;padding:20px}
     .empty{padding:30px;text-align:center;color:var(--muted);background:white;border:1px dashed var(--line);border-radius:14px;grid-column:1/-1}
+    .listening-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.listening-item {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.listening-item strong {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.listening-item audio {
+  width: 100%;
+  max-width: 500px;
+}
     footer{padding:28px 0 8px;color:var(--muted);font-size:12px;text-align:center}
     @media(max-width:900px){.app{grid-template-columns:1fr}aside{padding:12px 14px;gap:10px}.brand{padding:2px 5px}.brand-icon{width:34px;height:34px}nav{display:flex;overflow-x:auto;padding-bottom:3px}.nav-label,.side-note{display:none}.nav-btn{white-space:nowrap;padding:9px 11px}.stats{grid-template-columns:repeat(2,1fr)}.categories{grid-template-columns:repeat(3,1fr)}.lesson-grid{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:560px){main{padding:20px 14px}.topbar{align-items:flex-start}.status{font-size:10px}.hero-art{display:none}.categories{grid-template-columns:repeat(2,1fr)}.lesson-grid,.qr-layout{grid-template-columns:1fr}.section-head{margin-top:24px}.category{padding:14px}.stats{gap:9px}.stat{padding:13px}}
