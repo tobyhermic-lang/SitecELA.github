@@ -10,8 +10,7 @@ function loadListeningLessons() {
     const fileName = `AH-LIV-${number}.mp3`;
 
     const lesson = document.createElement("div");
-    lesson.className = "resource";
-
+lesson.className = "listening-item";
     const title = document.createElement("strong");
     title.textContent = `Listening Lesson ${number}`;
 
