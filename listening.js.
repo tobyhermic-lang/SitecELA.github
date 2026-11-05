@@ -13,7 +13,6 @@ function loadListeningLessons() {
     const lesson = document.createElement("div");
     lesson.className = "resource";
 
-    const info = document.createElement("div");
     const title = document.createElement("strong");
     title.textContent = `Listening Lesson ${number}`;
 
@@ -22,8 +21,7 @@ function loadListeningLessons() {
     audio.preload = "none";
     audio.src = `./audio/${fileName}`;
 
-    info.appendChild(title);
-    lesson.appendChild(info);
+    lesson.appendChild(title);
     lesson.appendChild(audio);
 
     listeningList.appendChild(lesson);
