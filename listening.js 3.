@@ -1,1 +1,28 @@
+const audioFiles = Array.from({ length: 10 }, (_, index) => {
+    const number = String(index + 1).padStart(3, "0");
+    return `AH-LIV-${number}.mp3`;
+});
 
+const audioFolder = "audio/";
+
+const listeningContainer = document.getElementById("listening-list");
+
+if (listeningContainer) {
+    audioFiles.forEach((file, index) => {
+        const exercise = document.createElement("div");
+        exercise.className = "listening-exercise";
+
+        const title = document.createElement("h3");
+        title.textContent = `Listening ${index + 1}`;
+
+        const player = document.createElement("audio");
+        player.controls = true;
+        player.preload = "none";
+        player.src = audioFolder + file;
+
+        exercise.appendChild(title);
+        exercise.appendChild(player);
+
+        listeningContainer.appendChild(exercise);
+    });
+}
