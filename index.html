@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,7 +49,8 @@
       <button class="nav-btn" data-page="qr"><span>▧</span>QR Lookup</button>
     </nav></div>
     <div><div class="nav-label">Learning sections</div><nav id="categoryNav">
-<button class="nav-btn" data-page="listening"><span>🎧</span>Listening</button>      <button class="nav-btn" data-category="Reading"><span>📖</span>Reading</button>
+      <button class="nav-btn" data-page="listening"><span>🎧</span>Listening</button>
+      <button class="nav-btn" data-category="Reading"><span>📖</span>Reading</button>
       <button class="nav-btn" data-category="Writing"><span>✍️</span>Writing</button>
       <button class="nav-btn" data-category="Vocabulary"><span>🔤</span>Vocabulary</button>
       <button class="nav-btn" data-category="Grammar"><span>🧩</span>Grammar</button>
@@ -72,71 +74,53 @@
       <div class="section-head"><h2>All learning materials</h2><span class="sub" id="resultCount"></span></div>
       <div class="toolbar"><input class="search" id="searchInput" placeholder="Search by lesson name or ID..." aria-label="Search lessons"><select class="filter" id="categoryFilter"><option value="All">All sections</option><option>Listening</option><option>Reading</option><option>Writing</option><option>Vocabulary</option><option>Grammar</option></select></div>
       <div class="lesson-grid" id="catalogueLessons"></div>
-    </section><section class="page" id="listening">
-  <div class="section-head">
-    <h2>Listening Practice</h2>
-  </div>
+    </section>
 
-  <div id="listening-list"></div>
-</section>
-<!-- Listening Section -->
-<section class="page" id="listening">
-  <div class="section-head">
-    <h2>Listening Practice</h2>
-  </div>
+    <section class="page" id="listening">
+      <div class="section-head">
+        <h2>Listening Practice</h2>
+      </div>
+      <div id="listening-list"></div>
+    </section>
 
-  <div id="listening-list"></div>
-</section>
     <section class="page" id="detail">
       <button class="back" onclick="showPage('catalogue')">← Back to catalogue</button><div id="lessonDetail"></div>
     </section>
 
     <section class="page" id="qr">
       <section class="page" id="qr">
-  <div class="qr-layout">
-
-    <div class="panel">
-      <div class="eyebrow">Quick access</div>
-      <h2>Find a lesson by code</h2>
-      <p class="sub">
-        Enter a lesson ID printed below a QR code.
-      </p>
-
-      <div class="qr-input">
-        <input id="qrCode" placeholder="Enter lesson code">
-        <button class="secondary" id="lookupBtn">Find</button>
-      </div>
-
-      <div class="result" id="qrResult" aria-live="polite"></div>
-    </div>
-
-    <div class="panel">
-      <div class="eyebrow">Camera scanner</div>
-      <h2>Scan a QR code</h2>
-
-      <div class="camera-box">
-        <div style="width:100%">
-          <h3>Scan your QR sticker</h3>
-
-          <div id="qr-reader"
-               style="width:100%; max-width:400px; margin:auto;">
+        <div class="qr-layout">
+          <div class="panel">
+            <div class="eyebrow">Quick access</div>
+            <h2>Find a lesson by code</h2>
+            <p class="sub">
+              Enter a lesson ID printed below a QR code.
+            </p>
+            <div class="qr-input">
+              <input id="qrCode" placeholder="Enter lesson code">
+              <button class="secondary" id="lookupBtn">Find</button>
+            </div>
+            <div class="result" id="qrResult" aria-live="polite"></div>
           </div>
-
-          <p id="scan-status">
-            Ready to scan. Allow camera access when asked.
-          </p>
-
-          <div id="listening-result" hidden>
-            <h3 id="sentence-display"></h3>
-            <audio id="audio-player" controls style="width:100%">
-            </audio>
+          <div class="panel">
+            <div class="eyebrow">Camera scanner</div>
+            <h2>Scan a QR code</h2>
+            <div class="camera-box">
+              <div style="width:100%">
+                <h3>Scan your QR sticker</h3>
+                <div id="qr-reader" style="width:100%; max-width:400px; margin:auto;"></div>
+                <p id="scan-status">Ready to scan. Allow camera access when asked.</p>
+                <div id="listening-result" hidden>
+                  <h3 id="sentence-display"></h3>
+                  <audio id="audio-player" controls style="width:100%"></audio>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </section>
 
-  </div>
-</section>
     <footer>English Learning Hub · Demo version · Your learning materials stay organised.</footer>
   </main>
 </div>
@@ -174,15 +158,14 @@ function showPage(page,title,subtitle){
   listening:"Listening Practice",
   qr:"QR lesson lookup",
   detail:"Lesson details"
-}[page]);
-
-$("pageSubtitle").textContent=subtitle||({
+ }[page]);
+ $("pageSubtitle").textContent=subtitle||({
   home:"A simple place to find and practise English.",
   catalogue:"Search, filter and open your learning materials.",
   listening:"Listen and practise your English.",
   qr:"Use a lesson code to jump straight to a resource.",
   detail:"Open the resources for this lesson."
-}[page]);
+ }[page]);
  window.scrollTo({top:0,behavior:"smooth"});
 }
 function openLesson(id){
