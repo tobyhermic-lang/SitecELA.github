@@ -108,7 +108,20 @@
     <section class="page" id="detail">
       <button class="back" onclick="showPage('catalogue')">← Back to catalogue</button><div id="lessonDetail"></div>
     </section>
+<section class="page" id="listening">
 
+  <div class="section-head">
+    <h2>Listening Practice</h2>
+    <span class="sub">10 audio lessons</span>
+  </div>
+
+  <p class="sub">
+    Choose a lesson and press Play to listen.
+  </p>
+
+  <div id="listening-list" class="listening-list"></div>
+
+</section>
       <section class="page" id="qr">
         <div class="qr-layout">
           <div class="panel">
@@ -146,15 +159,27 @@
 </div>
 <script>
 const lessons = [
- {id:"L001",title:"At the Weekend",category:"Listening",level:"A2",description:"Listen to a short conversation about weekend activities.",files:["MP3","PDF"]},
- {id:"L002",title:"A Day at the Beach",category:"Listening",level:"A1–A2",description:"Practise listening for people, places and activities.",files:["MP3","PDF"]},
  {id:"R001",title:"A Healthy Lifestyle",category:"Reading",level:"A2",description:"Read a short text and find important details.",files:["PDF","JPG"]},
  {id:"R002",title:"Life in the City",category:"Reading",level:"A2",description:"Read about places in a town and daily routines.",files:["PDF"]},
  {id:"W001",title:"My Favourite Place",category:"Writing",level:"A2",description:"Plan and write a short paragraph with useful prompts.",files:["PDF","JPG"]},
  {id:"V001",title:"Personality and Feelings",category:"Vocabulary",level:"A2",description:"Learn and practise adjectives for describing people.",files:["PDF","JPG","MP3"]},
  {id:"G001",title:"Present Simple or Present Continuous?",category:"Grammar",level:"A1–A2",description:"Choose the correct tense using time expressions and context.",files:["PDF"]},
  {id:"G002",title:"Past Simple",category:"Grammar",level:"A2",description:"Practise regular and irregular verbs in past sentences.",files:["PDF","JPG"]}
-];
+];// Create the first 10 Listening lessons
+const listeningLessons = Array.from({ length: 10 }, (_, index) => {
+  const number = String(index + 1).padStart(3, "0");
+
+  return {
+    id: `AH-LIV-${number}`,
+    title: `Listening Lesson ${number}`,
+    category: "Listening",
+    level: "A2",
+    description: `Listen to audio lesson ${number}.`,
+    files: ["MP3"]
+  };
+});
+
+lessons.unshift(...listeningLessons);
 const icons={Listening:"🎧",Reading:"📖",Writing:"✍️",Vocabulary:"🔤",Grammar:"🧩"};
 let currentCategory="All";
 const $=id=>document.getElementById(id);
@@ -193,8 +218,24 @@ function openLesson(id){
  $("lessonDetail").innerHTML=`<div class="detail-box"><div class="eyebrow">${icons[l.category]} ${l.category} · ${l.id}</div><h2>${l.title}</h2><p class="sub">${l.description}</p><p><span class="tag">${l.level}</span></p><h3 style="margin-top:28px">Lesson resources</h3>${l.files.map(f=>`<div class="resource"><div><strong>${f} resource</strong><div class="sub" style="font-size:12px">${f==="MP3"?"Listening audio":f==="JPG"?"Picture or visual worksheet":"Printable worksheet"}</div></div><button onclick="alert('Demo resource: add your ${f} file to the lesson resources folder and connect its path here.')">Open ${f}</button></div>`).join("")}<p class="sub" style="margin-top:20px;font-size:12px">Teacher note: this is sample catalogue data. Replace it with your own lesson files when you are ready.</p></div>`;
  showPage("detail",l.title,`${l.category} · ${l.id}`);
 }
-function filterCategory(cat){$("categoryFilter").value=cat;showPage("catalogue","Lesson catalogue",`Showing ${cat} lessons.`);renderCatalogue();}
-function lookupCode(){
+function filterCategory(cat) {
+  if (cat === "Listening") {
+    showPage(
+      "listening",
+      "Listening Practice",
+      "Listen and practise your English."
+    );
+    return;
+  }
+
+  $("categoryFilter").value = cat;
+  showPage(
+    "catalogue",
+    "Lesson catalogue",
+    `Showing ${cat} lessons.`
+  );
+  renderCatalogue();
+}function lookupCode(){
  const code=$("qrCode").value.trim().toUpperCase(),l=lessons.find(x=>x.id===code);
  $("qrResult").textContent=l?`Found: ${l.title}`:"No lesson found. Check the code and try again.";
  if(l)openLesson(l.id);
