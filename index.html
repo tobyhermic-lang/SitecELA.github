@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,87 +34,77 @@
     .qr-layout{display:grid;grid-template-columns:1fr 1fr;gap:15px}.qr-input{display:flex;gap:8px;margin-top:12px}.qr-input input{min-width:0;flex:1;border:1px solid var(--line);border-radius:9px;padding:11px}.result{margin-top:12px;color:#166534;font-weight:650}.camera-box{background:#0f172a;color:#cbd5e1;border-radius:14px;min-height:180px;display:grid;place-items:center;text-align:center;padding:20px}
     .empty{padding:30px;text-align:center;color:var(--muted);background:white;border:1px dashed var(--line);border-radius:14px;grid-column:1/-1}
     .listening-list {
-  display: grid;
-  gap: 12px;
-  margin-top: 18px;
-}
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .listening-item {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .listening-item strong {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .listening-item audio {
+      width: 100%;
+      max-width: 500px;
+    }
 
-.listening-item {
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 16px;
-}
-
-.listening-item strong {
-  display: block;
-  margin-bottom: 10px;
-}
-
-.listening-item audio {
-  width: 100%;
-  max-width: 500px;
-}
     /* SHADOWING SECTION */
+    .shadowing-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 13px;
+      margin-top: 18px;
+    }
+    .shadowing-item {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      padding: 17px;
+      text-align: left;
+      cursor: pointer;
+    }
+    .shadowing-item:hover {
+      border-color: #93c5fd;
+      transform: translateY(-2px);
+    }
+    .shadowing-player {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+      margin-top: 22px;
+    }
+    .shadowing-player video {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      border-radius: 12px;
+      background: #000;
+    }
+    .shadowing-player h3 {
+      margin-top: 0;
+    }
 
-.shadowing-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 13px;
-  margin-top: 18px;
-}
+    /* MOBILE RESPONSIVE */
+    @media(max-width:900px) {
+      .shadowing-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media(max-width:560px) {
+      .shadowing-list {
+        grid-template-columns: 1fr;
+      }
+      .shadowing-player {
+        padding: 12px;
+      }
+    }
 
-.shadowing-item {
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: 15px;
-  padding: 17px;
-  text-align: left;
-  cursor: pointer;
-}
-
-.shadowing-item:hover {
-  border-color: #93c5fd;
-  transform: translateY(-2px);
-}
-
-.shadowing-player {
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: 20px;
-  margin-top: 22px;
-}
-
-.shadowing-player video {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  border-radius: 12px;
-  background: #000;
-}
-
-.shadowing-player h3 {
-  margin-top: 0;
-}
-
-/* MOBILE RESPONSIVE */
-
-@media(max-width:900px) {
-  .shadowing-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media(max-width:560px) {
-  .shadowing-list {
-    grid-template-columns: 1fr;
-  }
-
-  .shadowing-player {
-    padding: 12px;
-  }
-}
     footer{padding:28px 0 8px;color:var(--muted);font-size:12px;text-align:center}
     @media(max-width:900px){.app{grid-template-columns:1fr}aside{padding:12px 14px;gap:10px}.brand{padding:2px 5px}.brand-icon{width:34px;height:34px}nav{display:flex;overflow-x:auto;padding-bottom:3px}.nav-label,.side-note{display:none}.nav-btn{white-space:nowrap;padding:9px 11px}.stats{grid-template-columns:repeat(2,1fr)}.categories{grid-template-columns:repeat(3,1fr)}.lesson-grid{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:560px){main{padding:20px 14px}.topbar{align-items:flex-start}.status{font-size:10px}.hero-art{display:none}.categories{grid-template-columns:repeat(2,1fr)}.lesson-grid,.qr-layout{grid-template-columns:1fr}.section-head{margin-top:24px}.category{padding:14px}.stats{gap:9px}.stat{padding:13px}}
@@ -136,7 +125,7 @@
       <button class="nav-btn" data-category="Writing"><span>✍️</span>Writing</button>
       <button class="nav-btn" data-category="Vocabulary"><span>🔤</span>Vocabulary</button>
       <button class="nav-btn" data-category="Grammar"><span>🧩</span>Grammar</button>
-      <button class="nav-btn" data-page="shadowing"> <span>🎬</span>Shadowing</button>
+      <button class="nav-btn" data-page="shadowing"><span>🎬</span>Shadowing</button>
     </nav></div>
     <div class="side-note">💡 <strong>Offline-friendly learning</strong><br>Install this hub on your device. Lessons you cache can be opened without an internet connection.</div>
   </aside>
@@ -146,7 +135,10 @@
     <section class="page active" id="home">
       <div class="hero"><div><div class="eyebrow" style="color:#bfdbfe">ENGLISH LEARNING HUB</div><h2>Small steps. Better English.</h2><p>Explore lessons, practise your skills and keep your learning materials together in one place.</p><button class="primary" onclick="showPage('catalogue')">Explore lessons →</button></div><div class="hero-art">🎓</div></div>
       <div class="stats">
-        <div class="stat"><strong id="totalLessons">8</strong><small>Sample lessons</small></div><div class="stat"><strong>5</strong><small>Learning sections</small></div><div class="stat"><strong>3</strong><small>Supported file types</small></div><div class="stat"><strong>∞</strong><small>Room to learn</small></div>
+        <div class="stat"><strong id="totalLessons">8</strong><small>Sample lessons</small></div>
+        <div class="stat"><strong>6</strong><small>Learning sections</small></div>
+        <div class="stat"><strong>3</strong><small>Supported file types</small></div>
+        <div class="stat"><strong>∞</strong><small>Room to learn</small></div>
       </div>
       <div class="section-head"><h2>Browse by skill</h2><button class="text-btn" onclick="showPage('catalogue')">View catalogue →</button></div>
       <div class="categories" id="homeCategories"></div>
@@ -162,86 +154,76 @@
     <section class="page" id="detail">
       <button class="back" onclick="showPage('catalogue')">← Back to catalogue</button><div id="lessonDetail"></div>
     </section>
-<section class="page" id="listening">
 
-  <div class="section-head">
-    <h2>Listening Practice</h2>
-    <span class="sub">10 audio lessons</span>
-  </div>
+    <section class="page" id="listening">
+      <div class="section-head">
+        <h2>Listening Practice</h2>
+        <span class="sub">10 audio lessons</span>
+      </div>
+      <p class="sub">
+        Choose a lesson and press Play to listen.
+      </p>
+      <div id="listening-list" class="listening-list"></div>
+    </section>
 
-  <p class="sub">
-    Choose a lesson and press Play to listen.
-  </p>
-
-  <div id="listening-list" class="listening-list"></div>
-
-</section>
     <!-- SHADOWING SECTION -->
-<section class="page" id="shadowing">
+    <section class="page" id="shadowing">
+      <div class="section-head">
+        <h2>Shadowing Practice</h2>
+        <span class="sub">Watch, listen and repeat</span>
+      </div>
+      <p class="sub">
+        Choose a lesson and practise speaking English.
+      </p>
+      <div id="shadowingLessonList" class="shadowing-list"></div>
+      <div id="shadowingPlayer" class="shadowing-player" hidden>
+        <h3 id="shadowingLessonTitle"></h3>
+        <video
+          id="shadowingVideo"
+          controls
+          playsinline
+          preload="metadata">
+        </video>
+      </div>
+    </section>
+    <!-- END SHADOWING SECTION -->
 
-  <div class="section-head">
-    <h2>Shadowing Practice</h2>
-    <span class="sub">Watch, listen and repeat</span>
-  </div>
-
-  <p class="sub">
-    Choose a lesson and practise speaking English.
-  </p>
-
-  <!-- List of available Shadowing lessons -->
-  <div id="shadowingLessonList" class="shadowing-list">
-  </div>
-
-  <!-- Selected lesson video -->
-  <div id="shadowingPlayer" class="shadowing-player" hidden>
-
-    <h3 id="shadowingLessonTitle"></h3>
-
-    <video
-      id="shadowingVideo"
-      controls
-      playsinline
-      preload="metadata">
-    </video>
-
-  </div>
-
-</section>
-<!-- END SHADOWING SECTION -->  <section class="page" id="qr">
-        <div class="qr-layout">
-          <div class="panel">
-            <div class="eyebrow">Quick access</div>
-            <h2>Find a lesson by code</h2>
-            <p class="sub">
-              Enter a lesson ID printed below a QR code.
-            </p>
-            <div class="qr-input">
-              <input id="qrCode" placeholder="Enter lesson code">
-              <button class="secondary" id="lookupBtn">Find</button>
-            </div>
-            <div class="result" id="qrResult" aria-live="polite"></div>
+    <section class="page" id="qr">
+      <div class="qr-layout">
+        <div class="panel">
+          <div class="eyebrow">Quick access</div>
+          <h2>Find a lesson by code</h2>
+          <p class="sub">
+            Enter a lesson ID printed below a QR code.
+          </p>
+          <div class="qr-input">
+            <input id="qrCode" placeholder="Enter lesson code">
+            <button class="secondary" id="lookupBtn">Find</button>
           </div>
-          <div class="panel">
-            <div class="eyebrow">Camera scanner</div>
-            <h2>Scan a QR code</h2>
-            <div class="camera-box">
-              <div style="width:100%">
-                <h3>Scan your QR sticker</h3>
-                <div id="qr-reader" style="width:100%; max-width:400px; margin:auto;"></div>
-                <p id="scan-status">Ready to scan. Allow camera access when asked.</p>
-                <div id="listening-result" hidden>
-                  <h3 id="sentence-display"></h3>
-                  <audio id="audio-player" controls style="width:100%"></audio>
-                </div>
+          <div class="result" id="qrResult" aria-live="polite"></div>
+        </div>
+        <div class="panel">
+          <div class="eyebrow">Camera scanner</div>
+          <h2>Scan a QR code</h2>
+          <div class="camera-box">
+            <div style="width:100%">
+              <h3>Scan your QR sticker</h3>
+              <div id="qr-reader" style="width:100%; max-width:400px; margin:auto;"></div>
+              <p id="scan-status">Ready to scan. Allow camera access when asked.</p>
+              <div id="listening-result" hidden>
+                <h3 id="sentence-display"></h3>
+                <audio id="audio-player" controls style="width:100%"></audio>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
     <footer>English Learning Hub · Demo version · Your learning materials stay organised.</footer>
   </main>
 </div>
+
 <script>
 const lessons = [
  {id:"R001",title:"A Healthy Lifestyle",category:"Reading",level:"A2",description:"Read a short text and find important details.",files:["PDF","JPG"]},
@@ -249,8 +231,10 @@ const lessons = [
  {id:"W001",title:"My Favourite Place",category:"Writing",level:"A2",description:"Plan and write a short paragraph with useful prompts.",files:["PDF","JPG"]},
  {id:"V001",title:"Personality and Feelings",category:"Vocabulary",level:"A2",description:"Learn and practise adjectives for describing people.",files:["PDF","JPG","MP3"]},
  {id:"G001",title:"Present Simple or Present Continuous?",category:"Grammar",level:"A1–A2",description:"Choose the correct tense using time expressions and context.",files:["PDF"]},
- {id:"G002",title:"Past Simple",category:"Grammar",level:"A2",description:"Practise regular and irregular verbs in past sentences.",files:["PDF","JPG"]}
-];// Create the first 10 Listening lessons
+ {id:"G002",title:"Past Simple",category:"Grammar",level:"A2",description:"Practise regular and irregular verbs in past sentences.",files:["PDF"]}
+];
+
+// Create the first 10 Listening lessons
 const listeningLessons = Array.from({ length: 10 }, (_, index) => {
   const number = String(index + 1).padStart(3, "0");
 
@@ -265,46 +249,113 @@ const listeningLessons = Array.from({ length: 10 }, (_, index) => {
 });
 
 lessons.unshift(...listeningLessons);
+
 const icons={Listening:"🎧",Reading:"📖",Writing:"✍️",Vocabulary:"🔤",Grammar:"🧩"};
 let currentCategory="All";
 const $=id=>document.getElementById(id);
-function lessonCard(l){return `<button class="lesson" onclick="openLesson('${l.id}')"><div class="lesson-top"><span class="lesson-id">${l.id}</span><span class="tag">${l.level}</span></div><h3>${icons[l.category]} ${l.title}</h3><p>${l.description}</p><div class="filetypes">${l.files.map(f=>`<span class="file">${f}</span>`).join("")}</div></button>`}
-function renderCards(target,items){$(target).innerHTML=items.length?items.map(lessonCard).join(""):'<div class="empty">No lessons found. Try another search.</div>'}
+
+function lessonCard(l){
+  return `<button class="lesson" onclick="openLesson('${l.id}')"><div class="lesson-top"><span class="lesson-id">${l.id}</span><span class="tag">${l.level}</span></div><h3>${icons[l.category]} ${l.title}</h3><p>${l.description}</p><div class="filetypes">${l.files.map(f=>`<span class="file">${f}</span>`).join("")}</div></button>`;
+}
+
+function renderCards(target,items){
+  $(target).innerHTML=items.length?items.map(lessonCard).join(""):'<div class="empty">No lessons found. Try another search.</div>';
+}
+
 function renderHome(){
- $("homeCategories").innerHTML=Object.keys(icons).map(c=>`<button class="category" onclick="filterCategory('${c}')"><span class="cat-icon">${icons[c]}</span><strong>${c}</strong><small>${lessons.filter(l=>l.category===c).length} sample lessons</small></button>`).join("");
- renderCards("recentLessons",lessons.slice(0,3));$("totalLessons").textContent=lessons.length;
+  $("homeCategories").innerHTML=Object.keys(icons).map(c=>`<button class="category" onclick="filterCategory('${c}')"><span class="cat-icon">${icons[c]}</span><strong>${c}</strong><small>${lessons.filter(l=>l.category===c).length} sample lessons</small></button>`).join("");
+  renderCards("recentLessons",lessons.slice(0,3));
+  $("totalLessons").textContent=lessons.length;
 }
+
 function renderCatalogue(){
- const q=$("searchInput").value.toLowerCase().trim(),cat=$("categoryFilter").value;
- const items=lessons.filter(l=>(cat==="All"||l.category===cat)&&(`${l.id} ${l.title} ${l.description} ${l.category}`).toLowerCase().includes(q));
- $("resultCount").textContent=`${items.length} lesson${items.length===1?"":"s"}`;renderCards("catalogueLessons",items);
+  const q=$("searchInput").value.toLowerCase().trim(),cat=$("categoryFilter").value;
+  const items=lessons.filter(l=>(cat==="All"||l.category===cat)&&(`${l.id} ${l.title} ${l.description} ${l.category}`).toLowerCase().includes(q));
+  $("resultCount").textContent=`${items.length} lesson${items.length===1?"":"s"}`;
+  renderCards("catalogueLessons",items);
 }
+
+// SHADOWING LESSON DATA
+const shadowingLessons = Array.from({ length: 10 }, (_, index) => {
+  const number = String(index + 1).padStart(3, "0");
+
+  return {
+    id: `AH-SHAD-${number}`,
+    title: `Shadowing Lesson ${number}`,
+    video: `./shadowing/AH-SHAD-${number}.mp4`
+  };
+});
+
+// DISPLAY SHADOWING LESSON BUTTONS
+function renderShadowingLessons() {
+  const list = $("shadowingLessonList");
+
+  list.innerHTML = shadowingLessons.map((lesson, index) => `
+    <button class="shadowing-item" type="button"
+      onclick="playShadowingLesson(${index})">
+      <strong>${lesson.id}</strong>
+      <p>${lesson.title}</p>
+      <span class="tag">MP4 Video</span>
+    </button>
+  `).join("");
+}
+
+// PLAY THE SELECTED SHADOWING VIDEO
+function playShadowingLesson(index) {
+  const lesson = shadowingLessons[index];
+
+  if (!lesson) return;
+
+  const video = $("shadowingVideo");
+
+  $("shadowingLessonTitle").textContent = lesson.title;
+
+  video.pause();
+  video.src = lesson.video;
+  video.load();
+
+  $("shadowingPlayer").hidden = false;
+
+  $("shadowingPlayer").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
 function showPage(page,title,subtitle){
- document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===page));
- document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
- $("pageTitle").textContent=title||({
-  home:"Welcome back!",
-  catalogue:"Lesson catalogue",
-  listening:"Listening Practice",
-shadowing:"Shadowing Practice",
-qr:"QR lesson lookup",
-  detail:"Lesson details"
- }[page]);
- $("pageSubtitle").textContent=subtitle||({
-  home:"A simple place to find and practise English.",
-  catalogue:"Search, filter and open your learning materials.",
-listening:"Listen and practise your English.",
-shadowing:"Watch, listen and repeat.",
-qr:"Use a lesson code to jump straight to a resource.",
-  detail:"Open the resources for this lesson."
- }[page]);
- window.scrollTo({top:0,behavior:"smooth"});
+  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===page));
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+
+  $("pageTitle").textContent=title||({
+    home:"Welcome back!",
+    catalogue:"Lesson catalogue",
+    listening:"Listening Practice",
+    shadowing:"Shadowing Practice",
+    qr:"QR lesson lookup",
+    detail:"Lesson details"
+  }[page]);
+
+  $("pageSubtitle").textContent=subtitle||({
+    home:"A simple place to find and practise English.",
+    catalogue:"Search, filter and open your learning materials.",
+    listening:"Listen and practise your English.",
+    shadowing:"Watch, listen and repeat.",
+    qr:"Use a lesson code to jump straight to a resource.",
+    detail:"Open the resources for this lesson."
+  }[page]));
+
+  window.scrollTo({top:0,behavior:"smooth"});
 }
+
 function openLesson(id){
- const l=lessons.find(x=>x.id===id);if(!l)return;
- $("lessonDetail").innerHTML=`<div class="detail-box"><div class="eyebrow">${icons[l.category]} ${l.category} · ${l.id}</div><h2>${l.title}</h2><p class="sub">${l.description}</p><p><span class="tag">${l.level}</span></p><h3 style="margin-top:28px">Lesson resources</h3>${l.files.map(f=>`<div class="resource"><div><strong>${f} resource</strong><div class="sub" style="font-size:12px">${f==="MP3"?"Listening audio":f==="JPG"?"Picture or visual worksheet":"Printable worksheet"}</div></div><button onclick="alert('Demo resource: add your ${f} file to the lesson resources folder and connect its path here.')">Open ${f}</button></div>`).join("")}<p class="sub" style="margin-top:20px;font-size:12px">Teacher note: this is sample catalogue data. Replace it with your own lesson files when you are ready.</p></div>`;
- showPage("detail",l.title,`${l.category} · ${l.id}`);
+  const l=lessons.find(x=>x.id===id);
+  if(!l)return;
+
+  $("lessonDetail").innerHTML=`<div class="detail-box"><div class="eyebrow">${icons[l.category]} ${l.category} · ${l.id}</div><h2>${l.title}</h2><p class="sub">${l.description}</p><p><span class="tag">${l.level}</span></p><h3 style="margin-top:28px">Lesson resources</h3>${l.files.map(f=>`<div class="resource"><div><strong>${f} resource</strong><div class="sub" style="font-size:12px">${f==="MP3"?"Listening audio":f==="JPG"?"Picture or visual worksheet":"Printable worksheet"}</div></div><button onclick="alert('Demo resource: add your ${f} file to the lesson resources folder and connect its path here.')">Open ${f}</button></div>`).join("")}<p class="sub" style="margin-top:20px;font-size:12px">Teacher note: this is sample catalogue data. Replace it with your own lesson files when you are ready.</p></div>`;
+
+  showPage("detail",l.title,`${l.category} · ${l.id}`);
 }
+
 function filterCategory(cat) {
   if (cat === "Listening") {
     showPage(
@@ -322,20 +373,40 @@ function filterCategory(cat) {
     `Showing ${cat} lessons.`
   );
   renderCatalogue();
-}function lookupCode(){
- const code=$("qrCode").value.trim().toUpperCase(),l=lessons.find(x=>x.id===code);
- $("qrResult").textContent=l?`Found: ${l.title}`:"No lesson found. Check the code and try again.";
- if(l)openLesson(l.id);
 }
-$("searchInput").addEventListener("input",renderCatalogue);$("categoryFilter").addEventListener("change",renderCatalogue);
-$("lookupBtn").addEventListener("click",lookupCode);$("qrCode").addEventListener("keydown",e=>{if(e.key==="Enter")lookupCode()});
+
+function lookupCode(){
+  const code=$("qrCode").value.trim().toUpperCase(),l=lessons.find(x=>x.id===code);
+  $("qrResult").textContent=l?`Found: ${l.title}`:"No lesson found. Check the code and try again.";
+  if(l)openLesson(l.id);
+}
+
+$("searchInput").addEventListener("input",renderCatalogue);
+$("categoryFilter").addEventListener("change",renderCatalogue);
+$("lookupBtn").addEventListener("click",lookupCode);
+$("qrCode").addEventListener("keydown",e=>{if(e.key==="Enter")lookupCode()});
+
 document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
 document.querySelectorAll("[data-category]").forEach(b=>b.addEventListener("click",()=>filterCategory(b.dataset.category)));
-function updateConnection(){$("connectionStatus").textContent=navigator.onLine?"● Online":"● Offline";$("connectionStatus").style.color=navigator.onLine?"#166534":"#b45309"}
-window.addEventListener("online",updateConnection);window.addEventListener("offline",updateConnection);
-renderHome();renderCatalogue();updateConnection();
-if("serviceWorker" in navigator && location.protocol!=="file:"){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(console.error));}
+
+function updateConnection(){
+  $("connectionStatus").textContent=navigator.onLine?"● Online":"● Offline";
+  $("connectionStatus").style.color=navigator.onLine?"#166534":"#b45309";
+}
+
+window.addEventListener("online",updateConnection);
+window.addEventListener("offline",updateConnection);
+
+renderHome();
+renderCatalogue();
+renderShadowingLessons();
+updateConnection();
+
+if("serviceWorker" in navigator && location.protocol!=="file:"){
+  window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(console.error));
+}
 </script>
+
 <script src="https://unpkg.com/html5-qrcode"></script>
 <script src="./listening.js"></script>
 </body>
