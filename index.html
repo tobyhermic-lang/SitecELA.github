@@ -56,6 +56,66 @@
   width: 100%;
   max-width: 500px;
 }
+    /* SHADOWING SECTION */
+
+.shadowing-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 13px;
+  margin-top: 18px;
+}
+
+.shadowing-item {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  padding: 17px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.shadowing-item:hover {
+  border-color: #93c5fd;
+  transform: translateY(-2px);
+}
+
+.shadowing-player {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px;
+  margin-top: 22px;
+}
+
+.shadowing-player video {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 12px;
+  background: #000;
+}
+
+.shadowing-player h3 {
+  margin-top: 0;
+}
+
+/* MOBILE RESPONSIVE */
+
+@media(max-width:900px) {
+  .shadowing-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media(max-width:560px) {
+  .shadowing-list {
+    grid-template-columns: 1fr;
+  }
+
+  .shadowing-player {
+    padding: 12px;
+  }
+}
     footer{padding:28px 0 8px;color:var(--muted);font-size:12px;text-align:center}
     @media(max-width:900px){.app{grid-template-columns:1fr}aside{padding:12px 14px;gap:10px}.brand{padding:2px 5px}.brand-icon{width:34px;height:34px}nav{display:flex;overflow-x:auto;padding-bottom:3px}.nav-label,.side-note{display:none}.nav-btn{white-space:nowrap;padding:9px 11px}.stats{grid-template-columns:repeat(2,1fr)}.categories{grid-template-columns:repeat(3,1fr)}.lesson-grid{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:560px){main{padding:20px 14px}.topbar{align-items:flex-start}.status{font-size:10px}.hero-art{display:none}.categories{grid-template-columns:repeat(2,1fr)}.lesson-grid,.qr-layout{grid-template-columns:1fr}.section-head{margin-top:24px}.category{padding:14px}.stats{gap:9px}.stat{padding:13px}}
@@ -76,6 +136,7 @@
       <button class="nav-btn" data-category="Writing"><span>✍️</span>Writing</button>
       <button class="nav-btn" data-category="Vocabulary"><span>🔤</span>Vocabulary</button>
       <button class="nav-btn" data-category="Grammar"><span>🧩</span>Grammar</button>
+      <button class="nav-btn" data-page="shadowing"> <span>🎬</span>Shadowing</button>
     </nav></div>
     <div class="side-note">💡 <strong>Offline-friendly learning</strong><br>Install this hub on your device. Lessons you cache can be opened without an internet connection.</div>
   </aside>
@@ -115,7 +176,38 @@
   <div id="listening-list" class="listening-list"></div>
 
 </section>
-      <section class="page" id="qr">
+    <!-- SHADOWING SECTION -->
+<section class="page" id="shadowing">
+
+  <div class="section-head">
+    <h2>Shadowing Practice</h2>
+    <span class="sub">Watch, listen and repeat</span>
+  </div>
+
+  <p class="sub">
+    Choose a lesson and practise speaking English.
+  </p>
+
+  <!-- List of available Shadowing lessons -->
+  <div id="shadowingLessonList" class="shadowing-list">
+  </div>
+
+  <!-- Selected lesson video -->
+  <div id="shadowingPlayer" class="shadowing-player" hidden>
+
+    <h3 id="shadowingLessonTitle"></h3>
+
+    <video
+      id="shadowingVideo"
+      controls
+      playsinline
+      preload="metadata">
+    </video>
+
+  </div>
+
+</section>
+<!-- END SHADOWING SECTION -->  <section class="page" id="qr">
         <div class="qr-layout">
           <div class="panel">
             <div class="eyebrow">Quick access</div>
@@ -194,14 +286,16 @@ function showPage(page,title,subtitle){
   home:"Welcome back!",
   catalogue:"Lesson catalogue",
   listening:"Listening Practice",
-  qr:"QR lesson lookup",
+shadowing:"Shadowing Practice",
+qr:"QR lesson lookup",
   detail:"Lesson details"
  }[page]);
  $("pageSubtitle").textContent=subtitle||({
   home:"A simple place to find and practise English.",
   catalogue:"Search, filter and open your learning materials.",
-  listening:"Listen and practise your English.",
-  qr:"Use a lesson code to jump straight to a resource.",
+listening:"Listen and practise your English.",
+shadowing:"Watch, listen and repeat.",
+qr:"Use a lesson code to jump straight to a resource.",
   detail:"Open the resources for this lesson."
  }[page]);
  window.scrollTo({top:0,behavior:"smooth"});
