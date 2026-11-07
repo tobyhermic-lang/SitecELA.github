@@ -1,0 +1,219 @@
+
+/* =========================================
+   ENGLISH LEARNING HUB
+   FESTIVE DECORATION SYSTEM
+   Balanced Decoration Theme
+   ========================================= */
+
+/* FESTIVE CONTROL BUTTON */
+
+.festive-control {
+  border: 1px solid #bfdbfe;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-radius: 10px;
+  padding: 9px 13px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.festive-control:hover {
+  background: #dbeafe;
+}
+
+/* FESTIVE SETTINGS PANEL */
+
+.festive-panel {
+  display: none;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+}
+
+.festive-panel.open {
+  display: block;
+}
+
+.festive-panel h3 {
+  margin: 0 0 14px;
+}
+
+.festive-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 13px;
+  flex-wrap: wrap;
+}
+
+.festive-panel select {
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  padding: 10px;
+  background: white;
+  color: #172033;
+  max-width: 100%;
+}
+
+.festive-panel button {
+  cursor: pointer;
+}
+
+/* FESTIVE HOMEPAGE BANNER */
+
+.festive-banner {
+  display: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  padding: 17px 22px;
+  background: linear-gradient(120deg, #172554, #2563eb);
+  color: white;
+}
+
+body.festive-active .festive-banner {
+  display: block;
+}
+
+.festive-banner-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.festive-banner h2 {
+  font-size: 19px;
+  margin: 0 0 5px;
+}
+
+.festive-banner p {
+  margin: 0;
+  color: #dbeafe;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.festive-banner-icon {
+  font-size: 42px;
+  flex-shrink: 0;
+}
+
+/* CHRISTMAS THEME */
+
+body[data-festive-theme="christmas"] .festive-banner {
+  background: linear-gradient(120deg, #14532d, #166534, #991b1b);
+}
+
+body[data-festive-theme="christmas"] .hero {
+  background: linear-gradient(120deg, #166534, #14532d, #172554);
+}
+
+/* HALLOWEEN THEME */
+
+body[data-festive-theme="halloween"] .festive-banner {
+  background: linear-gradient(120deg, #581c87, #7e22ce, #c2410c);
+}
+
+body[data-festive-theme="halloween"] .hero {
+  background: linear-gradient(120deg, #7c2d12, #581c87);
+}
+
+/* LUNAR NEW YEAR THEME */
+
+body[data-festive-theme="tet"] .festive-banner {
+  background: linear-gradient(120deg, #991b1b, #dc2626, #92400e);
+}
+
+body[data-festive-theme="tet"] .hero {
+  background: linear-gradient(120deg, #b91c1c, #991b1b, #92400e);
+}
+
+/* VALENTINE'S DAY THEME */
+
+body[data-festive-theme="valentine"] .festive-banner {
+  background: linear-gradient(120deg, #9d174d, #db2777, #be185d);
+}
+
+body[data-festive-theme="valentine"] .hero {
+  background: linear-gradient(120deg, #be185d, #9d174d);
+}
+
+/* EASTER THEME */
+
+body[data-festive-theme="easter"] .festive-banner {
+  background: linear-gradient(120deg, #7c3aed, #a78bfa, #0f766e);
+}
+
+/* SUMMER THEME */
+
+body[data-festive-theme="summer"] .festive-banner {
+  background: linear-gradient(120deg, #0369a1, #0891b2, #0f766e);
+}
+
+/* NEW YEAR THEME */
+
+body[data-festive-theme="newyear"] .festive-banner {
+  background: linear-gradient(120deg, #172554, #854d0e, #1e3a8a);
+}
+
+/* SMALL FESTIVE DECORATIONS */
+
+.festive-sparkle {
+  display: inline-block;
+  margin-left: 5px;
+  animation: festive-twinkle 2.5s ease-in-out infinite;
+}
+
+@keyframes festive-twinkle {
+  0%, 100% {
+    opacity: 0.55;
+    transform: scale(0.9);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+/* MOBILE RESPONSIVE */
+
+@media (max-width: 560px) {
+  .festive-banner {
+    padding: 15px;
+  }
+
+  .festive-banner-icon {
+    font-size: 32px;
+  }
+
+  .festive-banner h2 {
+    font-size: 16px;
+  }
+
+  .festive-control {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .festive-panel {
+    padding: 15px;
+  }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+  .festive-sparkle {
+    animation: none;
+  }
+}
