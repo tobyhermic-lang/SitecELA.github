@@ -77,8 +77,12 @@
   color: white;
 }
 
-body.festive-active .festive-banner {
+body.festive-active .festive-banner:not([hidden]) {
   display: block;
+}
+
+.festive-banner[hidden] {
+  display: none !important;
 }
 
 .festive-banner-content {
