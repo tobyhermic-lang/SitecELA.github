@@ -447,9 +447,11 @@ function createFestiveEffects(theme) {
       banner.hidden = true;
     }
 
-    applyIntensity(settings.intensity);
+        applyIntensity(settings.intensity);
+
+    // Create or remove festive decorations.
+    createFestiveEffects(active ? theme : "none");
   }
-createFestiveEffects(active ? theme : "none");
   // =========================================
   // 6. UPDATE THE ACTIVE THEME
   // =========================================
