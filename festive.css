@@ -217,3 +217,169 @@ body[data-festive-theme="newyear"] .festive-banner {
     animation: none;
   }
 }
+/* =========================================
+   CHRISTMAS LIGHTS
+   ========================================= */
+
+.festive-effects {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 30;
+}
+
+.festive-lights {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 42px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding: 0 3%;
+}
+
+.festive-lights::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 100%;
+  height: 18px;
+  border-top: 2px solid #334155;
+  border-radius: 50%;
+}
+
+.festive-bulb {
+  position: relative;
+  z-index: 1;
+  width: 10px;
+  height: 15px;
+  margin-top: 10px;
+  border-radius: 50% 50% 45% 45%;
+  background: #ef4444;
+  box-shadow: 0 0 10px currentColor;
+  animation: festive-light-glow 2s ease-in-out infinite alternate;
+}
+
+.festive-bulb:nth-child(4n + 1) {
+  background: #ef4444;
+  color: #ef4444;
+}
+
+.festive-bulb:nth-child(4n + 2) {
+  background: #22c55e;
+  color: #22c55e;
+  animation-delay: 0.4s;
+}
+
+.festive-bulb:nth-child(4n + 3) {
+  background: #facc15;
+  color: #facc15;
+  animation-delay: 0.8s;
+}
+
+.festive-bulb:nth-child(4n) {
+  background: #3b82f6;
+  color: #3b82f6;
+  animation-delay: 1.2s;
+}
+
+@keyframes festive-light-glow {
+  from {
+    opacity: 0.55;
+    transform: scale(0.85);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+/* =========================================
+   FALLING SNOW
+   ========================================= */
+
+.festive-snowflake {
+  position: absolute;
+  top: -30px;
+  color: #dbeafe;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.9);
+  opacity: 0.65;
+  animation-name: festive-snow-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-delay: var(--snow-delay, 0s);
+  animation-duration: var(--snow-duration, 15s);
+}
+
+@keyframes festive-snow-fall {
+  0% {
+    transform: translate3d(0, -5vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.7;
+  }
+
+  90% {
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translate3d(var(--snow-drift, 20px), 110vh, 0)
+      rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* =========================================
+   SNOW INTENSITY
+   ========================================= */
+
+body[data-festive-intensity="subtle"] .festive-snowflake {
+  opacity: 0.3;
+}
+
+body[data-festive-intensity="balanced"] .festive-snowflake {
+  opacity: 0.6;
+}
+
+body[data-festive-intensity="full"] .festive-snowflake {
+  opacity: 0.85;
+}
+
+/* =========================================
+   MOBILE ADJUSTMENTS
+   ========================================= */
+
+@media (max-width: 560px) {
+  .festive-bulb {
+    width: 8px;
+    height: 12px;
+  }
+
+  .festive-lights {
+    padding: 0 2%;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .festive-snowflake {
+    display: none;
+  }
+
+  .festive-bulb {
+    animation: none;
+  }
+}
