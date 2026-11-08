@@ -25,6 +25,22 @@
     .hero{background:linear-gradient(120deg,#1d4ed8,#172554);color:white;border-radius:22px;padding:clamp(24px,4vw,42px);display:flex;justify-content:space-between;gap:20px;align-items:center;overflow:hidden}
     .hero h2{font-size:clamp(25px,4vw,38px);margin:0 0 10px;max-width:520px}.hero p{color:#dbeafe;line-height:1.6;max-width:520px}.hero-art{font-size:clamp(65px,9vw,110px);padding:12px}
     .primary{background:white;color:#1d4ed8;border:0;border-radius:10px;padding:11px 16px;font-weight:750;margin-top:8px}
+    .registry-link {
+  display: inline-block;
+  background: #dbeafe;
+  color: #172554;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  padding: 11px 16px;
+  font-weight: 750;
+  margin-top: 8px;
+  margin-left: 8px;
+  text-decoration: none;
+}
+
+.registry-link:hover {
+  background: white;
+}
     .section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:30px 0 14px}.section-head h2{margin:0;font-size:20px}.text-btn{border:0;background:none;color:var(--blue);font-weight:700}
     .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:18px}.stat,.card,.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:17px}.stat strong{font-size:25px;display:block}.stat small{color:var(--muted)}
     .categories{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.category{border:1px solid var(--line);background:white;border-radius:15px;padding:18px 13px;text-align:left;transition:.15s}.category:hover,.lesson:hover{border-color:#93c5fd;transform:translateY(-2px)}.cat-icon{font-size:25px}.category strong{display:block;margin:10px 0 4px}.category small{color:var(--muted)}
@@ -134,7 +150,7 @@
     <div class="topbar"><div><div class="eyebrow">Your learning library</div><h1 id="pageTitle">Welcome back!</h1><p class="sub" id="pageSubtitle">A simple place to find and practise English.</p></div><div class="status" id="connectionStatus">● Checking connection</div></div>
 
     <section class="page active" id="home">
-      <div class="hero"><div><div class="eyebrow" style="color:#bfdbfe">ENGLISH LEARNING HUB</div><h2>Small steps. Better English.</h2><p>Explore lessons, practise your skills and keep your learning materials together in one place.</p><button class="primary" onclick="showPage('catalogue')">Explore lessons →</button></div><div class="hero-art">🎓</div></div>
+      <div class="hero"><div><div class="eyebrow" style="color:#bfdbfe">ENGLISH LEARNING HUB</div><h2>Small steps. Better English.</h2><p>Explore lessons, practise your skills and keep your learning materials together in one place.</p><button class="primary" onclick="showPage('catalogue')">Explore lessons →</button><a class="registry-link" href="./admin.html">Registry →</a></div><div class="hero-art">🎓</div></div>
       <div class="stats">
         <div class="stat"><strong id="totalLessons">8</strong><small>Sample lessons</small></div>
         <div class="stat"><strong>6</strong><small>Learning sections</small></div>
