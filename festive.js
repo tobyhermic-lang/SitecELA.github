@@ -314,6 +314,77 @@
   }
 
   // =========================================
+   // =========================================
+// CHRISTMAS DECORATIONS
+// =========================================
+
+function createFestiveEffects(theme) {
+  // Remove decorations from the previous theme.
+  const oldLayer = document.getElementById("festive-effects");
+
+  if (oldLayer) {
+    oldLayer.remove();
+  }
+
+  // Do not create decorations when disabled or no theme is active.
+  if (!settings.enabled || theme === "none") {
+    return;
+  }
+
+  const layer = document.createElement("div");
+  layer.id = "festive-effects";
+  layer.className = "festive-effects";
+  layer.setAttribute("aria-hidden", "true");
+
+  // Christmas decorations.
+  if (theme === "christmas") {
+
+    // Create the Christmas light string.
+    const lights = document.createElement("div");
+    lights.className = "festive-lights";
+
+    for (let i = 0; i < 18; i++) {
+      const bulb = document.createElement("span");
+      bulb.className = "festive-bulb";
+      lights.appendChild(bulb);
+    }
+
+    layer.appendChild(lights);
+
+    // Adjust the number of snowflakes according to intensity.
+    const snowCounts = {
+      subtle: 12,
+      balanced: 22,
+      full: 34
+    };
+
+    const snowCount = snowCounts[settings.intensity] || 22;
+
+    // Create falling snowflakes.
+    for (let i = 0; i < snowCount; i++) {
+      const snow = document.createElement("span");
+
+      snow.className = "festive-snowflake";
+      snow.textContent = "❄";
+
+      const left = Math.random() * 100;
+      const delay = Math.random() * 12;
+      const duration = 10 + Math.random() * 12;
+      const size = 10 + Math.random() * 12;
+      const drift = -40 + Math.random() * 80;
+
+      snow.style.left = left + "%";
+      snow.style.fontSize = size + "px";
+      snow.style.setProperty("--snow-delay", delay + "s");
+      snow.style.setProperty("--snow-duration", duration + "s");
+      snow.style.setProperty("--snow-drift", drift + "px");
+
+      layer.appendChild(snow);
+    }
+  }
+
+  document.body.appendChild(layer);
+}
   // 5. APPLY THEME AND ANIMATION INTENSITY
   // =========================================
 
@@ -378,7 +449,7 @@
 
     applyIntensity(settings.intensity);
   }
-
+createFestiveEffects(active ? theme : "none");
   // =========================================
   // 6. UPDATE THE ACTIVE THEME
   // =========================================
