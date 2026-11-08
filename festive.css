@@ -221,14 +221,25 @@ body[data-festive-theme="newyear"] .festive-banner {
    CHRISTMAS LIGHTS
    ========================================= */
 
+/* =========================================
+   FESTIVE OVERLAY — NEVER BLOCK WEBSITE CLICKS
+   ========================================= */
+
 .festive-effects {
   position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  pointer-events: none;
+  pointer-events: none !important;
   z-index: 30;
+}
+
+/* Make sure every decoration also ignores mouse clicks. */
+.festive-effects *,
+.festive-effects *::before,
+.festive-effects *::after {
+  pointer-events: none !important;
 }
 
 .festive-lights {
