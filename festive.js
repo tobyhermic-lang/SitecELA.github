@@ -383,7 +383,10 @@ function createFestiveEffects(theme) {
     }
   }
 
-  document.body.appendChild(layer);
+    // Only add the layer if it contains decorations.
+  if (layer.children.length > 0) {
+    document.body.appendChild(layer);
+  }
 }
   // 5. APPLY THEME AND ANIMATION INTENSITY
   // =========================================
