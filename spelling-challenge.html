@@ -1,0 +1,929 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Irregular Verb Spelling Challenge</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg,#172554,#4338ca,#7c3aed);
+  color: white;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+header h1 {
+  font-size: clamp(28px,5vw,42px);
+  margin: 10px 0;
+}
+
+header p { color: #ddd6fe; }
+
+.panel {
+  background: white;
+  color: #1e1b4b;
+  border-radius: 22px;
+  padding: 25px;
+  box-shadow: 0 12px 35px #0004;
+}
+
+.mode-area {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.mode-area select {
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px solid #c4b5fd;
+  font-size: 16px;
+  margin: 8px;
+}
+
+.scoreboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(125px,1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.team {
+  padding: 15px;
+  border-radius: 15px;
+  text-align: center;
+  background: #eef2ff;
+  border: 3px solid transparent;
+  cursor: pointer;
+  color: #312e81;
+  min-width: 0;
+}
+
+.team.active {
+  border-color: #7c3aed;
+  background: #ede9fe;
+}
+
+.team h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.score {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.highscore {
+  text-align: center;
+  background: #fef3c7;
+  color: #92400e;
+  padding: 13px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: #64748b;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.progress {
+  height: 9px;
+  background: #e2e8f0;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #8b5cf6;
+  transition: width .3s;
+}
+
+.question {
+  text-align: center;
+  padding: 20px 10px;
+}
+
+.question h2 {
+  color: #7c3aed;
+  font-size: 27px;
+  margin: 5px 0 20px;
+}
+
+.meaning {
+  background: #f1f5f9;
+  border-radius: 15px;
+  padding: 22px;
+  margin: 15px 0 22px;
+}
+
+.meaning-label {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.meaning-text {
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+.blanks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 7px;
+  margin: 25px 0;
+}
+
+.letter {
+  width: 43px;
+  height: 53px;
+  border: none;
+  border-bottom: 4px solid #7c3aed;
+  border-radius: 7px 7px 0 0;
+  background: #f5f3ff;
+  color: #312e81;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  outline: none;
+}
+
+.letter:focus {
+  background: #ddd6fe;
+  border-bottom-color: #4f46e5;
+}
+
+.letter:disabled {
+  opacity: 1;
+  color: #312e81;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  border: none;
+  padding: 13px 20px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .2s;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.primary { background: #7c3aed; color: white; }
+.secondary { background: #e0e7ff; color: #3730a3; }
+.hint-btn { background: #fef3c7; color: #92400e; }
+.danger { background: #fee2e2; color: #991b1b; }
+
+.hint-box {
+  display: none;
+  background: #fef3c7;
+  color: #92400e;
+  padding: 15px;
+  border-radius: 12px;
+  margin: 15px auto;
+  max-width: 400px;
+  font-weight: bold;
+}
+
+.feedback {
+  min-height: 35px;
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.answer-box {
+  display: none;
+  margin-top: 12px;
+  padding: 15px;
+  border-radius: 12px;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 19px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.bottom-info {
+  margin-top: 22px;
+  text-align: center;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.game-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+@media(max-width:500px) {
+  .panel { padding: 17px; }
+  .letter {
+    width: 34px;
+    height: 45px;
+    font-size: 20px;
+  }
+  button { padding: 12px 14px; }
+  .meaning-text { font-size: 18px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+  <div style="font-size:45px;">🔤 🏆</div>
+  <h1>Irregular Verb Spelling Challenge</h1>
+  <p>Read the meaning. Think of the verb. Spell its past simple form!</p>
+</header>
+
+<div class="panel">
+
+  <div class="mode-area">
+    <strong>CHOOSE GAME MODE</strong><br>
+
+    <select id="gameMode" onchange="changeMode()">
+      <option value="solo">👤 Solo Challenge</option>
+      <option value="team">👥 Team Battle</option>
+    </select>
+
+    <div id="teamSettings" style="display:none;">
+      <br>
+      <strong>Number of teams:</strong>
+      <select id="teamCount" onchange="createTeams()">
+        <option value="2">2 Teams</option>
+        <option value="3">3 Teams</option>
+        <option value="4">4 Teams</option>
+        <option value="5">5 Teams</option>
+        <option value="6">6 Teams</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="scoreboard" id="scoreboard"></div>
+
+  <div class="highscore" id="highScoreBox">
+    🏆 Personal High Score:
+    <span id="highScore">0</span>
+  </div>
+
+  <div class="info">
+    <span id="roundInfo">MAIN ROUND</span>
+    <span id="questionInfo">QUESTION 1 / 60</span>
+  </div>
+
+  <div class="progress">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div class="question">
+
+    <h2>WHAT IS THE PAST SIMPLE?</h2>
+
+    <div class="meaning">
+      <div class="meaning-label">ENGLISH MEANING</div>
+      <div class="meaning-text" id="meaning">Loading...</div>
+    </div>
+
+    <div style="color:#64748b;font-size:14px;">
+      Number of letters:
+      <strong id="letterCount">0</strong>
+    </div>
+
+    <div class="blanks" id="blanks"></div>
+
+    <div class="buttons">
+      <button class="hint-btn" id="hintBtn" onclick="showHint()">
+        💡 HINT
+      </button>
+
+      <button class="primary" id="submitBtn" onclick="checkAnswer()">
+        ✓ SUBMIT
+      </button>
+    </div>
+
+    <div class="hint-box" id="hintBox"></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="answer-box" id="answerBox"></div>
+
+  </div>
+
+  <div class="buttons">
+    <button class="secondary" id="revealBtn" onclick="revealAnswer()">
+      👁 REVEAL ANSWER
+    </button>
+
+    <button class="primary" id="nextBtn" onclick="nextQuestion()" disabled>
+      NEXT QUESTION →
+    </button>
+  </div>
+
+  <div class="bottom-info">
+    Correct without hint: 10 points |
+    Correct with hint: 5 points |
+    Review round: 3 points
+  </div>
+
+</div>
+
+<div class="game-controls">
+  <button class="secondary" onclick="startReview()">
+    🔄 REVIEW MISTAKES
+  </button>
+
+  <button class="danger" onclick="resetGame()">
+    ↻ RESET GAME
+  </button>
+</div>
+
+</div>
+
+<script>
+
+// ======================================
+// IRREGULAR VERB DATABASE
+// ======================================
+
+const verbs = [
+{base:"become",past:"became",meaning:"To start to be something different."},
+{base:"begin",past:"began",meaning:"To start doing something."},
+{base:"break",past:"broke",meaning:"To damage something into pieces."},
+{base:"bring",past:"brought",meaning:"To carry something to a place."},
+{base:"build",past:"built",meaning:"To make something by putting materials together."},
+{base:"buy",past:"bought",meaning:"To get something by paying money."},
+{base:"catch",past:"caught",meaning:"To stop and hold something moving through the air."},
+{base:"choose",past:"chose",meaning:"To decide which thing you want."},
+{base:"come",past:"came",meaning:"To move towards a person or place."},
+{base:"cost",past:"cost",meaning:"To have a particular price."},
+{base:"cut",past:"cut",meaning:"To divide something using a knife or scissors."},
+{base:"do",past:"did",meaning:"To perform an action or activity."},
+{base:"drink",past:"drank",meaning:"To take liquid into your mouth and swallow it."},
+{base:"drive",past:"drove",meaning:"To control a car or other vehicle."},
+{base:"eat",past:"ate",meaning:"To put food in your mouth and swallow it."},
+{base:"fall",past:"fell",meaning:"To move down to the ground accidentally."},
+{base:"feel",past:"felt",meaning:"To experience an emotion or physical sensation."},
+{base:"find",past:"found",meaning:"To discover something you were looking for."},
+{base:"fly",past:"flew",meaning:"To travel through the air using wings."},
+{base:"forget",past:"forgot",meaning:"To fail to remember something."},
+{base:"freeze",past:"froze",meaning:"To become hard because of extreme cold."},
+{base:"get",past:"got",meaning:"To receive or obtain something."},
+{base:"give",past:"gave",meaning:"To let someone have something."},
+{base:"go",past:"went",meaning:"To move from one place to another."},
+{base:"grow",past:"grew",meaning:"To become bigger or taller."},
+{base:"have",past:"had",meaning:"To own, possess, or experience something."},
+{base:"hear",past:"heard",meaning:"To notice a sound with your ears."},
+{base:"hide",past:"hid",meaning:"To put something where people cannot see it."},
+{base:"hold",past:"held",meaning:"To carry or keep something in your hands."},
+{base:"keep",past:"kept",meaning:"To continue to have or look after something."},
+{base:"know",past:"knew",meaning:"To have information or understanding about something."},
+{base:"leave",past:"left",meaning:"To go away from a place."},
+{base:"lose",past:"lost",meaning:"To no longer have something."},
+{base:"make",past:"made",meaning:"To create or produce something."},
+{base:"meet",past:"met",meaning:"To see and talk to someone for the first time or by arrangement."},
+{base:"pay",past:"paid",meaning:"To give money for something."},
+{base:"put",past:"put",meaning:"To move something to a particular place."},
+{base:"read",past:"read",meaning:"To look at and understand written words."},
+{base:"ride",past:"rode",meaning:"To travel on a bicycle, horse, or motorbike."},
+{base:"ring",past:"rang",meaning:"To make a bell or phone produce a sound."},
+{base:"run",past:"ran",meaning:"To move quickly on your feet."},
+{base:"say",past:"said",meaning:"To speak words or express something."},
+{base:"see",past:"saw",meaning:"To notice something using your eyes."},
+{base:"sell",past:"sold",meaning:"To give something to someone in exchange for money."},
+{base:"sing",past:"sang",meaning:"To make music with your voice."},
+{base:"sit",past:"sat",meaning:"To rest your body on a chair or seat."},
+{base:"sleep",past:"slept",meaning:"To rest with your eyes closed."},
+{base:"speak",past:"spoke",meaning:"To talk or use your voice."},
+{base:"swim",past:"swam",meaning:"To move through water using your arms and legs."},
+{base:"take",past:"took",meaning:"To carry or move something with you."},
+{base:"teach",past:"taught",meaning:"To help someone learn something."},
+{base:"think",past:"thought",meaning:"To use your mind to consider something."},
+{base:"throw",past:"threw",meaning:"To send something through the air with your hand."},
+{base:"understand",past:"understood",meaning:"To know the meaning of something."},
+{base:"wear",past:"wore",meaning:"To have clothes on your body."},
+{base:"win",past:"won",meaning:"To be the best or finish first in a competition."},
+{base:"write",past:"wrote",meaning:"To form words using a pen, pencil, or keyboard."},
+{base:"fight",past:"fought",meaning:"To use physical force or argue against someone."},
+{base:"feed",past:"fed",meaning:"To give food to a person or animal."},
+{base:"lend",past:"lent",meaning:"To let someone use something and expect it back."},
+{base:"spend",past:"spent",meaning:"To use money or time."}
+];
+
+// ======================================
+// GAME VARIABLES
+// ======================================
+
+let questions = [];
+let reviewQuestions = [];
+let currentIndex = 0;
+
+let currentTeam = "Player";
+let gameMode = "solo";
+let teams = [];
+let scores = {};
+
+let usedHint = false;
+let answered = false;
+let reviewMode = false;
+let gameFinished = false;
+
+let highScore = Number(
+  localStorage.getItem("irregularVerbHighScore") || 0
+);
+
+// ======================================
+// SHUFFLE
+// ======================================
+
+function shuffle(array) {
+  return [...array].sort(() => Math.random() - 0.5);
+}
+
+// ======================================
+// GAME MODE
+// ======================================
+
+function changeMode() {
+  gameMode = document.getElementById("gameMode").value;
+
+  document.getElementById("teamSettings").style.display =
+    gameMode === "team" ? "block" : "none";
+
+  createTeams();
+  startGame();
+}
+
+function createTeams() {
+  teams = [];
+  scores = {};
+
+  if (gameMode === "solo") {
+    teams.push("Player");
+  } else {
+    const count = Number(
+      document.getElementById("teamCount").value
+    );
+
+    for (let i = 1; i <= count; i++) {
+      teams.push("Team " + i);
+    }
+  }
+
+  teams.forEach(team => {
+    scores[team] = 0;
+  });
+
+  currentTeam = teams[0];
+
+  renderScoreboard();
+  updateScores();
+
+  document.getElementById("highScoreBox").style.display =
+    gameMode === "solo" ? "block" : "none";
+}
+
+function renderScoreboard() {
+  const board = document.getElementById("scoreboard");
+  board.innerHTML = "";
+
+  teams.forEach((team,index) => {
+    const card = document.createElement("div");
+
+    card.className = "team";
+    card.id = "teamCard" + index;
+
+    const heading = document.createElement("h3");
+    heading.textContent = team;
+
+    const score = document.createElement("div");
+    score.className = "score";
+    score.id = "score" + index;
+    score.textContent = "0";
+
+    const label = document.createElement("small");
+    label.textContent = "POINTS";
+
+    card.append(heading,score,label);
+    card.onclick = () => selectTeam(team);
+
+    board.appendChild(card);
+  });
+
+  highlightTeam();
+}
+
+function selectTeam(team) {
+  if (!teams.includes(team)) return;
+
+  currentTeam = team;
+  highlightTeam();
+}
+
+function highlightTeam() {
+  teams.forEach((team,index) => {
+    const card = document.getElementById("teamCard" + index);
+
+    if (card) {
+      card.classList.toggle("active",team === currentTeam);
+    }
+  });
+}
+
+// ======================================
+// HIGH SCORE
+// ======================================
+
+function updateHighScore() {
+  if (gameMode !== "solo") return;
+
+  const playerScore = scores["Player"] || 0;
+
+  if (playerScore > highScore) {
+    highScore = playerScore;
+
+    localStorage.setItem(
+      "irregularVerbHighScore",
+      highScore
+    );
+  }
+
+  document.getElementById("highScore").textContent = highScore;
+}
+
+function updateScores() {
+  teams.forEach((team,index) => {
+    const element = document.getElementById("score" + index);
+
+    if (element) {
+      element.textContent = scores[team] || 0;
+    }
+  });
+
+  updateHighScore();
+}
+
+// ======================================
+// START GAME
+// ======================================
+
+function startGame() {
+  questions = shuffle(verbs);
+  currentIndex = 0;
+  reviewQuestions = [];
+  reviewMode = false;
+  gameFinished = false;
+
+  loadQuestion();
+}
+
+// ======================================
+// LOAD QUESTION
+// ======================================
+
+function loadQuestion() {
+
+  if (currentIndex >= questions.length) {
+    finishRound();
+    return;
+  }
+
+  const word = questions[currentIndex];
+
+  usedHint = false;
+  answered = false;
+
+  document.getElementById("meaning").textContent = word.meaning;
+  document.getElementById("letterCount").textContent = word.past.length;
+
+  document.getElementById("roundInfo").textContent =
+    reviewMode ? "REVIEW ROUND" : "MAIN ROUND";
+
+  document.getElementById("questionInfo").textContent =
+    "QUESTION " + (currentIndex + 1) + " / " + questions.length;
+
+  document.getElementById("progressBar").style.width =
+    (currentIndex / questions.length * 100) + "%";
+
+  document.getElementById("hintBox").style.display = "none";
+  document.getElementById("feedback").textContent = "";
+  document.getElementById("answerBox").style.display = "none";
+
+  document.getElementById("hintBtn").disabled = false;
+  document.getElementById("submitBtn").disabled = false;
+  document.getElementById("revealBtn").disabled = false;
+  document.getElementById("nextBtn").disabled = true;
+
+  const blanks = document.getElementById("blanks");
+  blanks.innerHTML = "";
+
+  for (let i = 0; i < word.past.length; i++) {
+    const input = document.createElement("input");
+
+    input.className = "letter";
+    input.type = "text";
+    input.maxLength = 1;
+    input.autocomplete = "off";
+    input.spellcheck = false;
+    input.setAttribute("aria-label","Letter " + (i + 1));
+
+    input.addEventListener("input",function() {
+      this.value = this.value.toUpperCase().replace(/[^A-Z]/g,"");
+
+      if (this.value && i < word.past.length - 1) {
+        blanks.children[i + 1].focus();
+      }
+    });
+
+    input.addEventListener("keydown",function(e) {
+      if (e.key === "Backspace" && !this.value && i > 0) {
+        blanks.children[i - 1].focus();
+      }
+
+      if (e.key === "Enter") checkAnswer();
+    });
+
+    blanks.appendChild(input);
+  }
+
+  blanks.children[0].focus();
+}
+
+// ======================================
+// HINT
+// ======================================
+
+function showHint() {
+  if (answered || gameFinished) return;
+
+  usedHint = true;
+
+  const word = questions[currentIndex];
+
+  const hintBox = document.getElementById("hintBox");
+
+  hintBox.textContent =
+    "💡 BASE VERB: " + word.base.toUpperCase();
+
+  hintBox.style.display = "block";
+}
+
+// ======================================
+// CHECK ANSWER
+// ======================================
+
+function checkAnswer() {
+  if (answered || gameFinished) return;
+
+  const word = questions[currentIndex];
+  const inputs = document.querySelectorAll(".letter");
+
+  let studentAnswer = "";
+
+  inputs.forEach(input => {
+    studentAnswer += input.value.toLowerCase();
+  });
+
+  if (studentAnswer.length !== word.past.length) {
+    const feedback = document.getElementById("feedback");
+    feedback.textContent = "⚠️ Please fill in every letter!";
+    feedback.style.color = "#d97706";
+    return;
+  }
+
+  if (studentAnswer === word.past.toLowerCase()) {
+
+    const points = reviewMode ? 3 : (usedHint ? 5 : 10);
+
+    scores[currentTeam] += points;
+    updateScores();
+
+    const feedback = document.getElementById("feedback");
+    feedback.textContent = "🎉 CORRECT! +" + points + " POINTS!";
+    feedback.style.color = "#16a34a";
+
+    if (reviewMode) {
+      reviewQuestions = reviewQuestions.filter(item => item !== word);
+    }
+
+  } else {
+
+    const feedback = document.getElementById("feedback");
+    feedback.textContent = "❌ Incorrect! Check the correct spelling below.";
+    feedback.style.color = "#dc2626";
+
+    if (!reviewMode && !reviewQuestions.includes(word)) {
+      reviewQuestions.push(word);
+    }
+  }
+
+  revealCorrectWord();
+
+  answered = true;
+
+  document.getElementById("submitBtn").disabled = true;
+  document.getElementById("hintBtn").disabled = true;
+  document.getElementById("revealBtn").disabled = true;
+  document.getElementById("nextBtn").disabled = false;
+}
+
+// ======================================
+// REVEAL ANSWER
+// ======================================
+
+function revealCorrectWord() {
+  const word = questions[currentIndex];
+
+  const answerBox = document.getElementById("answerBox");
+
+  answerBox.textContent =
+    word.base.toUpperCase() + " → " + word.past.toUpperCase();
+
+  answerBox.style.display = "block";
+
+  const inputs = document.querySelectorAll(".letter");
+
+  inputs.forEach((input,index) => {
+    input.value = word.past[index].toUpperCase();
+    input.disabled = true;
+  });
+}
+
+function revealAnswer() {
+  if (answered || gameFinished) return;
+
+  const word = questions[currentIndex];
+
+  if (!reviewMode && !reviewQuestions.includes(word)) {
+    reviewQuestions.push(word);
+  }
+
+  document.getElementById("feedback").textContent =
+    "Teacher revealed the answer. No points awarded.";
+
+  document.getElementById("feedback").style.color = "#64748b";
+
+  revealCorrectWord();
+
+  answered = true;
+
+  document.getElementById("submitBtn").disabled = true;
+  document.getElementById("hintBtn").disabled = true;
+  document.getElementById("revealBtn").disabled = true;
+  document.getElementById("nextBtn").disabled = false;
+}
+
+// ======================================
+// NEXT QUESTION
+// ======================================
+
+function nextQuestion() {
+  if (!answered || gameFinished) return;
+
+  currentIndex++;
+  loadQuestion();
+}
+
+// ======================================
+// REVIEW MISTAKES
+// ======================================
+
+function startReview() {
+  if (reviewQuestions.length === 0) {
+    alert("No mistakes to review yet. Play a round first!");
+    return;
+  }
+
+  questions = shuffle(reviewQuestions);
+  currentIndex = 0;
+  reviewMode = true;
+  gameFinished = false;
+
+  loadQuestion();
+}
+
+// ======================================
+// FINISH ROUND
+// ======================================
+
+function finishRound() {
+  gameFinished = true;
+
+  document.getElementById("progressBar").style.width = "100%";
+  document.getElementById("meaning").textContent =
+    "You have completed this round!";
+
+  document.getElementById("blanks").innerHTML = "";
+  document.getElementById("letterCount").textContent = "-";
+  document.getElementById("hintBox").style.display = "none";
+  document.getElementById("answerBox").style.display = "none";
+
+  document.getElementById("hintBtn").disabled = true;
+  document.getElementById("submitBtn").disabled = true;
+  document.getElementById("revealBtn").disabled = true;
+  document.getElementById("nextBtn").disabled = true;
+
+  if (reviewMode) {
+
+    document.getElementById("feedback").textContent =
+      reviewQuestions.length > 0
+      ? "🏆 Review complete! " + reviewQuestions.length +
+        " word(s) still need practice."
+      : "🏆 Excellent! All review words mastered!";
+
+  } else if (gameMode === "solo") {
+
+    document.getElementById("feedback").textContent =
+      "🏆 YOUR FINAL SCORE: " + scores["Player"] + " POINTS!";
+
+  } else {
+
+    const highest = Math.max(...Object.values(scores));
+
+    const winners = teams.filter(
+      team => scores[team] === highest
+    );
+
+    document.getElementById("feedback").textContent =
+      winners.length > 1
+      ? "🏆 IT'S A DRAW: " + winners.join(" & ")
+      : "🏆 " + winners[0] + " WINS!";
+  }
+
+  document.getElementById("feedback").style.color = "#7c3aed";
+}
+
+// ======================================
+// RESET
+// ======================================
+
+function resetGame() {
+  if (!confirm("Reset the game and current scores?")) return;
+
+  createTeams();
+  startGame();
+}
+
+// ======================================
+// INITIALISE GAME
+// ======================================
+
+createTeams();
+updateHighScore();
+startGame();
+
+</script>
+</body>
+</html>
