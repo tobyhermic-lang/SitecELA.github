@@ -7,6 +7,42 @@
 <title>English Horse Racing Challenge</title>
 
 <style>
+/* COLLAPSIBLE RACE SETTINGS */
+
+.settings-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.settings-heading h2 {
+  margin: 0;
+}
+
+.gear-button {
+  background: #ede9fe;
+  color: #5b21b6;
+  border: 2px solid #c4b5fd;
+  padding: 10px 16px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.gear-button:hover {
+  background: #ddd6fe;
+}
+
+.settings-content {
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px solid #ddd6fe;
+}
+
+.settings-content.hidden {
+  display: none;
+}
+
 * { box-sizing: border-box; }
 
 body {
@@ -267,8 +303,21 @@ button:disabled {
 
 <div class="container">
 
-  <section class="panel">
-    <h2>⚙️ Race Settings</h2>
+<section class="panel settings-panel">
+
+  <div class="settings-heading">
+    <h2>🏁 Race Control</h2>
+
+    <button id="settingsToggle"
+            class="gear-button"
+            aria-expanded="false"
+            aria-controls="settingsContent"
+            title="Open race settings">
+      ⚙️ Settings
+    </button>
+  </div>
+
+  <div id="settingsContent" class="settings-content hidden">
 
     <div class="settings">
       <div>
@@ -302,59 +351,63 @@ button:disabled {
       </div>
     </div>
 
-    <p style="margin-top:15px">
-      <button class="primary" id="startButton">🏁 Start New Race</button>
-    </p>
-  </section>
-
-  <section class="panel">
-    <h2>🏆 The Race Track</h2>
-    <div id="track" class="track">
-      <p style="color:#166534">Start a race to prepare the horses!</p>
-    </div>
-  </section>
-
-  <section class="panel">
-    <h2>📊 Scoreboard</h2>
-    <div id="scoreboard" class="scoreboard">
-      <p>Scores will appear here.</p>
-    </div>
-  </section>
-
-  <section class="panel question-box">
-    <h2>🧠 Question Challenge</h2>
-
-    <p id="turnLabel">Start a new race to begin.</p>
-
-    <div id="questionArea" class="hidden">
-      <div class="question" id="questionText"></div>
-
-      <p>Change this base word:</p>
-      <div class="base-word" id="baseWord"></div>
-
-      <div class="answer-area">
-        <input id="answerInput" type="text"
-          placeholder="Type your answer here"
-          autocomplete="off">
-        <button class="primary" id="submitAnswer">Submit</button>
-      </div>
-
-      <div class="feedback" id="feedback"></div>
-
-      <button class="orange hidden" id="nextTurn">
-        Next Player →
+    <p>
+      <button class="primary" id="startButton">
+        🏁 Start New Race
       </button>
+    </p>
+
+  </div>
+</section>
+
+<section class="panel">
+  <h2>🏆 The Race Track</h2>
+  <div id="track" class="track">
+    <p style="color:#166534">Start a race to prepare the horses!</p>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>📊 Scoreboard</h2>
+  <div id="scoreboard" class="scoreboard">
+    <p>Scores will appear here.</p>
+  </div>
+</section>
+
+<section class="panel question-box">
+  <h2>🧠 Question Challenge</h2>
+
+  <p id="turnLabel">Start a new race to begin.</p>
+
+  <div id="questionArea" class="hidden">
+    <div class="question" id="questionText"></div>
+
+    <p>Change this base word:</p>
+    <div class="base-word" id="baseWord"></div>
+
+    <div class="answer-area">
+      <input id="answerInput" type="text"
+        placeholder="Type your answer here"
+        autocomplete="off">
+      <button class="primary" id="submitAnswer">Submit</button>
     </div>
-  </section>
 
-  <section class="panel dice-area">
-    <h2>🎲 Dice Roller</h2>
-    <div class="dice" id="dice">⚀</div>
-    <p id="diceMessage">Answer correctly to unlock the dice!</p>
-    <button class="green" id="rollButton" disabled>🎲 Roll Dice</button>
-  </section>
+    <div class="feedback" id="feedback"></div>
 
-  <div id="result"></div>
+    <button class="orange hidden" id="nextTurn">
+      Next Player →
+    </button>
+  </div>
+</section>
+
+<section class="panel dice-area">
+  <h2>🎲 Dice Roller</h2>
+  <div class="dice" id="dice">⚀</div>
+  <p id="diceMessage">Answer correctly to unlock the dice!</p>
+  <button class="green" id="rollButton" disabled>🎲 Roll Dice</button>
+</section>
+
+<div id="result"></div>
 
 </div>
 
@@ -533,6 +586,12 @@ function startRace() {
   drawTrack();
   drawScoreboard();
   showTurn();
+
+  // Collapse settings after starting the race.
+  $("settingsContent").classList.add("hidden");
+  $("settingsToggle").textContent = "⚙️ Settings";
+  $("settingsToggle").setAttribute("aria-expanded", "false");
+  $("settingsToggle").title = "Open race settings";
 }
 
 // SHOW CURRENT PLAYER
@@ -643,6 +702,27 @@ $("nextTurn").addEventListener("click", nextPlayer);
 
 $("answerInput").addEventListener("keydown", event => {
   if (event.key === "Enter") submitAnswer();
+});
+
+// COLLAPSIBLE SETTINGS BUTTON
+
+const settingsToggle = $("settingsToggle");
+const settingsContent = $("settingsContent");
+
+settingsToggle.addEventListener("click", () => {
+  const isOpen = !settingsContent.classList.contains("hidden");
+
+  settingsContent.classList.toggle("hidden");
+
+  settingsToggle.setAttribute("aria-expanded", String(!isOpen));
+
+  settingsToggle.textContent = isOpen
+    ? "⚙️ Settings"
+    : "✖ Close Settings";
+
+  settingsToggle.title = isOpen
+    ? "Open race settings"
+    : "Close race settings";
 });
 
 loadCategories();
