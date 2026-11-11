@@ -1,0 +1,471 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animal Detective</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg,#fce4ec,#e3f2fd);
+  color: #24304f;
+  text-align: center;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 42px;
+  color: #5636a5;
+}
+
+.subtitle {
+  font-size: 18px;
+}
+
+.scoreboard {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.team {
+  background: white;
+  border-radius: 15px;
+  padding: 15px 25px;
+  min-width: 150px;
+  box-shadow: 0 4px 8px #0002;
+}
+
+.score {
+  font-size: 32px;
+  font-weight: bold;
+  color: #6941c6;
+}
+
+.game-card {
+  background: white;
+  border-radius: 22px;
+  padding: 25px;
+  box-shadow: 0 5px 15px #0002;
+}
+
+.clue {
+  background: #eee9ff;
+  padding: 16px;
+  margin: 12px auto;
+  border-radius: 12px;
+  max-width: 650px;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+
+.animal-picture {
+  font-size: 110px;
+  margin: 15px;
+}
+
+.animal-name {
+  font-size: 30px;
+  font-weight: bold;
+  color: #5636a5;
+}
+
+button {
+  border: none;
+  padding: 13px 20px;
+  margin: 6px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  background: #6941c6;
+  color: white;
+}
+
+button:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.secondary {
+  background: #ff6b9a;
+}
+
+.green {
+  background: #20a47c;
+}
+
+.status {
+  font-weight: bold;
+  min-height: 25px;
+  margin: 12px;
+}
+
+@media(max-width:600px) {
+  h1 { font-size: 32px; }
+  .scoreboard { flex-wrap: wrap; }
+  .game-card { padding: 15px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🕵️ ANIMAL DETECTIVE</h1>
+<p class="subtitle">
+  Three clues. One mystery animal. Can you guess it?
+</p>
+
+<div class="scoreboard">
+  <div class="team">
+    🔵 TEAM A
+    <div class="score" id="scoreA">0</div>
+    <button onclick="selectTeam('A')">Select A</button>
+  </div>
+
+  <div class="team">
+    🟣 TEAM B
+    <div class="score" id="scoreB">0</div>
+    <button onclick="selectTeam('B')">Select B</button>
+  </div>
+</div>
+
+<div class="game-card">
+
+<h2 id="round">ANIMAL 1 / 8</h2>
+
+<div id="clues"></div>
+
+<div id="animal" class="hidden">
+  <div class="animal-picture" id="picture"></div>
+  <div class="animal-name" id="answer"></div>
+</div>
+
+<div class="status" id="status">
+  Find the animal from the clues!
+</div>
+
+<button id="revealBtn" onclick="revealClue()">
+  Reveal clue 1
+</button>
+
+<button class="secondary" id="answerBtn"
+onclick="revealAnswer()" disabled>
+  Reveal answer
+</button>
+
+<br>
+
+<button class="green" id="awardBtn"
+onclick="awardPoints()" disabled>
+  Give points
+</button>
+
+<button class="secondary" onclick="noPoints()">
+  No points
+</button>
+
+<br>
+
+<button id="nextBtn" onclick="nextAnimal()" disabled>
+  Next animal →
+</button>
+
+</div>
+
+<br>
+
+<button onclick="resetGame()">↻ Reset game</button>
+
+<button onclick="toggleFullscreen()">⛶ Full screen</button>
+
+</div>
+
+<script>
+
+const animals = [
+
+{
+name:"Monkey",
+picture:"🐒",
+clues:[
+"I have a long tail.",
+"I can climb trees.",
+"I like eating bananas."
+]
+},
+
+{
+name:"Zebra",
+picture:"🦓",
+clues:[
+"I have four legs.",
+"My body has black and white stripes.",
+"I look like a horse."
+]
+},
+
+{
+name:"Kangaroo",
+picture:"🦘",
+clues:[
+"I have two strong back legs.",
+"I can jump very high.",
+"I carry my baby in a pouch."
+]
+},
+
+{
+name:"Camel",
+picture:"🐪",
+clues:[
+"I live in hot, dry places.",
+"I have long legs and a long neck.",
+"I have one or two humps."
+]
+},
+
+{
+name:"Lizard",
+picture:"🦎",
+clues:[
+"I am a small reptile.",
+"I have four short legs and a long tail.",
+"I like sitting on warm rocks."
+]
+},
+
+{
+name:"Flamingo",
+picture:"🦩",
+clues:[
+"I am a bird.",
+"I have long, thin legs and a long neck.",
+"I am usually pink."
+]
+},
+
+{
+name:"Crocodile",
+picture:"🐊",
+clues:[
+"I have a long tail.",
+"I have a big mouth and sharp teeth.",
+"I live in rivers and swamps."
+]
+},
+
+{
+name:"Penguin",
+picture:"🐧",
+clues:[
+"I am a bird, but I cannot fly.",
+"I have black and white feathers.",
+"I can swim very well in cold water."
+]
+}
+
+];
+
+let current = 0;
+let clueCount = 0;
+let team = "A";
+let scoreA = 0;
+let scoreB = 0;
+let finished = false;
+let answered = false;
+
+function selectTeam(t) {
+  team = t;
+  document.getElementById("status").textContent =
+    "Team " + t + " is answering!";
+}
+
+function render() {
+
+  const a = animals[current];
+
+  document.getElementById("round").textContent =
+    "ANIMAL " + (current+1) + " / 8";
+
+  let html = "";
+
+  for(let i=0;i<3;i++) {
+
+    if(i < clueCount) {
+      html += `<div class="clue">
+        🔎 Clue ${i+1}: ${a.clues[i]}
+      </div>`;
+    } else {
+      html += `<div class="clue hidden">
+        Clue ${i+1}
+      </div>`;
+    }
+
+  }
+
+  document.getElementById("clues").innerHTML = html;
+
+  document.getElementById("revealBtn").disabled =
+    clueCount >= 3 || finished;
+
+  document.getElementById("revealBtn").textContent =
+    clueCount < 3 ?
+    "Reveal clue " + (clueCount+1) :
+    "All clues revealed";
+
+  document.getElementById("answerBtn").disabled =
+    clueCount === 0 || answered || finished;
+
+  document.getElementById("awardBtn").disabled =
+    !answered || finished;
+
+  document.getElementById("nextBtn").disabled =
+    !finished;
+
+  document.getElementById("scoreA").textContent = scoreA;
+  document.getElementById("scoreB").textContent = scoreB;
+}
+
+function revealClue() {
+  if(clueCount < 3 && !finished) {
+    clueCount++;
+    render();
+  }
+}
+
+function revealAnswer() {
+
+  if(clueCount === 0 || answered || finished) return;
+
+  answered = true;
+
+  const a = animals[current];
+
+  document.getElementById("animal").classList.remove("hidden");
+  document.getElementById("picture").textContent = a.picture;
+  document.getElementById("answer").textContent = a.name;
+
+  document.getElementById("status").textContent =
+    "The answer is " + a.name + "!";
+
+  render();
+}
+
+function awardPoints() {
+
+  if(!answered || finished) return;
+
+  const points = Math.max(1, 4-clueCount);
+
+  if(team === "A") {
+    scoreA += points;
+  } else {
+    scoreB += points;
+  }
+
+  finished = true;
+
+  document.getElementById("status").textContent =
+    "⭐ Team " + team + " earns " + points + " points!";
+
+  render();
+}
+
+function noPoints() {
+
+  if(finished) return;
+
+  finished = true;
+
+  document.getElementById("status").textContent =
+    "Round finished. No points awarded.";
+
+  render();
+}
+
+function nextAnimal() {
+
+  if(!finished) return;
+
+  if(current < animals.length-1) {
+
+    current++;
+    clueCount = 0;
+    finished = false;
+    answered = false;
+
+    document.getElementById("animal").classList.add("hidden");
+    document.getElementById("status").textContent =
+      "Find the animal from the clues!";
+
+    render();
+
+  } else {
+
+    document.getElementById("round").textContent =
+      "GAME COMPLETE!";
+
+    document.getElementById("status").textContent =
+      scoreA === scoreB ?
+      "It's a tie!" :
+      scoreA > scoreB ?
+      "🏆 TEAM A WINS!" :
+      "🏆 TEAM B WINS!";
+
+    document.getElementById("nextBtn").disabled = true;
+  }
+}
+
+function resetGame() {
+
+  current = 0;
+  clueCount = 0;
+  team = "A";
+  scoreA = 0;
+  scoreB = 0;
+  finished = false;
+  answered = false;
+
+  document.getElementById("animal").classList.add("hidden");
+  document.getElementById("status").textContent =
+    "Find the animal from the clues!";
+
+  render();
+}
+
+function toggleFullscreen() {
+  if(!document.fullscreenElement) {
+    document.documentElement.requestFullscreen?.();
+  } else {
+    document.exitFullscreen?.();
+  }
+}
+
+render();
+
+</script>
+
+</body>
+</html>
