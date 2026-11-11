@@ -501,25 +501,6 @@ function drawTrack() {
   });
 }
 
-// DRAW SCOREBOARD
-function drawScoreboard() {
-  const board = $("scoreboard");
-  board.innerHTML = "";
-
-  players.forEach((player, i) => {
-    const card = document.createElement("div");
-    card.className = "score" + (i === currentPlayer ? " active" : "");
-
-    card.innerHTML = `
-      <div style="font-size:28px">${player.horse}</div>
-      <strong>${player.name}</strong>
-      ${player.position} / ${raceLength} spaces
-    `;
-
-    board.appendChild(card);
-  });
-}
-
 // LOAD A QUESTION
 function loadQuestion() {
   if (questionIndex >= questions.length) {
@@ -577,7 +558,7 @@ function startRace() {
   $("diceMessage").textContent = "Answer the question to roll.";
 
   drawTrack();
-  drawScoreboard();
+  ();
   showTurn();
 
   // Collapse settings after starting the race.
@@ -598,7 +579,7 @@ function showTurn() {
 
   loadQuestion();
   drawTrack();
-  drawScoreboard();
+  ();
 }
 
 // CHECK ANSWER
@@ -661,7 +642,7 @@ function rollDice() {
       player.name + " rolled " + result + "!";
 
     drawTrack();
-    drawScoreboard();
+    ();
 
     if (player.position >= raceLength) {
       raceOver = true;
