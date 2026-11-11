@@ -149,23 +149,72 @@
   <main>
     <div class="topbar"><div><div class="eyebrow">Your learning library</div><h1 id="pageTitle">Welcome back!</h1><p class="sub" id="pageSubtitle">A simple place to find and practise English.</p></div><div class="status" id="connectionStatus">● Checking connection</div></div>
 
-    <section class="page active" id="home">
-      <div class="hero"><div><div class="eyebrow" style="color:#bfdbfe">ENGLISH LEARNING HUB</div><h2>Small steps. Better English.</h2><p>Explore lessons, practise your skills and keep your learning materials together in one place.</p><button class="primary" onclick="showPage('catalogue')">Explore lessons →</button><a class="registry-link" href="./admin.html">Registry →</a></div><div class="hero-art">🎓</div></div>
-      <div class="stats">
-        <div class="stat"><strong id="totalLessons">8</strong><small>Sample lessons</small></div>
-        <div class="stat"><strong>6</strong><small>Learning sections</small></div>
-        <div class="stat"><strong>3</strong><small>Supported file types</small></div>
-        <div class="stat"><strong>∞</strong><small>Room to learn</small></div>
+    
+<section class="page active" id="home">
+  <div class="hero">
+    <div>
+      <div class="eyebrow" style="color:#bfdbfe">
+        ENGLISH LEARNING HUB
       </div>
-      <div class="section-head"><h2>Browse by skill</h2><button class="text-btn" onclick="showPage('catalogue')">View catalogue →</button></div>
-      <div class="categories" id="homeCategories"></div>
-      <div class="section-head"><h2>Recently added</h2></div><div class="lesson-grid" id="recentLessons"></div>
-    </section>
 
-    <section class="page" id="catalogue">
-      <div class="section-head"><h2>All learning materials</h2><span class="sub" id="resultCount"></span></div>
-      <div class="toolbar"><input class="search" id="searchInput" placeholder="Search by lesson name or ID..." aria-label="Search lessons"><select class="filter" id="categoryFilter"><option value="All">All sections</option><option>Listening</option><option>Reading</option><option>Writing</option><option>Vocabulary</option><option>Grammar</option></select></div>
-      <div class="lesson-grid" id="catalogueLessons"></div>
+      <h2>Small steps. Better English.</h2>
+
+      <p>
+        Explore lessons, practise your skills and keep your learning materials together in one place.
+      </p>
+
+      <button class="primary" onclick="showPage('catalogue')">
+        Explore lessons →
+      </button>
+
+      <a class="registry-link" href="./admin.html">
+        Registry →
+      </a>
+
+      <a class="registry-link" href="./animal-detective.html">
+        🐾 Animal Detective
+      </a>
+    </div>
+
+    <div class="hero-art">🎓</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <strong id="totalLessons">8</strong>
+      <small>Sample lessons</small>
+    </div>
+
+    <div class="stat">
+      <strong>6</strong>
+      <small>Learning sections</small>
+    </div>
+
+    <div class="stat">
+      <strong>3</strong>
+      <small>Supported file types</small>
+    </div>
+
+    <div class="stat">
+      <strong>∞</strong>
+      <small>Room to learn</small>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Browse by skill</h2>
+    <button class="text-btn" onclick="showPage('catalogue')">
+      View catalogue →
+    </button>
+  </div>
+
+  <div class="categories" id="homeCategories"></div>
+
+  <div class="section-head">
+    <h2>Recently added</h2>
+  </div>
+
+  <div class="lesson-grid" id="recentLessons"></div>
     </section>
 
     <section class="page" id="detail">
@@ -429,6 +478,3 @@ if("serviceWorker" in navigator && location.protocol!=="file:"){
 <script src="./festive.js"></script>
 </body>
 </html>
-<a href="animal-detective.html">
-  🐾 Animal Detective
-</a>
