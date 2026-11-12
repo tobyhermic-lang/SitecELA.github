@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,77 +6,535 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#172554">
   <meta name="description" content="English Learning Hub - an offline-friendly library of English lessons.">
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="./manifest.json">
   <title>English Learning Hub</title>
-  <style>
-    :root{--navy:#172554;--blue:#2563eb;--pale:#eff6ff;--ink:#172033;--muted:#64748b;--line:#e2e8f0;--bg:#f6f8fc;--white:#fff}
-    *{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--ink)}
-    button,input{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:grid;grid-template-columns:245px 1fr}
-    aside{background:var(--navy);color:white;padding:24px 16px;display:flex;flex-direction:column;gap:24px}
-    .brand{display:flex;align-items:center;gap:11px;padding:4px 8px}.brand-icon{width:40px;height:40px;border-radius:13px;background:#60a5fa;display:grid;place-items:center;font-size:22px}
-    .brand strong{display:block;font-size:16px}.brand small{color:#bfdbfe}
-    .nav-label{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:#93c5fd;padding:0 12px;margin:8px 0}
-    nav{display:grid;gap:5px}.nav-btn{border:0;background:transparent;color:#dbeafe;text-align:left;padding:11px 12px;border-radius:10px;display:flex;align-items:center;gap:12px}
-    .nav-btn:hover,.nav-btn.active{background:#263b70;color:white}.nav-btn span:first-child{width:22px;text-align:center}
-    .side-note{margin-top:auto;background:#203768;padding:14px;border-radius:14px;color:#dbeafe;font-size:12px;line-height:1.5}
-    main{padding:30px clamp(18px,4vw,54px);max-width:1500px;width:100%;margin:auto}
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:28px}.eyebrow{color:var(--blue);font-size:12px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
-    h1{font-size:clamp(25px,3vw,34px);margin:6px 0}.sub{color:var(--muted);margin:0;line-height:1.6}
-    .status{border:1px solid var(--line);background:white;border-radius:999px;padding:9px 13px;font-size:12px;color:#166534;white-space:nowrap}
-    .hero{background:linear-gradient(120deg,#1d4ed8,#172554);color:white;border-radius:22px;padding:clamp(24px,4vw,42px);display:flex;justify-content:space-between;gap:20px;align-items:center;overflow:hidden}
-    .hero h2{font-size:clamp(25px,4vw,38px);margin:0 0 10px;max-width:520px}.hero p{color:#dbeafe;line-height:1.6;max-width:520px}.hero-art{font-size:clamp(65px,9vw,110px);padding:12px}
-    .primary{background:white;color:#1d4ed8;border:0;border-radius:10px;padding:11px 16px;font-weight:750;margin-top:8px}
-    .registry-link {
-  display: inline-block;
-  background: #dbeafe;
-  color: #172554;
-  border: 1px solid #bfdbfe;
-  border-radius: 10px;
-  padding: 11px 16px;
-  font-weight: 750;
-  margin-top: 8px;
-  margin-left: 8px;
-  text-decoration: none;
-}
 
-.registry-link:hover {
-  background: white;
-}
-    .section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:30px 0 14px}.section-head h2{margin:0;font-size:20px}.text-btn{border:0;background:none;color:var(--blue);font-weight:700}
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:18px}.stat,.card,.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:17px}.stat strong{font-size:25px;display:block}.stat small{color:var(--muted)}
-    .categories{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.category{border:1px solid var(--line);background:white;border-radius:15px;padding:18px 13px;text-align:left;transition:.15s}.category:hover,.lesson:hover{border-color:#93c5fd;transform:translateY(-2px)}.cat-icon{font-size:25px}.category strong{display:block;margin:10px 0 4px}.category small{color:var(--muted)}
-    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.search{flex:1;min-width:200px;border:1px solid var(--line);border-radius:11px;padding:12px 14px;background:white}.filter{border:1px solid var(--line);background:white;border-radius:11px;padding:11px 14px;color:var(--ink)}
-    .lesson-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.lesson{background:white;border:1px solid var(--line);border-radius:15px;padding:17px;text-align:left;transition:.15s}.lesson-top{display:flex;justify-content:space-between;align-items:center}.lesson-id{font-size:11px;color:var(--muted);font-weight:750}.tag{font-size:11px;padding:5px 8px;border-radius:99px;background:var(--pale);color:#1d4ed8}.lesson h3{font-size:16px;margin:14px 0 5px}.lesson p{font-size:13px;color:var(--muted);margin:0;line-height:1.5}.filetypes{display:flex;gap:6px;margin-top:14px}.file{font-size:10px;border:1px solid var(--line);border-radius:6px;padding:4px 6px;color:#475569}
-    .page{display:none}.page.active{display:block}.back{border:0;background:none;color:var(--blue);font-weight:700;padding:0;margin-bottom:18px}.detail-box{background:white;border:1px solid var(--line);border-radius:18px;padding:clamp(20px,4vw,32px)}.detail-box h2{margin:8px 0}.resource{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:10px}.resource button,.secondary{border:1px solid #bfdbfe;background:var(--pale);color:#1d4ed8;border-radius:9px;padding:9px 12px;font-weight:700}
-    .qr-layout{display:grid;grid-template-columns:1fr 1fr;gap:15px}.qr-input{display:flex;gap:8px;margin-top:12px}.qr-input input{min-width:0;flex:1;border:1px solid var(--line);border-radius:9px;padding:11px}.result{margin-top:12px;color:#166534;font-weight:650}.camera-box{background:#0f172a;color:#cbd5e1;border-radius:14px;min-height:180px;display:grid;place-items:center;text-align:center;padding:20px}
-    .empty{padding:30px;text-align:center;color:var(--muted);background:white;border:1px dashed var(--line);border-radius:14px;grid-column:1/-1}
+  <style>
+    :root {
+      --navy: #172554;
+      --blue: #2563eb;
+      --pale: #eff6ff;
+      --ink: #172033;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --bg: #f6f8fc;
+      --white: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 245px 1fr;
+    }
+
+    aside {
+      background: var(--navy);
+      color: white;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 4px 8px;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
+      background: #60a5fa;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 16px;
+    }
+
+    .brand small {
+      color: #bfdbfe;
+    }
+
+    .nav-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #93c5fd;
+      padding: 0 12px;
+      margin: 8px 0;
+    }
+
+    nav {
+      display: grid;
+      gap: 5px;
+    }
+
+    .nav-btn {
+      border: 0;
+      background: transparent;
+      color: #dbeafe;
+      text-align: left;
+      padding: 11px 12px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-btn:hover,
+    .nav-btn.active {
+      background: #263b70;
+      color: white;
+    }
+
+    .nav-btn span:first-child {
+      width: 22px;
+      text-align: center;
+    }
+
+    .side-note {
+      margin-top: auto;
+      background: #203768;
+      padding: 14px;
+      border-radius: 14px;
+      color: #dbeafe;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    main {
+      padding: 30px clamp(18px, 4vw, 54px);
+      max-width: 1500px;
+      width: 100%;
+      margin: auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(25px, 3vw, 34px);
+      margin: 6px 0;
+    }
+
+    .sub {
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .status {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-size: 12px;
+      color: #166534;
+      white-space: nowrap;
+    }
+
+    .hero {
+      background: linear-gradient(120deg, #1d4ed8, #172554);
+      color: white;
+      border-radius: 22px;
+      padding: clamp(24px, 4vw, 42px);
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero h2 {
+      font-size: clamp(25px, 4vw, 38px);
+      margin: 0 0 10px;
+      max-width: 520px;
+    }
+
+    .hero p {
+      color: #dbeafe;
+      line-height: 1.6;
+      max-width: 520px;
+    }
+
+    .hero-art {
+      font-size: clamp(65px, 9vw, 110px);
+      padding: 12px;
+    }
+
+    .primary {
+      background: white;
+      color: #1d4ed8;
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-weight: 750;
+      margin-top: 8px;
+    }
+
+    .registry-link {
+      display: inline-block;
+      background: #dbeafe;
+      color: #172554;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-weight: 750;
+      margin-top: 8px;
+      margin-left: 8px;
+      text-decoration: none;
+    }
+
+    .registry-link:hover {
+      background: white;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 12px;
+      margin: 30px 0 14px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .text-btn {
+      border: 0;
+      background: none;
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 13px;
+      margin-top: 18px;
+    }
+
+    .stat,
+    .card,
+    .panel {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 17px;
+    }
+
+    .stat strong {
+      font-size: 25px;
+      display: block;
+    }
+
+    .stat small {
+      color: var(--muted);
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .category {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 15px;
+      padding: 18px 13px;
+      text-align: left;
+      transition: .15s;
+    }
+
+    .category:hover,
+    .lesson:hover {
+      border-color: #93c5fd;
+      transform: translateY(-2px);
+    }
+
+    .cat-icon {
+      font-size: 25px;
+    }
+
+    .category strong {
+      display: block;
+      margin: 10px 0 4px;
+    }
+
+    .category small {
+      color: var(--muted);
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 18px 0;
+    }
+
+    .search {
+      flex: 1;
+      min-width: 200px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      padding: 12px 14px;
+      background: white;
+    }
+
+    .filter {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 11px;
+      padding: 11px 14px;
+      color: var(--ink);
+    }
+
+    .catalogue-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 8px 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 13px;
+    }
+
+    .lesson {
+      width: 100%;
+      font-family: inherit;
+      color: inherit;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      padding: 17px;
+      text-align: left;
+      transition: .15s;
+    }
+
+    .lesson-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .lesson-id {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 750;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 5px 8px;
+      border-radius: 99px;
+      background: var(--pale);
+      color: #1d4ed8;
+    }
+
+    .lesson h3 {
+      font-size: 16px;
+      margin: 14px 0 5px;
+    }
+
+    .lesson p {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .filetypes {
+      display: flex;
+      gap: 6px;
+      margin-top: 14px;
+    }
+
+    .file {
+      font-size: 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 4px 6px;
+      color: #475569;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .back {
+      border: 0;
+      background: none;
+      color: var(--blue);
+      font-weight: 700;
+      padding: 0;
+      margin-bottom: 18px;
+    }
+
+    .detail-box {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: clamp(20px, 4vw, 32px);
+    }
+
+    .detail-box h2 {
+      margin: 8px 0;
+    }
+
+    .resource {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 10px;
+    }
+
+    .resource button,
+    .secondary {
+      border: 1px solid #bfdbfe;
+      background: var(--pale);
+      color: #1d4ed8;
+      border-radius: 9px;
+      padding: 9px 12px;
+      font-weight: 700;
+    }
+
+    .qr-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .qr-input {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .qr-input input {
+      min-width: 0;
+      flex: 1;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 11px;
+    }
+
+    .result {
+      margin-top: 12px;
+      color: #166534;
+      font-weight: 650;
+    }
+
+    .camera-box {
+      background: #0f172a;
+      color: #cbd5e1;
+      border-radius: 14px;
+      min-height: 180px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .empty {
+      padding: 30px;
+      text-align: center;
+      color: var(--muted);
+      background: white;
+      border: 1px dashed var(--line);
+      border-radius: 14px;
+      grid-column: 1 / -1;
+    }
+
+    /* LISTENING SECTION */
+
     .listening-list {
       display: grid;
       gap: 12px;
       margin-top: 18px;
     }
+
     .listening-item {
       background: white;
       border: 1px solid var(--line);
       border-radius: 12px;
       padding: 16px;
     }
+
     .listening-item strong {
       display: block;
       margin-bottom: 10px;
     }
+
     .listening-item audio {
       width: 100%;
       max-width: 500px;
     }
 
     /* SHADOWING SECTION */
+
     .shadowing-list {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 13px;
       margin-top: 18px;
     }
+
     .shadowing-item {
       background: white;
       border: 1px solid var(--line);
@@ -84,10 +543,12 @@
       text-align: left;
       cursor: pointer;
     }
+
     .shadowing-item:hover {
       border-color: #93c5fd;
       transform: translateY(-2px);
     }
+
     .shadowing-player {
       background: white;
       border: 1px solid var(--line);
@@ -95,6 +556,7 @@
       padding: 20px;
       margin-top: 22px;
     }
+
     .shadowing-player video {
       display: block;
       width: 100%;
@@ -102,271 +564,692 @@
       border-radius: 12px;
       background: #000;
     }
+
     .shadowing-player h3 {
       margin-top: 0;
     }
 
+    .lesson:focus-visible,
+    .category:focus-visible,
+    .nav-btn:focus-visible {
+      outline: 3px solid #60a5fa;
+      outline-offset: 2px;
+    }
+
     /* MOBILE RESPONSIVE */
-    @media(max-width:900px) {
+
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        padding: 12px 14px;
+        gap: 10px;
+      }
+
+      .brand {
+        padding: 2px 5px;
+      }
+
+      .brand-icon {
+        width: 34px;
+        height: 34px;
+      }
+
+      nav {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 3px;
+      }
+
+      .nav-label,
+      .side-note {
+        display: none;
+      }
+
+      .nav-btn {
+        white-space: nowrap;
+        padding: 9px 11px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .categories {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .lesson-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
       .shadowing-list {
         grid-template-columns: repeat(2, 1fr);
       }
     }
-    @media(max-width:560px) {
+
+    @media (max-width: 560px) {
+      main {
+        padding: 20px 14px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .status {
+        font-size: 10px;
+      }
+
+      .hero-art {
+        display: none;
+      }
+
+      .categories {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .lesson-grid,
+      .qr-layout,
       .shadowing-list {
         grid-template-columns: 1fr;
       }
+
+      .section-head {
+        margin-top: 24px;
+      }
+
+      .category {
+        padding: 14px;
+      }
+
+      .stats {
+        gap: 9px;
+      }
+
+      .stat {
+        padding: 13px;
+      }
+
       .shadowing-player {
         padding: 12px;
       }
+
+      .catalogue-summary {
+        align-items: flex-start;
+        flex-direction: column;
+      }
     }
 
-    footer{padding:28px 0 8px;color:var(--muted);font-size:12px;text-align:center}
-    @media(max-width:900px){.app{grid-template-columns:1fr}aside{padding:12px 14px;gap:10px}.brand{padding:2px 5px}.brand-icon{width:34px;height:34px}nav{display:flex;overflow-x:auto;padding-bottom:3px}.nav-label,.side-note{display:none}.nav-btn{white-space:nowrap;padding:9px 11px}.stats{grid-template-columns:repeat(2,1fr)}.categories{grid-template-columns:repeat(3,1fr)}.lesson-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:560px){main{padding:20px 14px}.topbar{align-items:flex-start}.status{font-size:10px}.hero-art{display:none}.categories{grid-template-columns:repeat(2,1fr)}.lesson-grid,.qr-layout{grid-template-columns:1fr}.section-head{margin-top:24px}.category{padding:14px}.stats{gap:9px}.stat{padding:13px}}
+    footer {
+      padding: 28px 0 8px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
   </style>
+
   <link rel="stylesheet" href="./festive.css">
 </head>
+
 <body>
 <div class="app">
-  <aside>
-    <div class="brand"><div class="brand-icon">📚</div><div><strong>English Learning Hub</strong><small>Learn anywhere</small></div></div>
-    <div><div class="nav-label">Workspace</div><nav id="navigation">
-      <button class="nav-btn active" data-page="home"><span>⌂</span>Home</button>
-      <button class="nav-btn" data-page="catalogue"><span>▦</span>Catalogue</button>
-      <button class="nav-btn" data-page="qr"><span>▧</span>QR Lookup</button>
-    </nav></div>
-    <div><div class="nav-label">Learning sections</div><nav id="categoryNav">
-      <button class="nav-btn" data-page="listening"><span>🎧</span>Listening</button>
-      <button class="nav-btn" data-category="Reading"><span>📖</span>Reading</button>
-      <button class="nav-btn" data-category="Writing"><span>✍️</span>Writing</button>
-      <button class="nav-btn" data-category="Vocabulary"><span>🔤</span>Vocabulary</button>
-      <button class="nav-btn" data-category="Grammar"><span>🧩</span>Grammar</button>
-      <button class="nav-btn" data-page="shadowing"><span>🎬</span>Shadowing</button>
-    </nav></div>
-    <div class="side-note">💡 <strong>Offline-friendly learning</strong><br>Install this hub on your device. Lessons you cache can be opened without an internet connection.</div>
-  </aside>
-  <main>
-    <div class="topbar"><div><div class="eyebrow">Your learning library</div><h1 id="pageTitle">Welcome back!</h1><p class="sub" id="pageSubtitle">A simple place to find and practise English.</p></div><div class="status" id="connectionStatus">● Checking connection</div></div>
 
-    
-<section class="page active" id="home">
-  <div class="hero">
+  <aside>
+    <div class="brand">
+      <div class="brand-icon">📚</div>
+      <div>
+        <strong>English Learning Hub</strong>
+        <small>Learn anywhere</small>
+      </div>
+    </div>
+
     <div>
-      <div class="eyebrow" style="color:#bfdbfe">
-        ENGLISH LEARNING HUB
+      <div class="nav-label">Workspace</div>
+      <nav id="navigation">
+        <button class="nav-btn active" data-page="home">
+          <span>⌂</span>Home
+        </button>
+        <button class="nav-btn" data-page="catalogue">
+          <span>▦</span>Catalogue
+        </button>
+        <button class="nav-btn" data-page="qr">
+          <span>▧</span>QR Lookup
+        </button>
+      </nav>
+    </div>
+
+    <div>
+      <div class="nav-label">Learning sections</div>
+      <nav id="categoryNav">
+        <button class="nav-btn" data-page="listening">
+          <span>🎧</span>Listening
+        </button>
+        <button class="nav-btn" data-category="Reading">
+          <span>📖</span>Reading
+        </button>
+        <button class="nav-btn" data-category="Writing">
+          <span>✍️</span>Writing
+        </button>
+        <button class="nav-btn" data-category="Vocabulary">
+          <span>🔤</span>Vocabulary
+        </button>
+        <button class="nav-btn" data-category="Grammar">
+          <span>🧩</span>Grammar
+        </button>
+        <button class="nav-btn" data-page="shadowing">
+          <span>🎬</span>Shadowing
+        </button>
+      </nav>
+    </div>
+
+    <div class="side-note">
+      💡 <strong>Offline-friendly learning</strong><br>
+      Install this hub on your device. Lessons you cache can be opened without an internet connection.
+    </div>
+  </aside>
+
+  <main>
+
+    <div class="topbar">
+      <div>
+        <div class="eyebrow">Your learning library</div>
+        <h1 id="pageTitle">Welcome back!</h1>
+        <p class="sub" id="pageSubtitle">
+          A simple place to find and practise English.
+        </p>
+      </div>
+      <div class="status" id="connectionStatus">
+        ● Checking connection
+      </div>
+    </div>
+
+    <!-- HOME PAGE -->
+
+    <section class="page active" id="home">
+
+      <div class="hero">
+        <div>
+          <div class="eyebrow" style="color:#bfdbfe">
+            ENGLISH LEARNING HUB
+          </div>
+
+          <h2>Small steps. Better English.</h2>
+
+          <p>
+            Explore lessons, practise your skills and keep your learning materials together in one place.
+          </p>
+
+          <button class="primary" onclick="showPage('catalogue')">
+            Explore lessons →
+          </button>
+
+          <a class="registry-link" href="./admin.html">
+            Registry →
+          </a>
+
+          <a class="registry-link" href="./animal-detective.html">
+            🐾 Animal Detective
+          </a>
+        </div>
+
+        <div class="hero-art">🎓</div>
       </div>
 
-      <h2>Small steps. Better English.</h2>
+      <div class="stats">
+        <div class="stat">
+          <strong id="totalLessons">16</strong>
+          <small>Sample lessons</small>
+        </div>
 
-      <p>
-        Explore lessons, practise your skills and keep your learning materials together in one place.
-      </p>
+        <div class="stat">
+          <strong>6</strong>
+          <small>Learning sections</small>
+        </div>
 
-      <button class="primary" onclick="showPage('catalogue')">
-        Explore lessons →
-      </button>
+        <div class="stat">
+          <strong>3</strong>
+          <small>Supported file types</small>
+        </div>
 
-      <a class="registry-link" href="./admin.html">
-        Registry →
-      </a>
+        <div class="stat">
+          <strong>∞</strong>
+          <small>Room to learn</small>
+        </div>
+      </div>
 
-      <a class="registry-link" href="./animal-detective.html">
-        🐾 Animal Detective
-      </a>
-    </div>
+      <div class="section-head">
+        <h2>Browse by skill</h2>
+        <button class="text-btn" onclick="showPage('catalogue')">
+          View catalogue →
+        </button>
+      </div>
 
-    <div class="hero-art">🎓</div>
-  </div>
+      <div class="categories" id="homeCategories"></div>
 
-  <div class="stats">
-    <div class="stat">
-      <strong id="totalLessons">8</strong>
-      <small>Sample lessons</small>
-    </div>
+      <div class="section-head">
+        <h2>Recently added</h2>
+      </div>
 
-    <div class="stat">
-      <strong>6</strong>
-      <small>Learning sections</small>
-    </div>
+      <div class="lesson-grid" id="recentLessons"></div>
 
-    <div class="stat">
-      <strong>3</strong>
-      <small>Supported file types</small>
-    </div>
-
-    <div class="stat">
-      <strong>∞</strong>
-      <small>Room to learn</small>
-    </div>
-  </div>
-
-  <div class="section-head">
-    <h2>Browse by skill</h2>
-    <button class="text-btn" onclick="showPage('catalogue')">
-      View catalogue →
-    </button>
-  </div>
-
-  <div class="categories" id="homeCategories"></div>
-
-  <div class="section-head">
-    <h2>Recently added</h2>
-  </div>
-
-  <div class="lesson-grid" id="recentLessons"></div>
     </section>
+
+    <!-- CATALOGUE PAGE -->
+
+    <section class="page" id="catalogue">
+
+      <div class="section-head">
+        <h2>Lesson catalogue</h2>
+        <span class="sub">Find a lesson to practise</span>
+      </div>
+
+      <div class="toolbar" role="search">
+
+        <input
+          class="search"
+          id="searchInput"
+          type="search"
+          placeholder="Search by lesson name, code or skill..."
+          aria-label="Search lessons">
+
+        <select
+          class="filter"
+          id="categoryFilter"
+          aria-label="Filter lessons by skill">
+
+          <option value="All">All skills</option>
+          <option value="Listening">Listening</option>
+          <option value="Reading">Reading</option>
+          <option value="Writing">Writing</option>
+          <option value="Vocabulary">Vocabulary</option>
+          <option value="Grammar">Grammar</option>
+
+        </select>
+
+      </div>
+
+      <div class="catalogue-summary">
+        <span id="resultCount" aria-live="polite">0 lessons</span>
+        <span>Choose a lesson to view its details.</span>
+      </div>
+
+      <div class="lesson-grid" id="catalogueLessons"></div>
+
+    </section>
+
+    <!-- LESSON DETAIL PAGE -->
 
     <section class="page" id="detail">
-      <button class="back" onclick="showPage('catalogue')">← Back to catalogue</button><div id="lessonDetail"></div>
+      <button class="back" onclick="showPage('catalogue')">
+        ← Back to catalogue
+      </button>
+
+      <div id="lessonDetail"></div>
     </section>
 
+    <!-- LISTENING SECTION -->
+
     <section class="page" id="listening">
+
       <div class="section-head">
         <h2>Listening Practice</h2>
         <span class="sub">10 audio lessons</span>
       </div>
+
       <p class="sub">
         Choose a lesson and press Play to listen.
       </p>
+
       <div id="listening-list" class="listening-list"></div>
+
     </section>
 
     <!-- SHADOWING SECTION -->
+
     <section class="page" id="shadowing">
+
       <div class="section-head">
         <h2>Shadowing Practice</h2>
         <span class="sub">Watch, listen and repeat</span>
       </div>
+
       <p class="sub">
         Choose a lesson and practise speaking English.
       </p>
+
       <div id="shadowingLessonList" class="shadowing-list"></div>
+
       <div id="shadowingPlayer" class="shadowing-player" hidden>
+
         <h3 id="shadowingLessonTitle"></h3>
+
         <video
           id="shadowingVideo"
           controls
           playsinline
           preload="metadata">
         </video>
+
       </div>
+
     </section>
-    <!-- END SHADOWING SECTION -->
+
+    <!-- QR LOOKUP SECTION -->
 
     <section class="page" id="qr">
+
       <div class="qr-layout">
+
         <div class="panel">
+
           <div class="eyebrow">Quick access</div>
           <h2>Find a lesson by code</h2>
+
           <p class="sub">
             Enter a lesson ID printed below a QR code.
           </p>
+
           <div class="qr-input">
-            <input id="qrCode" placeholder="Enter lesson code">
-            <button class="secondary" id="lookupBtn">Find</button>
+            <input
+              id="qrCode"
+              placeholder="Enter lesson code"
+              aria-label="Lesson code">
+
+            <button class="secondary" id="lookupBtn">
+              Find
+            </button>
           </div>
+
           <div class="result" id="qrResult" aria-live="polite"></div>
+
         </div>
+
         <div class="panel">
+
           <div class="eyebrow">Camera scanner</div>
           <h2>Scan a QR code</h2>
+
           <div class="camera-box">
+
             <div style="width:100%">
+
               <h3>Scan your QR sticker</h3>
-              <div id="qr-reader" style="width:100%; max-width:400px; margin:auto;"></div>
-              <p id="scan-status">Ready to scan. Allow camera access when asked.</p>
+
+              <div
+                id="qr-reader"
+                style="width:100%; max-width:400px; margin:auto;">
+              </div>
+
+              <p id="scan-status">
+                Ready to scan. Allow camera access when asked.
+              </p>
+
               <div id="listening-result" hidden>
                 <h3 id="sentence-display"></h3>
-                <audio id="audio-player" controls style="width:100%"></audio>
+                <audio
+                  id="audio-player"
+                  controls
+                  style="width:100%">
+                </audio>
               </div>
+
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
-    <footer>English Learning Hub · Demo version · Your learning materials stay organised.</footer>
+    <footer>
+      English Learning Hub · Demo version · Your learning materials stay organised.
+    </footer>
+
   </main>
 </div>
 
 <script>
+"use strict";
+
+/* =========================================
+   LESSON DATA
+   ========================================= */
+
 const lessons = [
- {id:"R001",title:"A Healthy Lifestyle",category:"Reading",level:"A2",description:"Read a short text and find important details.",files:["PDF","JPG"]},
- {id:"R002",title:"Life in the City",category:"Reading",level:"A2",description:"Read about places in a town and daily routines.",files:["PDF"]},
- {id:"W001",title:"My Favourite Place",category:"Writing",level:"A2",description:"Plan and write a short paragraph with useful prompts.",files:["PDF","JPG"]},
- {id:"V001",title:"Personality and Feelings",category:"Vocabulary",level:"A2",description:"Learn and practise adjectives for describing people.",files:["PDF","JPG","MP3"]},
- {id:"G001",title:"Present Simple or Present Continuous?",category:"Grammar",level:"A1–A2",description:"Choose the correct tense using time expressions and context.",files:["PDF"]},
- {id:"G002",title:"Past Simple",category:"Grammar",level:"A2",description:"Practise regular and irregular verbs in past sentences.",files:["PDF"]}
+  {
+    id: "R001",
+    title: "A Healthy Lifestyle",
+    category: "Reading",
+    level: "A2",
+    description: "Read a short text and find important details.",
+    files: ["PDF", "JPG"]
+  },
+  {
+    id: "R002",
+    title: "Life in the City",
+    category: "Reading",
+    level: "A2",
+    description: "Read about places in a town and daily routines.",
+    files: ["PDF"]
+  },
+  {
+    id: "W001",
+    title: "My Favourite Place",
+    category: "Writing",
+    level: "A2",
+    description: "Plan and write a short paragraph with useful prompts.",
+    files: ["PDF", "JPG"]
+  },
+  {
+    id: "V001",
+    title: "Personality and Feelings",
+    category: "Vocabulary",
+    level: "A2",
+    description: "Learn and practise adjectives for describing people.",
+    files: ["PDF", "JPG", "MP3"]
+  },
+  {
+    id: "G001",
+    title: "Present Simple or Present Continuous?",
+    category: "Grammar",
+    level: "A1–A2",
+    description: "Choose the correct tense using time expressions and context.",
+    files: ["PDF"]
+  },
+  {
+    id: "G002",
+    title: "Past Simple",
+    category: "Grammar",
+    level: "A2",
+    description: "Practise regular and irregular verbs in past sentences.",
+    files: ["PDF"]
+  }
 ];
 
-// Create the first 10 Listening lessons
-const listeningLessons = Array.from({ length: 10 }, (_, index) => {
-  const number = String(index + 1).padStart(3, "0");
+/* Create the first 10 Listening lessons */
 
-  return {
-    id: `AH-LIV-${number}`,
-    title: `Listening Lesson ${number}`,
-    category: "Listening",
-    level: "A2",
-    description: `Listen to audio lesson ${number}.`,
-    files: ["MP3"]
-  };
-});
+const listeningLessons = Array.from(
+  { length: 10 },
+  (_, index) => {
+    const number = String(index + 1).padStart(3, "0");
+
+    return {
+      id: `AH-LIV-${number}`,
+      title: `Listening Lesson ${number}`,
+      category: "Listening",
+      level: "A2",
+      description: `Listen to audio lesson ${number}.`,
+      files: ["MP3"]
+    };
+  }
+);
 
 lessons.unshift(...listeningLessons);
 
-const icons={Listening:"🎧",Reading:"📖",Writing:"✍️",Vocabulary:"🔤",Grammar:"🧩"};
-let currentCategory="All";
-const $=id=>document.getElementById(id);
+const icons = {
+  Listening: "🎧",
+  Reading: "📖",
+  Writing: "✍️",
+  Vocabulary: "🔤",
+  Grammar: "🧩"
+};
 
-function lessonCard(l){
-  return `<button class="lesson" onclick="openLesson('${l.id}')"><div class="lesson-top"><span class="lesson-id">${l.id}</span><span class="tag">${l.level}</span></div><h3>${icons[l.category]} ${l.title}</h3><p>${l.description}</p><div class="filetypes">${l.files.map(f=>`<span class="file">${f}</span>`).join("")}</div></button>`;
+let currentCategory = "All";
+
+const $ = id => document.getElementById(id);
+
+/* =========================================
+   LESSON CARD RENDERING
+   ========================================= */
+
+function lessonCard(lesson) {
+  return `
+    <button
+      class="lesson"
+      type="button"
+      onclick="openLesson('${lesson.id}')">
+
+      <div class="lesson-top">
+        <span class="lesson-id">${lesson.id}</span>
+        <span class="tag">${lesson.level}</span>
+      </div>
+
+      <h3>${icons[lesson.category]} ${lesson.title}</h3>
+
+      <p>${lesson.description}</p>
+
+      <div class="filetypes">
+        ${lesson.files.map(file =>
+          `<span class="file">${file}</span>`
+        ).join("")}
+      </div>
+
+    </button>
+  `;
 }
 
-function renderCards(target,items){
-  $(target).innerHTML=items.length?items.map(lessonCard).join(""):'<div class="empty">No lessons found. Try another search.</div>';
+function renderCards(target, items) {
+  const element = $(target);
+
+  if (!element) return;
+
+  element.innerHTML = items.length
+    ? items.map(lessonCard).join("")
+    : '<div class="empty">No lessons found. Try another search.</div>';
 }
 
-function renderHome(){
-  $("homeCategories").innerHTML=Object.keys(icons).map(c=>`<button class="category" onclick="filterCategory('${c}')"><span class="cat-icon">${icons[c]}</span><strong>${c}</strong><small>${lessons.filter(l=>l.category===c).length} sample lessons</small></button>`).join("");
-  renderCards("recentLessons",lessons.slice(0,3));
-  $("totalLessons").textContent=lessons.length;
+/* =========================================
+   HOME PAGE
+   ========================================= */
+
+function renderHome() {
+  $("homeCategories").innerHTML =
+    Object.keys(icons).map(category => `
+      <button
+        class="category"
+        type="button"
+        onclick="filterCategory('${category}')">
+
+        <span class="cat-icon">${icons[category]}</span>
+
+        <strong>${category}</strong>
+
+        <small>
+          ${lessons.filter(
+            lesson => lesson.category === category
+          ).length} sample lessons
+        </small>
+
+      </button>
+    `).join("");
+
+  renderCards("recentLessons", lessons.slice(0, 3));
+
+  $("totalLessons").textContent = lessons.length;
 }
 
-function renderCatalogue(){
-  const q=$("searchInput").value.toLowerCase().trim(),cat=$("categoryFilter").value;
-  const items=lessons.filter(l=>(cat==="All"||l.category===cat)&&(`${l.id} ${l.title} ${l.description} ${l.category}`).toLowerCase().includes(q));
-  $("resultCount").textContent=`${items.length} lesson${items.length===1?"":"s"}`;
-  renderCards("catalogueLessons",items);
+/* =========================================
+   CATALOGUE
+   ========================================= */
+
+function renderCatalogue() {
+  const searchInput = $("searchInput");
+  const categoryFilter = $("categoryFilter");
+
+  if (!searchInput || !categoryFilter) return;
+
+  const query = searchInput.value.toLowerCase().trim();
+  const category = categoryFilter.value;
+
+  const filteredLessons = lessons.filter(lesson => {
+    const matchesCategory =
+      category === "All" || lesson.category === category;
+
+    const searchableText = `
+      ${lesson.id}
+      ${lesson.title}
+      ${lesson.description}
+      ${lesson.category}
+    `.toLowerCase();
+
+    const matchesSearch = searchableText.includes(query);
+
+    return matchesCategory && matchesSearch;
+  });
+
+  $("resultCount").textContent =
+    `${filteredLessons.length} lesson${filteredLessons.length === 1 ? "" : "s"}`;
+
+  renderCards("catalogueLessons", filteredLessons);
 }
 
-// SHADOWING LESSON DATA
-const shadowingLessons = Array.from({ length: 10 }, (_, index) => {
-  const number = String(index + 1).padStart(3, "0");
+/* =========================================
+   SHADOWING LESSON DATA
+   ========================================= */
 
-  return {
-    id: `AH-SHAD-${number}`,
-    title: `Shadowing Lesson ${number}`,
-    video: `./shadowing/AH-SHAD-${number}.mp4`
-  };
-});
+const shadowingLessons = Array.from(
+  { length: 10 },
+  (_, index) => {
+    const number = String(index + 1).padStart(3, "0");
 
-// DISPLAY SHADOWING LESSON BUTTONS
+    return {
+      id: `AH-SHAD-${number}`,
+      title: `Shadowing Lesson ${number}`,
+      video: `./shadowing/AH-SHAD-${number}.mp4`
+    };
+  }
+);
+
+/* DISPLAY SHADOWING LESSON BUTTONS */
+
 function renderShadowingLessons() {
   const list = $("shadowingLessonList");
 
+  if (!list) return;
+
   list.innerHTML = shadowingLessons.map((lesson, index) => `
-    <button class="shadowing-item" type="button"
+    <button
+      class="shadowing-item"
+      type="button"
       onclick="playShadowingLesson(${index})">
+
       <strong>${lesson.id}</strong>
+
       <p>${lesson.title}</p>
+
       <span class="tag">MP4 Video</span>
+
     </button>
   `).join("");
 }
 
-// PLAY THE SELECTED SHADOWING VIDEO
+/* PLAY THE SELECTED SHADOWING VIDEO */
+
 function playShadowingLesson(index) {
   const lesson = shadowingLessons[index];
 
@@ -388,93 +1271,398 @@ function playShadowingLesson(index) {
   });
 }
 
-function showPage(page,title,subtitle){
-  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===page));
-  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+/* =========================================
+   PAGE NAVIGATION
+   ========================================= */
 
-  $("pageTitle").textContent=title||({
-    home:"Welcome back!",
-    catalogue:"Lesson catalogue",
-    listening:"Listening Practice",
-    shadowing:"Shadowing Practice",
-    qr:"QR lesson lookup",
-    detail:"Lesson details"
-  }[page]);
+function showPage(page, title, subtitle) {
 
-  $("pageSubtitle").textContent=subtitle||({
-    home:"A simple place to find and practise English.",
-    catalogue:"Search, filter and open your learning materials.",
-    listening:"Listen and practise your English.",
-    shadowing:"Watch, listen and repeat.",
-    qr:"Use a lesson code to jump straight to a resource.",
-    detail:"Open the resources for this lesson."
-  }[page]));
+  document.querySelectorAll(".page").forEach(section => {
+    section.classList.toggle(
+      "active",
+      section.id === page
+    );
+  });
 
-  window.scrollTo({top:0,behavior:"smooth"});
+  document.querySelectorAll(".nav-btn").forEach(button => {
+
+    const isPageButton =
+      button.dataset.page === page;
+
+    const isCategoryButton =
+      page === "catalogue" &&
+      button.dataset.category === currentCategory;
+
+    button.classList.toggle(
+      "active",
+      isPageButton || isCategoryButton
+    );
+
+  });
+
+  const titles = {
+    home: "Welcome back!",
+    catalogue: "Lesson catalogue",
+    listening: "Listening Practice",
+    shadowing: "Shadowing Practice",
+    qr: "QR lesson lookup",
+    detail: "Lesson details"
+  };
+
+  const subtitles = {
+    home: "A simple place to find and practise English.",
+    catalogue: "Search, filter and open your learning materials.",
+    listening: "Listen and practise your English.",
+    shadowing: "Watch, listen and repeat.",
+    qr: "Use a lesson code to jump straight to a resource.",
+    detail: "Open the resources for this lesson."
+  };
+
+  $("pageTitle").textContent =
+    title || titles[page] || "English Learning Hub";
+
+  $("pageSubtitle").textContent =
+    subtitle || subtitles[page] || "";
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
-function openLesson(id){
-  const l=lessons.find(x=>x.id===id);
-  if(!l)return;
+/* =========================================
+   OPEN LESSON DETAILS
+   ========================================= */
 
-  $("lessonDetail").innerHTML=`<div class="detail-box"><div class="eyebrow">${icons[l.category]} ${l.category} · ${l.id}</div><h2>${l.title}</h2><p class="sub">${l.description}</p><p><span class="tag">${l.level}</span></p><h3 style="margin-top:28px">Lesson resources</h3>${l.files.map(f=>`<div class="resource"><div><strong>${f} resource</strong><div class="sub" style="font-size:12px">${f==="MP3"?"Listening audio":f==="JPG"?"Picture or visual worksheet":"Printable worksheet"}</div></div><button onclick="alert('Demo resource: add your ${f} file to the lesson resources folder and connect its path here.')">Open ${f}</button></div>`).join("")}<p class="sub" style="margin-top:20px;font-size:12px">Teacher note: this is sample catalogue data. Replace it with your own lesson files when you are ready.</p></div>`;
+function openLesson(id) {
 
-  showPage("detail",l.title,`${l.category} · ${l.id}`);
+  const lesson = lessons.find(item => item.id === id);
+
+  if (!lesson) return;
+
+  $("lessonDetail").innerHTML = `
+    <div class="detail-box">
+
+      <div class="eyebrow">
+        ${icons[lesson.category]} ${lesson.category} · ${lesson.id}
+      </div>
+
+      <h2>${lesson.title}</h2>
+
+      <p class="sub">${lesson.description}</p>
+
+      <p>
+        <span class="tag">${lesson.level}</span>
+      </p>
+
+      <h3 style="margin-top:28px">Lesson resources</h3>
+
+      ${lesson.files.map(file => `
+        <div class="resource">
+
+          <div>
+            <strong>${file} resource</strong>
+
+            <div class="sub" style="font-size:12px">
+              ${
+                file === "MP3"
+                  ? "Listening audio"
+                  : file === "JPG"
+                    ? "Picture or visual worksheet"
+                    : "Printable worksheet"
+              }
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onclick="alert('Demo resource: add your ${file} file to the lesson resources folder and connect its path here.')">
+
+            Open ${file}
+
+          </button>
+
+        </div>
+      `).join("")}
+
+      <p class="sub" style="margin-top:20px;font-size:12px">
+        Teacher note: this is sample catalogue data. Replace it with your own lesson files when you are ready.
+      </p>
+
+    </div>
+  `;
+
+  showPage(
+    "detail",
+    lesson.title,
+    `${lesson.category} · ${lesson.id}`
+  );
 }
 
-function filterCategory(cat) {
-  if (cat === "Listening") {
+/* =========================================
+   CATEGORY FILTERING
+   ========================================= */
+
+function filterCategory(category) {
+
+  currentCategory = category;
+
+  if (category === "Listening") {
+
     showPage(
       "listening",
       "Listening Practice",
       "Listen and practise your English."
     );
+
     return;
   }
 
-  $("categoryFilter").value = cat;
+  $("categoryFilter").value = category;
+
   showPage(
     "catalogue",
     "Lesson catalogue",
-    `Showing ${cat} lessons.`
+    `Showing ${category} lessons.`
   );
+
   renderCatalogue();
 }
 
-function lookupCode(){
-  const code=$("qrCode").value.trim().toUpperCase(),l=lessons.find(x=>x.id===code);
-  $("qrResult").textContent=l?`Found: ${l.title}`:"No lesson found. Check the code and try again.";
-  if(l)openLesson(l.id);
+/* =========================================
+   QR MANUAL LOOKUP
+   ========================================= */
+
+function lookupCode() {
+
+  const code = $("qrCode").value.trim().toUpperCase();
+
+  const lesson = lessons.find(item => item.id === code);
+
+  $("qrResult").textContent = lesson
+    ? `Found: ${lesson.title}`
+    : "No lesson found. Check the code and try again.";
+
+  if (lesson) {
+    openLesson(lesson.id);
+  }
 }
 
-$("searchInput").addEventListener("input",renderCatalogue);
-$("categoryFilter").addEventListener("change",renderCatalogue);
-$("lookupBtn").addEventListener("click",lookupCode);
-$("qrCode").addEventListener("keydown",e=>{if(e.key==="Enter")lookupCode()});
+/* =========================================
+   EVENT LISTENERS
+   ========================================= */
 
-document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
-document.querySelectorAll("[data-category]").forEach(b=>b.addEventListener("click",()=>filterCategory(b.dataset.category)));
+/* Catalogue search */
 
-function updateConnection(){
-  $("connectionStatus").textContent=navigator.onLine?"● Online":"● Offline";
-  $("connectionStatus").style.color=navigator.onLine?"#166534":"#b45309";
+$("searchInput").addEventListener(
+  "input",
+  renderCatalogue
+);
+
+/* Catalogue category filter */
+
+$("categoryFilter").addEventListener("change", () => {
+
+  currentCategory = $("categoryFilter").value;
+
+  renderCatalogue();
+
+  document.querySelectorAll(".nav-btn").forEach(button => {
+
+    button.classList.toggle(
+      "active",
+      button.dataset.category === currentCategory &&
+      currentCategory !== "All"
+    );
+
+  });
+
+});
+
+/* QR lookup button */
+
+$("lookupBtn").addEventListener(
+  "click",
+  lookupCode
+);
+
+/* QR lookup Enter key */
+
+$("qrCode").addEventListener("keydown", event => {
+
+  if (event.key === "Enter") {
+    lookupCode();
+  }
+
+});
+
+/* Main navigation */
+
+document.querySelectorAll("[data-page]").forEach(button => {
+
+  button.addEventListener("click", () => {
+    showPage(button.dataset.page);
+  });
+
+});
+
+/* Category navigation */
+
+document.querySelectorAll("[data-category]").forEach(button => {
+
+  button.addEventListener("click", () => {
+    filterCategory(button.dataset.category);
+  });
+
+});
+
+/* =========================================
+   ONLINE / OFFLINE STATUS
+   ========================================= */
+
+function updateConnection() {
+
+  const status = $("connectionStatus");
+
+  status.textContent = navigator.onLine
+    ? "● Online"
+    : "● Offline";
+
+  status.style.color = navigator.onLine
+    ? "#166534"
+    : "#b45309";
 }
 
-window.addEventListener("online",updateConnection);
-window.addEventListener("offline",updateConnection);
+window.addEventListener("online", updateConnection);
+window.addEventListener("offline", updateConnection);
+
+/* =========================================
+   INITIALISE WEBSITE
+   ========================================= */
 
 renderHome();
 renderCatalogue();
 renderShadowingLessons();
 updateConnection();
 
-if("serviceWorker" in navigator && location.protocol!=="file:"){
-  window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(console.error));
+/* =========================================
+   SERVICE WORKER UPDATE MANAGEMENT
+   GITHUB PAGES COMPATIBLE
+   ========================================= */
+
+if (
+  "serviceWorker" in navigator &&
+  location.protocol !== "file:"
+) {
+
+  let refreshingForUpdate = false;
+
+  const hadActiveController =
+    Boolean(navigator.serviceWorker.controller);
+
+  /*
+    Reload once when a new service worker takes control
+    of a page that was already using an older worker.
+
+    The first service-worker installation does not
+    trigger a page reload.
+  */
+
+  navigator.serviceWorker.addEventListener(
+    "controllerchange",
+    () => {
+
+      if (
+        !hadActiveController ||
+        refreshingForUpdate
+      ) {
+        return;
+      }
+
+      refreshingForUpdate = true;
+
+      window.location.reload();
+
+    }
+  );
+
+  window.addEventListener("load", async () => {
+
+    try {
+
+      const registration =
+        await navigator.serviceWorker.register(
+          "./sw.js",
+          {
+            updateViaCache: "none"
+          }
+        );
+
+      /*
+        Check for a new service-worker release
+        whenever the website is opened.
+      */
+
+      await registration.update();
+
+      /*
+        Check again when a visitor returns
+        to the browser tab.
+      */
+
+      document.addEventListener(
+        "visibilitychange",
+        () => {
+
+          if (
+            document.visibilityState === "visible" &&
+            navigator.onLine
+          ) {
+
+            registration.update().catch(error => {
+              console.warn(
+                "Service-worker update check failed:",
+                error
+              );
+            });
+
+          }
+
+        }
+      );
+
+      /*
+        Check again after the device reconnects.
+      */
+
+      window.addEventListener("online", () => {
+
+        registration.update().catch(error => {
+          console.warn(
+            "Service-worker update check failed:",
+            error
+          );
+        });
+
+      });
+
+    } catch (error) {
+
+      console.error(
+        "Service-worker registration failed:",
+        error
+      );
+
+    }
+
+  });
+
 }
 </script>
 
 <script src="https://unpkg.com/html5-qrcode"></script>
 <script src="./listening.js"></script>
 <script src="./festive.js"></script>
+
 </body>
 </html>
