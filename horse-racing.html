@@ -558,7 +558,6 @@ function startRace() {
   $("diceMessage").textContent = "Answer the question to roll.";
 
   drawTrack();
-  ();
   showTurn();
 
   // Collapse settings after starting the race.
@@ -579,7 +578,6 @@ function showTurn() {
 
   loadQuestion();
   drawTrack();
-  ();
 }
 
 // CHECK ANSWER
@@ -642,7 +640,6 @@ function rollDice() {
       player.name + " rolled " + result + "!";
 
     drawTrack();
-    ();
 
     if (player.position >= raceLength) {
       raceOver = true;
