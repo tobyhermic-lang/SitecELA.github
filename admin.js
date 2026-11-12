@@ -15,7 +15,7 @@
   // Use the Project API URL and Publishable key.
   // NEVER use the Secret or service_role key here.
 
-  const SUPABASE_URL = "https://eoxotjmkjgqaparyqpld.supabase.co/rest/v1/";
+  const SUPABASE_URL = "https://eoxotjmkjgqaparyqpld.supabase.co";
 
   const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_TVHAtJLEfdpRtnyXPzd42g_-S7PgB75";
