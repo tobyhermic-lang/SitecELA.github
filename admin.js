@@ -1,7 +1,7 @@
 
 /* =========================================
-   SITECELA
-   ADMINISTRATOR AUTHENTICATION
+   SITECELA - ADMINISTRATOR CONTROL PANEL
+   STAGE 2: DASHBOARD HOMEPAGE
    ========================================= */
 
 (function () {
@@ -11,20 +11,11 @@
   // 1. SUPABASE CONNECTION
   // =========================================
 
-  // Use the Project API URL, NOT /rest/v1/
-  // Keep your existing Publishable Key.
-  // NEVER use a Secret or service_role key.
-
   const SUPABASE_URL =
     "https://eoxotjmkjgqaparyqpld.supabase.co";
 
   const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_TVHAtJLEfdpRtnyXPzd42g_-S7PgB75";
-
-
-  // =========================================
-  // 2. INITIALIZE SUPABASE
-  // =========================================
 
   if (!window.supabase) {
     console.error("Supabase library could not be loaded.");
@@ -36,32 +27,27 @@
     SUPABASE_PUBLISHABLE_KEY
   );
 
-
   // =========================================
-  // 3. PAGE ELEMENTS
+  // 2. LOGIN ELEMENTS
   // =========================================
 
-  const loginForm = document.getElementById(
-    "admin-login-form"
-  );
+  const loginForm =
+    document.getElementById("admin-login-form");
 
-  const emailInput = document.getElementById(
-    "admin-email"
-  );
+  const emailInput =
+    document.getElementById("admin-email");
 
-  const passwordInput = document.getElementById(
-    "admin-password"
-  );
+  const passwordInput =
+    document.getElementById("admin-password");
 
-  const loginButton = document.getElementById(
-    "login-button"
-  );
+  const loginButton =
+    document.getElementById("login-button");
 
-  const loginMessage = document.getElementById(
-    "login-message"
-  );
+  const loginMessage =
+    document.getElementById("login-message");
 
-  const backLink = document.querySelector(".back-link");
+  const backLink =
+    document.querySelector(".back-link");
 
   if (
     !loginForm ||
@@ -70,15 +56,12 @@
     !loginButton ||
     !loginMessage
   ) {
-    console.error(
-      "Administrator login elements are missing."
-    );
+    console.error("Administrator login elements are missing.");
     return;
   }
 
-
   // =========================================
-  // 4. DISPLAY MESSAGES
+  // 3. MESSAGE DISPLAY
   // =========================================
 
   function showMessage(message, type) {
@@ -88,13 +71,11 @@
       type === "success" ? "#15803d" : "#dc2626";
   }
 
-
   // =========================================
-  // 5. VERIFY ADMINISTRATOR PERMISSION
+  // 4. ADMINISTRATOR VERIFICATION
   // =========================================
 
   async function verifyAdministrator(user) {
-
     const { data, error } = await supabaseClient
       .from("admin_users")
       .select("user_id")
@@ -102,13 +83,10 @@
       .maybeSingle();
 
     if (error) {
-      console.error(
-        "Administrator verification error:",
-        error
-      );
+      console.error("Administrator verification:", error);
 
       throw new Error(
-        "Could not verify administrator permissions. Please try again."
+        "Could not verify administrator permissions."
       );
     }
 
@@ -121,20 +99,81 @@
     return true;
   }
 
+  // =========================================
+  // 5. DASHBOARD MENU
+  // =========================================
+
+  const dashboardSections = [
+    {
+      id: "overview",
+      icon: "🏠",
+      title: "Overview",
+      description: "Administrator homepage"
+    },
+    {
+      id: "listening",
+      icon: "🎧",
+      title: "Listening",
+      description: "Manage listening lessons"
+    },
+    {
+      id: "shadowing",
+      icon: "🎤",
+      title: "Shadowing",
+      description: "Manage shadowing lessons"
+    },
+    {
+      id: "reading",
+      icon: "📖",
+      title: "Reading",
+      description: "Manage reading materials"
+    },
+    {
+      id: "grammar",
+      icon: "📝",
+      title: "Grammar",
+      description: "Manage grammar lessons"
+    },
+    {
+      id: "tests",
+      icon: "✅",
+      title: "Tests",
+      description: "Manage assessed practice"
+    },
+    {
+      id: "administrators",
+      icon: "🛡️",
+      title: "Administrators",
+      description: "Manage administrator access"
+    },
+    {
+      id: "settings",
+      icon: "⚙️",
+      title: "Settings",
+      description: "Website administration"
+    }
+  ];
 
   // =========================================
-  // 6. CREATE ADMINISTRATOR DASHBOARD VIEW
+  // 6. DASHBOARD DISPLAY
   // =========================================
 
   function showDashboard(user) {
-
     loginForm.hidden = true;
 
     if (backLink) {
       backLink.hidden = true;
     }
 
-    // Prevent duplicate dashboard panels.
+    const loginCard = document.querySelector(
+      ".admin-login-card"
+    );
+
+    if (!loginCard) {
+      console.error("Administrator login card is missing.");
+      return;
+    }
+
     const oldDashboard = document.getElementById(
       "admin-dashboard-panel"
     );
@@ -144,176 +183,228 @@
     }
 
     const dashboard = document.createElement("section");
-
     dashboard.id = "admin-dashboard-panel";
+    dashboard.className = "admin-dashboard";
 
-    dashboard.style.cssText = `
-      margin-top: 20px;
-      padding: 24px;
-      border-radius: 12px;
-      background: #f1f5f9;
-      text-align: center;
+    dashboard.innerHTML = `
+      <header class="dashboard-header">
+        <div>
+          <div class="dashboard-brand">
+            📚 SitecELA
+          </div>
+          <p class="dashboard-label">
+            ADMINISTRATOR CONTROL PANEL
+          </p>
+        </div>
+
+        <button
+          type="button"
+          class="dashboard-logout"
+          id="dashboard-logout"
+        >
+          Sign Out
+        </button>
+      </header>
+
+      <div class="dashboard-welcome">
+        <p class="dashboard-eyebrow">
+          ADMINISTRATOR AREA
+        </p>
+
+        <h2>Welcome to your dashboard</h2>
+
+        <p class="dashboard-user"></p>
+
+        <div class="dashboard-status">
+          ● Administrator verified successfully
+        </div>
+      </div>
+
+      <div class="dashboard-content">
+        <div class="dashboard-section-heading">
+          <h3>Management Centre</h3>
+          <p>Select a section to continue.</p>
+        </div>
+
+        <div class="dashboard-grid"></div>
+
+        <section
+          class="dashboard-workspace"
+          id="dashboard-workspace"
+          aria-live="polite"
+        >
+          <h3>Welcome to SitecELA Administration</h3>
+          <p>
+            Choose a management section above.
+            Its management tools will be added in the
+            following development stages.
+          </p>
+        </section>
+      </div>
+
+      <footer class="dashboard-footer">
+        SitecELA English Learning Hub
+      </footer>
     `;
 
-    const heading = document.createElement("h2");
-    heading.textContent = "Administrator Dashboard";
+    loginCard.appendChild(dashboard);
 
-    heading.style.color = "#172554";
+    dashboard.querySelector(".dashboard-user").textContent =
+      "Signed in as: " + (user.email || "Administrator");
 
-    const success = document.createElement("p");
-    success.textContent =
-      "Administrator verified successfully!";
+    const grid = dashboard.querySelector(".dashboard-grid");
 
-    success.style.color = "#15803d";
-    success.style.fontWeight = "bold";
+    dashboardSections.forEach(function (section) {
+      const button = document.createElement("button");
 
-    const email = document.createElement("p");
-    email.textContent = "Logged in as: " + user.email;
+      button.type = "button";
+      button.className = "dashboard-card";
+      button.dataset.section = section.id;
 
-    email.style.wordBreak = "break-word";
+      const icon = document.createElement("span");
+      icon.className = "dashboard-card-icon";
+      icon.textContent = section.icon;
 
-    const information = document.createElement("p");
+      const title = document.createElement("strong");
+      title.textContent = section.title;
 
-    information.textContent =
-      "Your administrator session is active. " +
-      "Management tools will be connected here in the next development step.";
+      const description = document.createElement("span");
+      description.textContent = section.description;
 
-    information.style.lineHeight = "1.6";
+      button.appendChild(icon);
+      button.appendChild(title);
+      button.appendChild(description);
 
-    const logoutButton = document.createElement("button");
+      button.addEventListener("click", function () {
+        openDashboardSection(section);
+      });
 
-    logoutButton.type = "button";
-    logoutButton.textContent = "Sign Out";
+      grid.appendChild(button);
+    });
 
-    logoutButton.style.cssText = `
-      width: 100%;
-      padding: 12px;
-      margin-top: 15px;
-      border: none;
-      border-radius: 8px;
-      background: #172554;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    `;
+    document.getElementById(
+      "dashboard-logout"
+    ).addEventListener("click", handleLogout);
 
-    logoutButton.addEventListener(
-      "click",
-      handleLogout
-    );
-
-    dashboard.appendChild(heading);
-    dashboard.appendChild(success);
-    dashboard.appendChild(email);
-    dashboard.appendChild(information);
-    dashboard.appendChild(logoutButton);
-
-    loginForm.insertAdjacentElement(
-      "afterend",
-      dashboard
-    );
+    loginCard.classList.add("admin-card-wide");
   }
 
-
   // =========================================
-  // 7. HANDLE LOGIN
+  // 7. DASHBOARD NAVIGATION
   // =========================================
 
-  loginForm.addEventListener(
-    "submit",
-    async function (event) {
+  function openDashboardSection(section) {
+    const workspace = document.getElementById(
+      "dashboard-workspace"
+    );
 
-      event.preventDefault();
+    if (!workspace) return;
 
-      const email = emailInput.value.trim();
-      const password = passwordInput.value;
-
-      if (!email || !password) {
-        showMessage(
-          "Please enter your email and password.",
-          "error"
+    document.querySelectorAll(".dashboard-card").forEach(
+      function (card) {
+        card.classList.toggle(
+          "active",
+          card.dataset.section === section.id
         );
-        return;
+      }
+    );
+
+    workspace.innerHTML = "";
+
+    const heading = document.createElement("h3");
+    heading.textContent = section.icon + " " + section.title;
+
+    const description = document.createElement("p");
+    description.textContent = section.description + ".";
+
+    const status = document.createElement("div");
+    status.className = "dashboard-coming-soon";
+    status.textContent =
+      "This section is prepared. Its management functions " +
+      "will be connected in a later development stage.";
+
+    workspace.appendChild(heading);
+    workspace.appendChild(description);
+    workspace.appendChild(status);
+  }
+
+  // =========================================
+  // 8. LOGIN
+  // =========================================
+
+  loginForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+
+    if (!email || !password) {
+      showMessage(
+        "Please enter your email and password.",
+        "error"
+      );
+      return;
+    }
+
+    loginButton.disabled = true;
+    loginButton.textContent = "Signing in...";
+
+    showMessage("Checking your account...", "success");
+
+    let signedInUser = null;
+
+    try {
+      const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
+
+      if (error) {
+        throw new Error(
+          "Login failed. Please check your email and password."
+        );
       }
 
-      loginButton.disabled = true;
-      loginButton.textContent = "Signing in...";
+      if (!data.user) {
+        throw new Error(
+          "Could not retrieve your account information."
+        );
+      }
+
+      signedInUser = data.user;
+
+      await verifyAdministrator(signedInUser);
+
+      passwordInput.value = "";
+
+      showDashboard(signedInUser);
+
+    } catch (error) {
+      console.error("Administrator login:", error);
+
+      if (signedInUser) {
+        await supabaseClient.auth.signOut();
+      }
 
       showMessage(
-        "Checking your account...",
-        "success"
+        error.message || "Something went wrong.",
+        "error"
       );
 
-      let signedInUser = null;
-
-      try {
-
-        // Authenticate with Supabase.
-        const { data, error } =
-          await supabaseClient.auth.signInWithPassword({
-            email: email,
-            password: password
-          });
-
-        if (error) {
-          throw new Error(
-            "Login failed. Please check your email and password."
-          );
-        }
-
-        if (!data.user) {
-          throw new Error(
-            "Could not retrieve your account information."
-          );
-        }
-
-        signedInUser = data.user;
-
-        // Check administrator registration.
-        await verifyAdministrator(signedInUser);
-
-        // Open the administrator dashboard view.
-        passwordInput.value = "";
-
-        showDashboard(signedInUser);
-
-      } catch (error) {
-
-        console.error(
-          "Administrator login:",
-          error
-        );
-
-        // Do not keep an unverified account signed in.
-        if (signedInUser) {
-          await supabaseClient.auth.signOut();
-        }
-
-        showMessage(
-          error.message ||
-            "Something went wrong. Please try again.",
-          "error"
-        );
-
-      } finally {
-
-        loginButton.disabled = false;
-        loginButton.textContent = "Sign In";
-
-      }
+    } finally {
+      loginButton.disabled = false;
+      loginButton.textContent = "Sign In";
     }
-  );
-
+  });
 
   // =========================================
-  // 8. HANDLE LOGOUT
+  // 9. LOGOUT
   // =========================================
 
   async function handleLogout() {
-
-    const logoutButton = document.querySelector(
-      "#admin-dashboard-panel button"
+    const logoutButton = document.getElementById(
+      "dashboard-logout"
     );
 
     if (logoutButton) {
@@ -332,10 +423,7 @@
         logoutButton.textContent = "Sign Out";
       }
 
-      alert(
-        "Could not sign out. Please try again."
-      );
-
+      alert("Could not sign out. Please try again.");
       return;
     }
 
@@ -349,6 +437,14 @@
 
     loginForm.hidden = false;
 
+    const loginCard = document.querySelector(
+      ".admin-login-card"
+    );
+
+    if (loginCard) {
+      loginCard.classList.remove("admin-card-wide");
+    }
+
     if (backLink) {
       backLink.hidden = false;
     }
@@ -360,56 +456,41 @@
       "You have signed out successfully.",
       "success"
     );
-
   }
 
-
   // =========================================
-  // 9. RESTORE EXISTING LOGIN SESSION
+  // 10. RESTORE SESSION
   // =========================================
 
   async function restoreSession() {
-
     try {
-
       const { data, error } =
         await supabaseClient.auth.getSession();
 
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
 
       if (!data.session || !data.session.user) {
         return;
       }
 
-      const user = data.session.user;
+      await verifyAdministrator(data.session.user);
 
-      await verifyAdministrator(user);
-
-      showDashboard(user);
+      showDashboard(data.session.user);
 
     } catch (error) {
-
-      console.error(
-        "Session restoration error:",
-        error
-      );
+      console.error("Session restoration:", error);
 
       await supabaseClient.auth.signOut();
 
       showMessage(
-        error.message ||
-          "Please sign in again.",
+        "Your session could not be verified. Please sign in again.",
         "error"
       );
-
     }
   }
 
-
   // =========================================
-  // 10. START
+  // 11. START
   // =========================================
 
   restoreSession();
