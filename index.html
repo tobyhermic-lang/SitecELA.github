@@ -969,34 +969,44 @@
 
         <div class="panel">
 
-          <div class="eyebrow">Camera scanner</div>
-          <h2>Scan a QR code</h2>
+  <div class="eyebrow">Camera scanner</div>
+  <h2>Scan a QR code</h2>
 
-          <div class="camera-box">
+  <p class="sub">
+    Tap Start Scanner, allow camera access, and point your camera at a Listening QR code.
+  </p>
 
-            <div style="width:100%">
+  <div style="display:flex; gap:8px; flex-wrap:wrap; margin:15px 0;">
+    <button class="secondary" id="startQrButton" type="button">
+      📷 Start Scanner
+    </button>
 
-              <h3>Scan your QR sticker</h3>
+    <button class="secondary" id="stopQrButton" type="button" hidden>
+      Stop Scanner
+    </button>
+  </div>
 
-              <div
-                id="qr-reader"
-                style="width:100%; max-width:400px; margin:auto;">
-              </div>
+  <div
+    id="qr-reader"
+    style="width:100%; max-width:400px; margin:auto;">
+  </div>
 
-              <p id="scan-status">
-                Ready to scan. Allow camera access when asked.
-              </p>
+  <p id="scan-status" class="result" aria-live="polite">
+    Scanner is stopped. Tap Start Scanner to begin.
+  </p>
 
-              <div id="listening-result" hidden>
-                <h3 id="sentence-display"></h3>
-                <audio
-                  id="audio-player"
-                  controls
-                  style="width:100%">
-                </audio>
-              </div>
+  <div id="listening-result" hidden>
+    <h3 id="sentence-display"></h3>
+    <audio
+      id="audio-player"
+      controls
+      playsinline
+      preload="none"
+      style="width:100%">
+    </audio>
+  </div>
 
-            </div>
+</div>
 
           </div>
 
@@ -1658,7 +1668,180 @@ if (
   });
 
 }
-</script>
+/* =========================================
+   QR CAMERA SCANNER - LISTENING MP3
+   Supports lesson IDs and direct MP3 URLs
+   ========================================= */
+
+let qrScanner = null;
+let qrScannerRunning = false;
+let qrScanHandled = false;
+
+function resolveListeningAudio(qrText) {
+  const value = String(qrText || "").trim();
+
+  if (!value) return null;
+
+  // QR contains a Listening lesson ID, for example AH-LIV-001.
+  const codeMatch = value.match(/AH-LIV-\d{3}/i);
+
+  if (codeMatch) {
+    const code = codeMatch[0].toUpperCase();
+
+    return {
+      title: `Listening Lesson ${code.slice(-3)}`,
+      url: `./audio/${code}.mp3`
+    };
+  }
+
+  // QR contains a direct MP3 URL or relative MP3 file path.
+  try {
+    const url = new URL(value, window.location.href);
+
+    if (/\.mp3$/i.test(url.pathname)) {
+      return {
+        title: decodeURIComponent(url.pathname.split("/").pop()),
+        url: url.href
+      };
+    }
+  } catch (error) {
+    console.error("Invalid QR content:", error);
+  }
+
+  return null;
+}
+
+async function playScannedLesson(qrText) {
+  const status = $("scan-status");
+  const lesson = resolveListeningAudio(qrText);
+
+  if (!lesson) {
+    status.textContent =
+      "QR recognised, but it does not contain a supported Listening lesson ID or direct MP3 link.";
+    return;
+  }
+
+  const audio = $("audio-player");
+
+  $("listening-result").hidden = false;
+  $("sentence-display").textContent = lesson.title;
+
+  audio.pause();
+  audio.src = lesson.url;
+  audio.load();
+
+  status.textContent =
+    "Listening lesson found. Press Play if your phone does not start the audio automatically.";
+
+  // Browsers may block autoplay; the audio controls remain available.
+  try {
+    await audio.play();
+  } catch (error) {
+    console.info("Automatic playback was blocked. Press Play to start.");
+  }
+}
+
+async function startQrScanner() {
+  const status = $("scan-status");
+
+  if (qrScannerRunning) return;
+
+  if (typeof Html5Qrcode === "undefined") {
+    status.textContent =
+      "The QR scanner library could not load. Check your internet connection and reload the page.";
+    return;
+  }
+
+  if (!window.isSecureContext) {
+    status.textContent =
+      "Camera access requires a secure connection. Open this website using its HTTPS GitHub Pages address.";
+    return;
+  }
+
+  try {
+    if (!qrScanner) {
+      qrScanner = new Html5Qrcode("qr-reader");
+    }
+
+    qrScanHandled = false;
+    status.textContent = "Starting camera...";
+
+    await qrScanner.start(
+      { facingMode: "environment" },
+      {
+        fps: 10,
+        qrbox: { width: 250, height: 250 }
+      },
+      async (decodedText) => {
+        if (qrScanHandled) return;
+        qrScanHandled = true;
+
+        status.textContent =
+          "QR code detected. Opening the Listening lesson...";
+
+        if (qrScannerRunning) {
+          try {
+            await qrScanner.stop();
+          } catch (error) {
+            console.warn(
+              "Could not stop scanner after detection:",
+              error
+            );
+          }
+
+          qrScannerRunning = false;
+        }
+
+        $("startQrButton").hidden = false;
+        $("stopQrButton").hidden = true;
+
+        await playScannedLesson(decodedText);
+      },
+      () => {
+        // No QR code in this camera frame; continue scanning.
+      }
+    );
+
+    qrScannerRunning = true;
+    $("startQrButton").hidden = true;
+    $("stopQrButton").hidden = false;
+
+    status.textContent =
+      "Camera is active. Point it at one of your Listening QR codes.";
+
+  } catch (error) {
+    console.error("QR scanner error:", error);
+
+    qrScannerRunning = false;
+    $("startQrButton").hidden = false;
+    $("stopQrButton").hidden = true;
+
+    status.textContent =
+      "Cannot start the camera. Allow camera permission in your browser settings, then try again.";
+  }
+}
+
+async function stopQrScanner() {
+  if (!qrScanner || !qrScannerRunning) return;
+
+  try {
+    await qrScanner.stop();
+    qrScannerRunning = false;
+
+    $("startQrButton").hidden = false;
+    $("stopQrButton").hidden = true;
+    $("scan-status").textContent = "Scanner stopped.";
+
+  } catch (error) {
+    console.error("Could not stop QR scanner:", error);
+
+    $("scan-status").textContent =
+      "The scanner could not be stopped. Try closing and reopening the QR Lookup page.";
+  }
+}
+
+$("startQrButton").addEventListener("click", startQrScanner);
+$("stopQrButton").addEventListener("click", stopQrScanner);</script>
 
 <script src="https://unpkg.com/html5-qrcode"></script>
 <script src="./listening.js"></script>
