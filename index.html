@@ -1544,6 +1544,7 @@ function updateConnection() {
 window.addEventListener("online", updateConnection);
 window.addEventListener("offline", updateConnection);
 
+
 /* =========================================
    INITIALISE WEBSITE
    ========================================= */
@@ -1552,6 +1553,36 @@ renderHome();
 renderCatalogue();
 renderShadowingLessons();
 updateConnection();
+
+/* =========================================
+   OPEN PAGE FROM A DIRECT QR LINK
+   ========================================= */
+
+function openPageFromUrl() {
+
+  const urlParams = new URLSearchParams(
+    window.location.search
+  );
+
+  const requestedPage = urlParams.get("page");
+
+  // Only allow recognised website pages.
+  const allowedPages = [
+    "home",
+    "catalogue",
+    "qr",
+    "listening",
+    "shadowing"
+  ];
+
+  if (allowedPages.includes(requestedPage)) {
+    showPage(requestedPage);
+  }
+
+}
+
+openPageFromUrl();
+
 
 /* =========================================
    SERVICE WORKER UPDATE MANAGEMENT
