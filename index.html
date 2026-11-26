@@ -800,7 +800,7 @@
 
       <div class="stats">
         <div class="stat">
-          <strong id="totalLessons">16</strong>
+          <strong id="totalLessons">396</strong>
           <small>Sample lessons</small>
         </div>
 
@@ -896,14 +896,17 @@
 
       <div class="section-head">
         <h2>Listening Practice</h2>
-        <span class="sub">10 audio lessons</span>
+        <span class="sub">390 audio lessons</span>
       </div>
 
       <p class="sub">
         Choose a lesson and press Play to listen.
       </p>
 
-      <div id="listening-list" class="listening-list"></div>
+      <div class="toolbar"><input class="search" id="audioSearch" placeholder="Search sentence or code" aria-label="Search listening"><select class="filter" id="audioTopic" aria-label="Topic"><option value="">All topics</option></select></div>
+<div class="panel" id="mainAudioPanel" hidden><h3 id="mainAudioTitle"></h3><audio id="mainAudio" controls playsinline preload="none" style="width:100%"></audio><p id="mainAudioStatus" aria-live="polite"></p><button class="secondary" id="replayAudio">Replay</button></div>
+<div id="listening-list" class="listening-list"></div>
+<div class="toolbar"><button class="secondary" id="prevAudio">Previous</button><span id="audioPage"></span><button class="secondary" id="nextAudio">Next</button></div>
 
     </section>
 
@@ -1079,23 +1082,14 @@ const lessons = [
   }
 ];
 
-/* Create the first 10 Listening lessons */
-
-const listeningLessons = Array.from(
-  { length: 10 },
-  (_, index) => {
-    const number = String(index + 1).padStart(3, "0");
-
-    return {
-      id: `AH-LIV-${number}`,
-      title: `Listening Lesson ${number}`,
-      category: "Listening",
-      level: "A2",
-      description: `Listen to audio lesson ${number}.`,
-      files: ["MP3"]
-    };
-  }
-);
+/* Listening data: 390 original sentences */
+const sentences = ["Let’s sit on the sofa.", "Turn off the TV.", "Open the curtains.", "Put the cushions back.", "Pick up your toys.", "Put the toys in the box.", "Let’s tidy up the room.", "Please fold the blanket.", "Put the remote on the table.", "Turn down the volume.", "Can you find my glasses?", "They’re on the table.", "Let’s read a book together.", "Turn the page, please.", "What can you see?", "Let’s water the plant.", "Please open the window.", "Let some fresh air in.", "Turn on the light.", "Don’t jump on the sofa.", "Keep your feet off the table.", "Please put the books away.", "Bring me the remote, please.", "Would you like to watch a cartoon?", "Yes, please.", "No, thank you.", "Come and sit with me.", "Give me a big hug.", "Please don’t run indoors.", "The room looks lovely now.", "Wake up, sleepyhead!", "It’s time to get up.", "Did you sleep well?", "Let’s make the bed.", "Fold your blanket.", "Fluff up your pillow.", "Open the curtains.", "Let the sunshine in.", "It’s time to get dressed.", "Choose your clothes.", "Which shirt do you want to wear?", "Put on your T-shirt.", "Take off your pajamas.", "Your shirt is inside out.", "Turn your shirt the right way around.", "Can you button your shirt?", "Pull up your trousers.", "Where are your socks?", "Put your dirty clothes in the basket.", "Keep your room tidy.", "Put your books on the shelf.", "Where is your teddy bear?", "Don’t leave toys on the floor.", "It’s time to go to bed.", "Put on your pajamas.", "Are you ready for bed?", "Let’s read a bedtime story.", "Turn off the light, please.", "Close your eyes and relax.", "Sweet dreams, my love.", "Come into the kitchen.", "Wash your hands first.", "Can you help me, please?", "Please get me a bowl.", "Bring me a spoon, please.", "Can you pass me the salt?", "Let’s wash the vegetables.", "Rinse the tomatoes, please.", "Put the vegetables in the basket.", "Let’s peel the potatoes.", "Can you stir the soup?", "Stir it slowly.", "Be careful. It’s hot.", "Don’t touch the stove.", "The water is boiling.", "The food smells delicious.", "What are you cooking, Mom?", "I’m making some soup.", "Can I help you cook?", "Set the timer, please.", "Turn off the tap.", "Wipe the counter, please.", "Put the lid on the pot.", "The rice is ready.", "Can I have a glass of water?", "Here’s your water.", "Don’t spill the juice.", "Let’s clean up together.", "Put the dishes in the sink.", "Thank you for helping me.", "It’s time for breakfast.", "It’s time for lunch.", "It’s time for dinner.", "Come to the table, please.", "Wash your hands before eating.", "Set the table, please.", "Put the bowls on the table.", "Bring the chopsticks, please.", "Here’s your spoon and fork.", "Sit up straight, please.", "What would you like to eat?", "I’d like some rice, please.", "Would you like some vegetables?", "Yes, please.", "No, thank you.", "Would you like some more?", "This soup is delicious.", "Blow on your food. It’s hot.", "Take small bites.", "Chew your food well.", "Don’t talk with your mouth full.", "Please use your spoon.", "Don’t play with your food.", "Try a little bit first.", "Are you full?", "I’m full, Mom.", "May I leave the table?", "Take your plate to the sink.", "Help me clear the table.", "Thank you for the meal, Mom.", "Let’s go to the bathroom.", "Do you need to use the toilet?", "Tell me when you need to go.", "Take off your clothes.", "Let’s check the water temperature.", "Is the water too hot?", "The water feels just right.", "Get into the bathtub carefully.", "Don’t splash water everywhere.", "Wash your body with soap.", "Rinse off the soap.", "Keep the soap out of your eyes.", "Wash your arms.", "Wash your legs and feet.", "Let’s wash your hair.", "Tilt your head back.", "Close your eyes.", "Here’s your shampoo.", "Rinse your hair well.", "The bath is finished.", "Stand up slowly.", "Watch your step. The floor is slippery.", "Dry yourself with a towel.", "Put on your clean clothes.", "Hang your towel up.", "Put your dirty clothes in the laundry basket.", "The bathroom is all wet.", "Wipe up the water, please.", "Put the shampoo back.", "All clean! Well done!", "It’s time to brush your teeth.", "Get your toothbrush.", "Where is your toothbrush?", "Here’s your toothpaste.", "Put some toothpaste on your brush.", "Just a little bit is enough.", "Wet your toothbrush.", "Open your mouth wide.", "Brush your front teeth.", "Brush your back teeth.", "Don’t forget your molars.", "Brush the outside of your teeth.", "Brush the inside, too.", "Brush your teeth gently.", "Move your brush in small circles.", "Brush for two minutes.", "Don’t rush.", "You’re doing a great job!", "Now brush your tongue gently.", "Spit out the toothpaste.", "Don’t swallow it.", "Rinse your mouth if needed.", "Wash your toothbrush.", "Shake off the extra water.", "Put your toothbrush back.", "Close the toothpaste cap.", "Wipe your mouth.", "Show me your clean teeth!", "Your smile looks lovely.", "Remember to brush twice a day.", "Do you need to pee?", "Do you need to poop?", "Let’s use the toilet.", "Close the door, please.", "Pull down your trousers.", "Sit on the toilet, please.", "Take your time.", "Are you finished?", "Wipe yourself carefully.", "Use some toilet paper.", "Put the used paper in the toilet.", "Flush the toilet.", "Put the toilet lid down.", "Wash your hands with soap.", "Rub your hands together.", "Don’t forget between your fingers.", "Rinse your hands well.", "Turn off the tap.", "Dry your hands with a towel.", "Hang your towel up.", "Is everything okay?", "Do you need my help?", "I can do it myself.", "Please wait outside.", "The toilet is clean now.", "Tell me if you need help.", "Don’t play with the toilet paper.", "Please keep the floor dry.", "Wash your hands every time.", "Well done for doing it yourself!", "Bring me the dirty clothes.", "Put them in the laundry basket.", "Let’s sort the clothes by color.", "Keep the white clothes separate.", "These clothes need washing.", "Put the clothes in the washing machine.", "Add some detergent.", "Close the washing machine door.", "Press the start button.", "The washing machine is running.", "The washing is finished.", "Let’s take the clothes out.", "Shake out the clothes.", "Bring the clothes to the drying area.", "Can you pass me the clothespins?", "Hang the shirt on the line.", "Hang the trousers up.", "Don’t let the clothes touch the ground.", "Space the clothes out.", "The sun is shining.", "It’s a windy day.", "The clothes are drying quickly.", "Bring the clothes in, please.", "These clothes are still wet.", "This shirt is dry.", "Let’s fold the clothes.", "Match the socks together.", "Put the folded clothes away.", "Put the clothespins in the basket.", "Thank you for helping with the laundry.", "Let’s go out to the balcony.", "Be careful near the railing.", "Stay away from the edge.", "Let’s water the plants.", "Take the watering can.", "Water this plant, please.", "Not too much water.", "Look at the little flowers.", "What color is this flower?", "The leaves are green.", "Can you see the birds?", "Listen to the birds singing.", "Feel the fresh air.", "Is it sunny outside?", "It’s a little windy.", "Bring your hat, please.", "Don’t lean over the railing.", "Keep the balcony tidy.", "Pick up the fallen leaves.", "Put the plant pot back.", "Let’s sweep the floor.", "Please don’t throw anything outside.", "Look at the view.", "Can you see the mountains?", "The sky looks beautiful.", "Let’s sit and relax.", "Bring your book outside.", "It’s getting dark.", "Let’s go back inside.", "Close the balcony door.", "Let’s go up to the rooftop.", "Hold the handrail.", "Walk slowly on the stairs.", "Stay with me, please.", "Don’t run on the rooftop.", "Stay away from the edge.", "Let’s look at the sky.", "Can you see the clouds?", "That cloud looks like a rabbit.", "The sky is blue today.", "Look at the sunset.", "The sun is going down.", "Let’s water the rooftop plants.", "Carry the small watering can.", "Put the empty pots together.", "Let’s sweep the rooftop.", "Pick up the leaves.", "The floor is wet.", "Be careful not to slip.", "Bring the cushions inside.", "It’s getting windy.", "Let’s go inside now.", "Please close the door behind you.", "Can you see the moon?", "There are stars in the sky.", "Let’s count the stars.", "Take a deep breath.", "The air feels cool.", "We can come back tomorrow.", "Thank you for being careful.", "It’s time to study.", "Sit at your desk, please.", "Take out your books.", "Open your notebook.", "Get your pencil ready.", "Do you have an eraser?", "Write your name at the top.", "Read the instructions first.", "Listen carefully.", "Repeat after me.", "Say it one more time.", "Can you spell that word?", "Please write neatly.", "Leave a space between words.", "Check your answers.", "Try it by yourself first.", "Do you need some help?", "Let’s take a short break.", "Put your pencils back.", "Keep your desk tidy.", "Put your books on the shelf.", "Finish your homework first.", "You’re making good progress.", "Don’t give up.", "Mistakes help us learn.", "Read the sentence aloud.", "What does this word mean?", "Let’s look it up together.", "Pack your schoolbag.", "Great work today!", "Let’s go into the garden.", "Put on your shoes.", "Watch where you step.", "The grass is wet.", "Look at that butterfly.", "Can you hear the birds?", "Let’s water the flowers.", "Hold the hose carefully.", "Water the roots, please.", "Don’t pick the flowers.", "Smell this flower.", "What a lovely smell!", "Let’s pull out the weeds.", "Put the leaves in this bag.", "Can you find a small stone?", "Let’s sweep the path.", "Put the garden tools away.", "Don’t touch that insect.", "The soil is soft.", "Look at the tiny seedling.", "Let’s plant a seed.", "Cover it with soil.", "Give it a little water.", "Plants need sunlight.", "Let’s wash our hands.", "Your hands are muddy.", "Brush the dirt off your shoes.", "Bring the ball back.", "Let’s play outside together.", "Time to go back inside.", "Take off your shoes, please.", "Put your shoes on the rack.", "Hang your bag up.", "Put your keys in the bowl.", "Please close the door.", "Open the door carefully.", "Who’s at the door?", "Let’s check before opening it.", "Don’t open the door to strangers.", "We’re going out now.", "Have you got your bag?", "Do you have your water bottle?", "Put on your shoes.", "Tie your shoelaces.", "Wear your helmet.", "Take an umbrella. It might rain.", "Have you got everything?", "Let’s lock the door.", "Stay close to me.", "Hold my hand.", "Watch your step.", "Mind the step.", "Wipe your feet on the mat.", "Welcome home!", "How was your day?", "Put your shoes away.", "Hang your coat here.", "Please keep the entrance tidy.", "Don’t leave your things on the floor.", "We’re home safe and sound."];
+const topics = ["Living Room", "Bedroom", "Kitchen", "Dining Room", "Bathroom", "Brushing Teeth", "Toilet", "Laundry & Drying Area", "Balcony", "Rooftop", "Study Corner", "Garden / Yard", "Entrance"];
+const listeningLessons = sentences.map((sentence,index)=>({
+ id: `AH-LIV-${String(index+1).padStart(3,"0")}`,
+ title: sentence, category:"Listening", level:"A2",
+ topic: topics[Math.floor(index/30)], description: sentence, files:["MP3"]
+}));
 
 lessons.unshift(...listeningLessons);
 
@@ -1108,6 +1102,9 @@ const icons = {
 };
 
 let currentCategory = "All";
+let qrScanner = null;
+let qrScannerRunning = false;
+let qrScanHandled = false;
 
 const $ = id => document.getElementById(id);
 
@@ -1285,6 +1282,8 @@ function playShadowingLesson(index) {
 
 function showPage(page, title, subtitle) {
 
+  if (page !== "listening") $("mainAudio").pause();
+  if (page !== "qr") { $("audio-player").pause(); if (qrScannerRunning) stopQrScanner(); }
   document.querySelectorAll(".page").forEach(section => {
     section.classList.toggle(
       "active",
@@ -1347,6 +1346,8 @@ function openLesson(id) {
   const lesson = lessons.find(item => item.id === id);
 
   if (!lesson) return;
+
+  if (lesson.category === "Listening") { playListening(lesson.id); return; }
 
   $("lessonDetail").innerHTML = `
     <div class="detail-box">
@@ -1445,6 +1446,8 @@ function lookupCode() {
 
   const code = $("qrCode").value.trim().toUpperCase();
 
+  const listening = resolveListeningAudio(code);
+  if (listening) { playScannedLesson(code); return; }
   const lesson = lessons.find(item => item.id === code);
 
   $("qrResult").textContent = lesson
@@ -1702,9 +1705,7 @@ if (
    Supports lesson IDs and direct MP3 URLs
    ========================================= */
 
-let qrScanner = null;
-let qrScannerRunning = false;
-let qrScanHandled = false;
+
 
 function resolveListeningAudio(qrText) {
   const value = String(qrText || "").trim();
@@ -1712,13 +1713,16 @@ function resolveListeningAudio(qrText) {
   if (!value) return null;
 
   // QR contains a Listening lesson ID, for example AH-LIV-001.
-  const codeMatch = value.match(/AH-LIV-\d{3}/i);
+  const codeMatch = value.match(/\bAH-LIV-\d{3}\b/i);
 
   if (codeMatch) {
     const code = codeMatch[0].toUpperCase();
 
+    const entry = listeningLessons.find(item => item.id === code);
+    if (!entry) return null;
     return {
-      title: `Listening Lesson ${code.slice(-3)}`,
+      title: entry.title,
+      id: code,
       url: `./audio/${code}.mp3`
     };
   }
@@ -1750,6 +1754,7 @@ async function playScannedLesson(qrText) {
     return;
   }
 
+  if (lesson.id) { playListening(lesson.id); return; }
   const audio = $("audio-player");
 
   $("listening-result").hidden = false;
@@ -1870,10 +1875,52 @@ async function stopQrScanner() {
 }
 
 $("startQrButton").addEventListener("click", startQrScanner);
-$("stopQrButton").addEventListener("click", stopQrScanner);</script>
+$("stopQrButton").addEventListener("click", stopQrScanner);
+
+let audioPage = 1;
+const mainAudio = $("mainAudio");
+for (const topic of topics) $("audioTopic").add(new Option(topic,topic));
+function renderListening() {
+ const query = $("audioSearch").value.trim().toLowerCase();
+ const topic = $("audioTopic").value;
+ const matches = listeningLessons.filter(l => (!topic || l.topic === topic) && `${l.id} ${l.title} ${l.topic}`.toLowerCase().includes(query));
+ const pages = Math.max(1,Math.ceil(matches.length/20));
+ audioPage = Math.max(1,Math.min(audioPage,pages));
+ const list = $("listening-list"); list.replaceChildren();
+ for (const l of matches.slice((audioPage-1)*20,audioPage*20)) {
+  const b = document.createElement("button"); b.className="lesson"; b.type="button";
+  const h=document.createElement("strong"); h.textContent=l.id+" · "+l.topic;
+  const p=document.createElement("p"); p.textContent=l.title; b.append(h,p);
+  b.onclick=()=>playListening(l.id); list.append(b);
+ }
+ $("audioPage").textContent=`${matches.length} lessons · Page ${audioPage} of ${pages}`;
+ $("prevAudio").disabled=audioPage===1; $("nextAudio").disabled=audioPage===pages;
+}
+function playListening(code) {
+ const l=listeningLessons.find(x=>x.id===code); if(!l)return;
+ showPage("listening"); mainAudio.pause();
+ $("mainAudioPanel").hidden=false; $("mainAudioTitle").textContent=l.id+" — "+l.title;
+ $("mainAudioStatus").textContent="Loading audio…";
+ mainAudio.src=`./audio/${l.id}.mp3`; mainAudio.playbackRate=1; mainAudio.load();
+ mainAudio.play().catch(()=>{if(!mainAudio.error) $("mainAudioStatus").textContent="Press Play to listen.";});
+ $("mainAudioPanel").scrollIntoView({block:"nearest"});
+}
+mainAudio.onplaying=()=>$("mainAudioStatus").textContent="Playing";
+mainAudio.onended=()=>$("mainAudioStatus").textContent="Finished. Press Replay to listen again.";
+mainAudio.onerror=()=>$("mainAudioStatus").textContent="Audio unavailable. Check your connection and whether the MP3 has been uploaded.";
+$("replayAudio").onclick=()=>{if(mainAudio.src&&!mainAudio.error){mainAudio.currentTime=0;mainAudio.play().catch(()=>{});}};
+$("audioSearch").oninput=$("audioTopic").onchange=()=>{audioPage=1;renderListening();};
+$("prevAudio").onclick=()=>{audioPage--;renderListening();};
+$("nextAudio").onclick=()=>{audioPage++;renderListening();};
+renderListening();
+const directParams=new URLSearchParams(location.search);
+const directCode=directParams.get("code")||directParams.get("lesson")||directParams.get("id");
+if(directCode){const l=resolveListeningAudio(directCode);if(l&&l.id)playListening(l.id);}
+
+</script>
 
 <script src="https://unpkg.com/html5-qrcode"></script>
-<script src="./listening.js"></script>
+
 <script src="./festive.js"></script>
 
 </body>
